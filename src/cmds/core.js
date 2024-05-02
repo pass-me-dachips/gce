@@ -6,7 +6,7 @@ console.log(`\x1b[1m
             \x1b[93m :-=======--:.                  Grand Code(GCE) Environment
           :=+**************+-.              Published at ${GSYSTEM.releaseDate}
         -+*****+=-----=+******+:.           Copyright (c) 2024 by David.A    
-      :+****+-.     .-+***********=:.       Github:<pass-me-dachips>
+      :+****+-.     .-+***********=:.       Github: <pass-me-dachips>
      :*****-       =***+-:.  ..:=+*=        Repo: <pass-me-dachips/gce>
     \x1b[96m.*****:      .+**+:             
     -*****+++++++*****+++++++++++++++       
