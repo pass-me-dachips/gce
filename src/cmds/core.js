@@ -18,5 +18,6 @@ console.log(`\x1b[1m
        .=******+=--::=**********+=:        
          .-+****************+-.             Platform: ${platform()}   
             .--==++++==-:.                  Est.size: ${GSYSTEM.ESTsize}
-\x1b[0m`)
+\x1b[0m`);
+return void 0;
 }
