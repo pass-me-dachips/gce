@@ -8,7 +8,10 @@ export default function Gcce() {
     ));
    let defaultGcce = "unable_to_determine";
    if (existsSync(GPATHS.globalConfig)) {
-      const globalConfig = JSON.parse(readFileSync(GPATHS.globalConfig));
+      const globalConfig = JSON.parse(readFileSync(
+        GPATHS.globalConfig,
+        GOUTFORMAT.encoding
+      ));
       if ("def" in globalConfig) {
         for (let i = 0; i <= configContent.length; i++) {
           let elem = configContent[i];
