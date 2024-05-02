@@ -14,7 +14,7 @@ const args = process.argv.slice(2);
 if (args.length > 0) {
   if (args.includes("--FAIAF")) await Main(args) 
   else {  
-    switch(cmdArgs[0]) {
+    switch(args[0]) {
       case "--help" : { Help(); break }
       case "gcce" : { Gcce(); break }
       case "globalConfig" : { GlobalC(); break }
