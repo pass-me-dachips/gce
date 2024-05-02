@@ -1,6 +1,6 @@
 import { homedir } from "node:os";
 
-export const osHomeDir = homedir()
+export const osHomeDir = homedir();
 
 export const osConfigDir = {
    linux: [".config"],

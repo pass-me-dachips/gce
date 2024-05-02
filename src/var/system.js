@@ -5,7 +5,8 @@ import { osConfigDir, osDataDir, osHomeDir, osTempDir } from "./osPaths.js";
 export const GSYSTEM = {
    name: "gce",
    version: "1.0.0",
-   releaseDate: "2024-05-05"
+   releaseDate: "2024-05-05",
+   ESTsize: "2MB"
 }
 
 export const GOUTFORMAT = {
@@ -13,9 +14,9 @@ export const GOUTFORMAT = {
    encoding: "ascii"
 }
 
-const configDir = join(osHomeDir, ...osConfigDir[platform()], GSYSTEM.name)
-const tempDir = join(osHomeDir, ...osTempDir[platform()], GSYSTEM.name)
-const dataDir = join(osHomeDir, ...osDataDir[platform()], GSYSTEM.name)
+const configDir = join(osHomeDir, ...osConfigDir[platform()], GSYSTEM.name);
+const tempDir = join(osHomeDir, ...osTempDir[platform()], GSYSTEM.name);
+const dataDir = join(osHomeDir, ...osDataDir[platform()], GSYSTEM.name);
 export const GPATHS = {
    configDir,
    tempDir,
