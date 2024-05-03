@@ -6,7 +6,7 @@
 */
 import { join } from "node:path";
 import { 
-   writeFileSync, 
+   readFileSync,
    mkdirSync, 
    existsSync, 
    statSync
@@ -30,9 +30,9 @@ export default async function Main(args) {
  else if( Number(port_raw[1]) > 1023 && Number(port_raw[1]) < 49151 ) {
      servicePort  = Number(port_raw[1]);
  } else { 
-    console.log(`\x1b[32;1mWARNING: the port ${port_raw[1]} is forbidden.`);
-    console.log("ports can only be registered eg 1024 - 49150");
-    console.log("gce would choose a random port in this case. \x1b[0m");
+    console.log(`\x1b[32;1mWARNING: the port ${port_raw[1]} is forbidden.`);//@log  
+    console.log("ports can only be registered eg 1024 - 49150");//@log  
+    console.log("gce would choose a random port in this case. \x1b[0m");//@log  
     servicePort  = 0;
  } //----------handle port options
 
@@ -60,75 +60,68 @@ export default async function Main(args) {
     //+++++++++++ creates the path as a dir if it doesnt exists.
   }
 
+ console.log(`start ${args[0]}, service-type=<${serviceType}>`); //@log  
 
-  console.log(servicePath, serviceType)
+ const gcces = existsSync(GPATHS.gcceConfig) && 
+  JSON.parse(readFileSync(GPATHS.gcceConfig, GOUTFORMAT.encoding));
 
-  
-//  console.log(`start ${args[0]}, service-type=<${serviceType}>`);
+ if (typeof gcces === "object" && gcces.length > 0) {
+    let gconfigContent = existsSync(GPATHS.globalConfig) ?
+      JSON.parse(readFileSync(GPATHS.globalConfig, GOUTFORMAT.encoding)) : {};
+    //=+++++++ gconfigContent as in globalConfig
 
- 
-//  const gcceConfigContent = existsSync(GPATHS.gcceConfig) && 
-//   JSON.parse(readFileSync(GPATHS.gcceConfig, GOUTFORMAT.encoding))
+    const isconfigForDir = serviceType === "DIR" && !isTemporary;
 
-//  if (typeof gcceConfigContent === "object" && gcceConfigContent.length > 0) {
-//     let globalConfigContent = existsSync(GPATHS.globalConfig) ?
-//       JSON.parse(readFileSync(GPATHS.globalConfig, GOUTFORMAT.encoding)) : {}
+    const findGcce = (name)  => {
+       const gcce = gcces.find(elem => elem.name === name);
+       if (gcce) return gcce
+       else return null
+    }
 
-//     const ignoreLocalGcceConfigFORFILE = serviceType === "FILE" || isTemporary 
-//     const isGceConfigForDir = serviceType === "DIR" && !isTemporary
+    const specifyGcce = async () => {
+       if (gcces.length === 1) { serviceGcce = gcces[0]; } 
+       else {
+         console.log("you have multiple gcce's installed"); //@log  
+         gcces.forEach(elem => {
+           console.log(
+             `${GOUTFORMAT.tabA}name ${`\x1b[36m${elem.name}\x1b[0m`}, version ${`\x1b[33m${elem.version}\x1b[0m`}`
+           )
+         })
+         const rl = readLine.createInterface({
+             output: process.stdout, input: process.stdin
+         })
+         const prompt = "specify a gcce and its version eg = <gccename>,<version> "
+         let gcceNV = await rl.question(prompt); //NV as in name, version
+         const gcceSelected = (gcceNV) => {
+            let gcce = gcces.find(elem => elem?.name === gcceNV?.split(",")[0] && 
+            elem?.version === gcceNV?.split(",")[1])
+            return gcce;
+         }
+         while (!gcceSelected(gcceNV)) { gcceNV = await rl.question(prompt); }
+         rl.close();
+         serviceGcce = gcceSelected(gcceNV);
+       }
+    } //+++++ function that determines the gcce to use.
 
-//     const ingcceConfig = (def)  => {
-//        const gcce = gcceConfigContent.find(elem => elem.name === def)
-//        if (gcce) return gcce 
-//        else return null
-//     }
+    if (isconfigForDir) {
+      const localconfigpath = join(servicePath, "gceconfig.json")
+      if (existsSync(localconfigpath)) { gconfigContent =
+          JSON.parse(readFileSync(localconfigpath, GOUTFORMAT.encoding)) ?? {};}
+      /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      *** if the service has a gceconfig.json file in its root, then 
+      *** let gconfigContent be its content instead of the global config content.
+      ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+    }
 
-//     const specifyGcce = async () => {
-//        if (gcceConfigContent.length === 1) {
-//          serviceGcce = gcceConfigContent[0];
-//        } else {
-//          console.log("gce spotted multiple gcce's installed");
-//          gcceConfigContent.forEach(elem => {
-//            console.log(
-//             `${GOUTFORMAT.tabA}name ${`\x1b[36m${elem.name}\x1b[0m`}, version ${`\x1b[33m${elem.version}\x1b[0m`}`
-//            )
-//          })
-//          const rl = readLine.createInterface({
-//            output: process.stdout, input: process.stdin
-//         })
-//         const q = "Specify a gcce and its version eg = <gccename>,<version> "
-//         let answer = await rl.question(q);
-//         const gcceSelected = (ans) => {
-//           let gcce  = gcceConfigContent.find(
-//             elem => elem?.name === ans?.split(',')[0] && 
-//             elem?.version === ans?.split(',')[1])
-//           return gcce;
-//         }
-//         while (!gcceSelected(answer)) {
-//            answer = await rl.question(q);
-//         }
-//         rl.close();
-//         serviceGcce = gcceSelected(answer);
-//        }
-//     }
+    const defaultKey = "def";
+    if (defaultKey in gconfigContent === false) await specifyGcce();
+    else if (defaultKey in gconfigContent && findGcce(gconfigContent.def) !== null) 
+    { serviceGcce = findGcce(gconfigContent.def) } 
+    else throw {
+      message: `ABORTED: gcce <${gconfigContent?.def ?? "NULL"}> not found!`
+    }
 
-//     // handle gcce options 
-//     if (ignoreLocalGcceConfigFORFILE || isGceConfigForDir) {
-//       if (isGceConfigForDir) {
-//       const localconfigpath = join(servicePath,'gce.config.json')
-//       if (existsSync(localconfigpath)) globalConfigContent =
-//         JSON.parse(readFileSync(localconfigpath, GOUTFORMAT.encoding)) ?? {}
-//       }
-
-//       if ("def" in globalConfigContent === false) await specifyGcce()
-//       else if ("def" in globalConfigContent && 
-//         ingcceConfig(globalConfigContent.def) !== null) 
-//            serviceGcce = ingcceConfig(globalConfigContent.def)
-//        else throw {
-//          message: `ABORTED: gcce <${globalConfigContent?.def ?? "NULL"}> not found!`
-//         }
-//     } // handle gcce options 
-
+    console.log(serviceGcce)
 //     await Server({
 //        servicePath,
 //        serviceType,
@@ -140,5 +133,5 @@ export default async function Main(args) {
 //        globalConfigContent
 //     });
 //     //  pass control to the server
-//  } else throw { message: "ABORTED: no gcce installed. "}
+ } else throw { message: "ABORTED: no gcce installed." }
 }
