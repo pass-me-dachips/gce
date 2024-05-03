@@ -23,6 +23,6 @@ export const GPATHS = {
    dataDir,
    gcceConfig: join(configDir, "gcce.json"),
    globalConfig: join(configDir, "gce.g.config.json"),
-   tServices: join(tempDir, "TSERVCIES"),
+   tServices: join(tempDir, "TSERVICES"),
    serviceLog: join(tempDir, "SERVICELOG")
 }
