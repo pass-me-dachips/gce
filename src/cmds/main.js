@@ -1,5 +1,5 @@
 /* ==================================++++++++++++++++++++++++++++++++++++++======
-   in this file, globalConfigContent referes to either the content of the global
+   in this file, gconfigContent referes to either the content of the global
    config file, the content of the localconfigfile: gceconfig.json or {}.
    errors occuring in this file are caugth by the global error handler.
    ==============++++++++++++++++++++++++++++++==================================
@@ -13,7 +13,7 @@ import {
 } from "node:fs";
 import * as readLine from "node:readline/promises";
 import { GOUTFORMAT, GPATHS } from "../var/system.js";
-// import Server from "../net/server.js";
+import Server from "../net/server.js";
 
 export default async function Main(args) {
  const serviceOptions = args.slice(1);
@@ -54,6 +54,7 @@ export default async function Main(args) {
     }
     mkdirSync(servicePath); //------handle temp path if enabled  
  } else { 
+    isTemporary = false;
     if (existsSync(servicePath)) {
       serviceType = statSync(servicePath).isDirectory() ? "DIR" : "FILE";
     } else { serviceType = "DIR"; mkdirSync(servicePath, { recursive: true}) }
@@ -121,17 +122,13 @@ export default async function Main(args) {
       message: `ABORTED: gcce <${gconfigContent?.def ?? "NULL"}> not found!`
     }
 
-    console.log(serviceGcce)
-//     await Server({
-//        servicePath,
-//        serviceType,
-//        buffering,
-//        ccEnabled,
-//        isTemporary,
-//        servicePort,
-//        serviceGcce,
-//        globalConfigContent
-//     });
-//     //  pass control to the server
+   Server({
+     servicePath,
+     serviceType,
+     isTemporary,
+     serviceGcce,
+     servicePort,
+     gconfigContent
+    }); //++++++++++ pass control to the server
  } else throw { message: "ABORTED: no gcce installed." }
 }
