@@ -1,0 +1,7 @@
+
+NEXT VERSION =>
+in later versions, the gce.lock file would be created during none sapi i/o 
+operations that does not tolerate redundancy or a fan of idempotency, which 
+specifies that another process is working on that file and the request has to be 
+delayed until finish. although this would likely happen, its better solved.
+
