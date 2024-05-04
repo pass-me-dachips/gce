@@ -1,6 +1,12 @@
 import { platform } from "node:os";
 import { join } from "node:path";
-import { osConfigDir, osDataDir, osHomeDir, osTempDir } from "./osPaths.js";
+import { 
+   osConfigDir, 
+   osDataDir, 
+   osHomeDir, 
+   osSeperator, 
+   osTempDir 
+} from "./osPaths.js";
 
 export const GSYSTEM = {
    name: "gce",
@@ -24,5 +30,6 @@ export const GPATHS = {
    gcceConfig: join(configDir, "gcce.json"),
    globalConfig: join(configDir, "gce.g.config.json"),
    tServices: join(tempDir, "TSERVICES"),
-   serviceLog: join(tempDir, "SERVICELOG")
+   serviceLog: join(tempDir, "SERVICELOG"),
+   seperator: osSeperator[platform()]
 }

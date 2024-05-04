@@ -1,6 +1,7 @@
 /* **** This file contains utility operations for reading files and folders. **** */
-import { readFile, stat } from "node:fs/promises";
+import { readFile, stat, readdir } from "node:fs/promises";
 import { GOUTFORMAT } from "../../../var/system.js";
+import { join } from "node:path";
 
 export async function fileRead(
    path, 
@@ -33,6 +34,29 @@ export async function fileRead(
      }
      return response;
   } catch (error) {
-     throw { ack: false, mesage: error.message }
+     throw { ack: false, message: error.message }
   }
+}
+
+/* the dirRead does not provide any optimization technique for reducing file load
+ times and eleminating freezing on large file systems for now.
+ for this reason, the dir read only supports batch reading and not recursively
+ which means you can only read diret children of a directory */
+export async function dirRead(path) {
+ try {
+     const fsNames = await readdir(path, GOUTFORMAT.encoding);
+     const fsLists = [];
+     for (let i = 0; i < fsNames.length; i++) {
+        const fs = fsNames[i];
+        const stats = await stat(join(path, fs));
+        fsLists.push({
+          name: fs,
+          type: stats.isDirectory() ? "DIR" : "FILE",
+          size: stats.isDirectory() ? 0 : stats.size
+        })
+     }
+     return fsLists;
+ } catch(error) {
+     throw { ack: false, message: error.message }
+ }
 }

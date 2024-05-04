@@ -17,3 +17,8 @@ export const osTempDir = {
    win32: ["AppData", "Local", "Temp"],
    darwin: ["Library", "Caches"]
 }
+export const osSeperator = {
+   linux: "/",
+   win32: "\\",
+   darwin: "/"
+}
