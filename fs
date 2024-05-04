@@ -10,4 +10,5 @@ ________________________________________________________________________________
 |    sdu   -   as in service data unit.
 |    sapi  -   as in service api.
 |    www   -   points to webserver related functionalities.
+|    opera -   stores fs core operations.
 |___________________________________________________________________________________
