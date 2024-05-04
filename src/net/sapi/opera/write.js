@@ -1,5 +1,5 @@
 /* ** This file contains utility functions for write operations **** */
-import { writeFile, rm } from "node:fs/promises";
+import { writeFile, rm, mkdir } from "node:fs/promises";
 import { GOUTFORMAT,  GPATHS } from "../../../var/system.js";
 import { basename } from "node:path";
 import { existsAsync } from "../../../etc/existsAsync.js";
@@ -26,6 +26,16 @@ export async function fileWrite(path, content) {
        * exists. it means another gce service or same is already working on that 
        * file.
        */
+  } catch(error) {
+    throw error;
+  }
+}
+
+
+export async function dirWrite(path) {
+  try {
+    await mkdir(path, { recursive: true });
+    return true;
   } catch(error) {
     throw error;
   }
