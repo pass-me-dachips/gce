@@ -31,5 +31,6 @@ export const GPATHS = {
    globalConfig: join(configDir, "gce.g.config.json"),
    tServices: join(tempDir, "TSERVICES"),
    serviceLog: join(tempDir, "SERVICELOG"),
-   seperator: osSeperator[platform()]
+   seperator: osSeperator[platform()],
+   gcelock: ".gcelock."
 }
