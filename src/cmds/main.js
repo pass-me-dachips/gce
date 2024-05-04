@@ -12,7 +12,7 @@ import {
    statSync
 } from "node:fs";
 import * as readLine from "node:readline/promises";
-import { GOUTFORMAT, GPATHS } from "../var/system.js";
+import { GOUTFORMAT, GPATHS, GSYSTEM } from "../var/system.js";
 import Server from "../net/server.js";
 
 export default async function Main(args) {
@@ -30,9 +30,9 @@ export default async function Main(args) {
  else if( Number(port_raw[1]) > 1023 && Number(port_raw[1]) < 49151 ) {
      servicePort  = Number(port_raw[1]);
  } else { 
-    console.log(`\x1b[32;1mWARNING: the port ${port_raw[1]} is forbidden.`);//@log  
-    console.log("ports can only be registered eg 1024 - 49150");//@log  
-    console.log("gce would choose a random port in this case. \x1b[0m");//@log  
+    console.log(`\x1b[0;93m\n- WARNING: the port ${port_raw[1]} is forbidden.`);//@log  
+    console.log("- ports can only be registered eg 1024 - 49150");//@log  
+    console.log("- gce would choose a random port in this case. \x1b[0m");//@log  
     servicePort  = 0;
  } //----------handle port options
 
@@ -61,7 +61,8 @@ export default async function Main(args) {
     //+++++++++++ creates the path as a dir if it doesnt exists.
   }
 
- console.log(`start ${args[0]}, service-type=<${serviceType}>`); //@log  
+ console.log(`\x1b[1;94m\nstart ${args[0]}, service-type=<${serviceType}>\x1b[0m`); 
+ //@log  
 
  const gcces = existsSync(GPATHS.gcceConfig) && 
   JSON.parse(readFileSync(GPATHS.gcceConfig, GOUTFORMAT.encoding));
@@ -82,7 +83,7 @@ export default async function Main(args) {
     const specifyGcce = async () => {
        if (gcces.length === 1) { serviceGcce = gcces[0]; } 
        else {
-         console.log("you have multiple gcce's installed"); //@log  
+         console.log("\n- you have multiple gcce's installed"); //@log  
          gcces.forEach(elem => {
            console.log(
              `${GOUTFORMAT.tabA}name ${`\x1b[36m${elem.name}\x1b[0m`}, version ${`\x1b[33m${elem.version}\x1b[0m`}`
@@ -91,7 +92,7 @@ export default async function Main(args) {
          const rl = readLine.createInterface({
              output: process.stdout, input: process.stdin
          })
-         const prompt = "specify a gcce and its version eg = <gccename>,<version> "
+         const prompt = "- specify a gcce and its version eg = <gccename>,<version> "
          let gcceNV = await rl.question(prompt); //NV as in name, version
          const gcceSelected = (gcceNV) => {
             let gcce = gcces.find(elem => elem?.name === gcceNV?.split(",")[0] && 
@@ -121,6 +122,10 @@ export default async function Main(args) {
     else throw {
       message: `ABORTED: gcce <${gconfigContent?.def ?? "NULL"}> not found!`
     }
+
+    console.log("\x1b[0;93m\n~ Published at %s, Copyright (c) 2024 by David.A", GSYSTEM.releaseDate);//@log
+    console.log("~ Official repository at: https://github.com/pass-me-dachips/gce");//@log   
+    console.log("~ Hint: run gce --help to see all available commands and options\n\x1b[0m");//@log  
 
    Server({
      servicePath,

@@ -22,17 +22,17 @@ export default function Server(sdu) {
      sdu.servicePort = port;
 
      const stdout = [
-        `grand code environment(GCE) ${GSYSTEM.version}, serviceOptions -:`,
-        `${GOUTFORMAT.tabA}absolute(0) ${sdu.servicePath}`,
-        `${GOUTFORMAT.tabA}temp = ${sdu.isTemporary}`,
-        `service gcce options -:`,
-        `${GOUTFORMAT.tabA}absolute(1) ${sdu.serviceGcce.abs}`,
-        `${GOUTFORMAT.tabA}name = ${sdu.serviceGcce.name}, version = ${sdu.serviceGcce.version}`,
-        `service NET options -:`,
-        `${GOUTFORMAT.tabA}inet = ${www.address().address}/lo, fixed`,
-        `${GOUTFORMAT.tabA}family = ${www.address().family}`,
-        `${GOUTFORMAT.tabA}port = ${port}, type = registered`,
-        `\x1b[33mservice started running on http://localhost:${port}\x1b[0m`
+        `\x1b[96mgrand code environment(GCE) ${GSYSTEM.version}, serviceOptions -:\x1b[0m`,
+        `${GOUTFORMAT.tabA}\x1b[93mabsolute(0)\x1b[0m \x1b[2m${sdu.servicePath}\x1b[0m`,
+        `${GOUTFORMAT.tabA}\x1b[93mtemp\x1b[0m = \x1b[2m${sdu.isTemporary}\x1b[0m`,
+        `\x1b[96mservice gcce options -:\x1b[0m`,
+        `${GOUTFORMAT.tabA}\x1b[93mabsolute(1)\x1b[0m \x1b[2m${sdu.serviceGcce.abs}\x1b[0m`,
+        `${GOUTFORMAT.tabA}\x1b[93mname\x1b[0m = \x1b[2m${sdu.serviceGcce.name}\x1b[0m, \x1b[93mversion\x1b[0m = \x1b[2m${sdu.serviceGcce.version}\x1b[0m`,
+        `\x1b[96mservice NET options -:\x1b[0m`,
+        `${GOUTFORMAT.tabA}\x1b[93minet\x1b[0m = \x1b[2m${www.address().address}/lo, fixed\x1b[0m`,
+        `${GOUTFORMAT.tabA}\x1b[93mfamily\x1b[0m = \x1b[2m${www.address().family}\x1b[0m`,
+        `${GOUTFORMAT.tabA}\x1b[93mport\x1b[0m = \x1b[2m${port}\x1b[0m, \x1b[93mtype\x1b[0m = \x1b[2mregistered\x1b[0m`,
+        `service started running on http://localhost:${port}`
      ];
      stdout.forEach(c => console.log(c));
      execBrowser(`http://localhost:${port}`);
