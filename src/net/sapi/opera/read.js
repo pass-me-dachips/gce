@@ -34,7 +34,7 @@ export async function fileRead(
      }
      return response;
   } catch (error) {
-     throw { ack: false, message: error.message }
+     throw error;
   }
 }
 
@@ -57,6 +57,6 @@ export async function dirRead(path) {
      }
      return fsLists;
  } catch(error) {
-     throw { ack: false, message: error.message }
+     throw error;
  }
 }

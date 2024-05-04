@@ -8,7 +8,7 @@ export async function fileWrite(path, content) {
   try {
      if (!await existsAsync(path)) {
         console.log("path dont exist, do your work")
-     } else throw { message: "ONLINE"}
+     } else throw { message: "ONLINE" }
 //      const response = { bytesWritten: content?.split("").length || 0 }
 //      const x = await readFile(join(path, "gce-lock-path"), "")
 //      exis
@@ -16,7 +16,7 @@ export async function fileWrite(path, content) {
 //     await writeFile(path, content, GOUTFORMAT.encoding);
 //      return response
   } catch(error) {
-    throw { ack: false, message: error.message }
+    error;
   }
 }
 
