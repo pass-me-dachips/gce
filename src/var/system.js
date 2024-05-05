@@ -1,4 +1,4 @@
-import { platform } from "node:os";
+import { homedir, platform } from "node:os";
 import { join } from "node:path";
 import { 
    osConfigDir, 
@@ -32,5 +32,6 @@ export const GPATHS = {
    tServices: join(tempDir, "TSERVICES"),
    serviceLog: join(tempDir, "SERVICELOG"),
    seperator: osSeperator[platform()],
-   gcelock: ".gcelock."
+   gcelock: ".gcelock.",
+   posixTrash: `${homedir}${osSeperator[platform()]}.local/share/Trash/files`
 }

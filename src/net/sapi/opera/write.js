@@ -4,6 +4,7 @@ import { GOUTFORMAT,  GPATHS } from "../../../var/system.js";
 import { basename, join } from "node:path";
 import { existsAsync } from "../../../etc/existsAsync.js";
 import { Buffer } from "node:buffer";
+import { platform } from "node:os";
 
 export async function fileWrite(path, content) {
   try {
@@ -108,4 +109,16 @@ export async function moveFile(source, destination) {
   } catch(error) {
     throw error;
   }
+}
+
+export async function toTrash(isFile, path) {
+  try {
+    if (platform() !== "win32") {
+      if (isFile) await moveFile(path, GPATHS.posixTrash);
+      else await moveDir(path, GPATHS.posixTrash);
+      return true;
+    } else throw { message: "UNSUPPORTED PLATFORM" };
+  } catch(error) {
+    throw error;
+  } 
 }
