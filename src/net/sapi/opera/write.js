@@ -1,5 +1,5 @@
 /* ** This file contains utility functions for write operations **** */
-import { writeFile, rm, mkdir, rename, cp } from "node:fs/promises";
+import { writeFile, rm, mkdir, rename, cp, copyFile } from "node:fs/promises";
 import { GOUTFORMAT,  GPATHS } from "../../../var/system.js";
 import { basename } from "node:path";
 import { existsAsync } from "../../../etc/existsAsync.js";
@@ -61,7 +61,7 @@ export async function renameFs(path, newbasename) {
   }
 }
 
-export async function removeFs(path) {
+export async function adminRemoveFs(path) {
   try {
     await rm(path, { recursive: true, retryDelay: 1000 });
     return true;
@@ -73,6 +73,15 @@ export async function removeFs(path) {
 export async function copyDir(source, destination) {
   try {
     await cp(source, destination, { recursive: true});
+    return true;
+  } catch(error) {
+    throw error;
+  }
+}
+
+export async function copyF(source, destination) {
+  try {
+    await copyFile(source, destination);
     return true;
   } catch(error) {
     throw error;
