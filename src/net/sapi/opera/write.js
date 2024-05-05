@@ -60,3 +60,12 @@ export async function renameFs(path, newbasename) {
     throw error;
   }
 }
+
+export async function removeFs(path) {
+  try {
+    await rm(path, { recursive: true, force: true, retryDelay: 1000 });
+    return true;
+  } catch(error) {
+    throw error;
+  }
+}
