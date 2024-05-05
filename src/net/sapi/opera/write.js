@@ -87,3 +87,15 @@ export async function copyF(source, destination) {
     throw error;
   }
 }
+
+export async function moveDir(source, destination) {
+  try {
+    await copyDir(source, destination);
+    await adminRemoveFs(source);
+    return true;
+  } catch(error) {
+    throw error;
+  }
+}
+
+// console.log(await moveDir(process.argv[2], process.argv[3]));
