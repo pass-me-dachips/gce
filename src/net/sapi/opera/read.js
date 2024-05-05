@@ -1,4 +1,4 @@
-/* ** This file contains utility functions for read operations eg: fs**** */
+/* ** This file contains utility functions for read operations **** */
 import { readFile, stat, readdir } from "node:fs/promises";
 import { GOUTFORMAT } from "../../../var/system.js";
 import { join } from "node:path";

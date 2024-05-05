@@ -1,5 +1,5 @@
 /* ** This file contains utility functions for write operations **** */
-import { writeFile, rm, mkdir } from "node:fs/promises";
+import { writeFile, rm, mkdir, rename } from "node:fs/promises";
 import { GOUTFORMAT,  GPATHS } from "../../../var/system.js";
 import { basename } from "node:path";
 import { existsAsync } from "../../../etc/existsAsync.js";
@@ -43,6 +43,18 @@ export async function createDir(path) {
 export async function createFile(path) {
   try {
     writeFile(path, "",  GOUTFORMAT.encoding);
+    return true;
+  } catch(error) {
+    throw error;
+  }
+}
+
+export async function renameFs(path, newlastname) {
+  try {
+    const pathBeforeBase = path.split(basename(path));
+    pathBeforeBase[pathBeforeBase.length - 1] = newlastname;
+    const newPath = pathBeforeBase.join("");
+    await rename(path, newPath);
     return true;
   } catch(error) {
     throw error;
