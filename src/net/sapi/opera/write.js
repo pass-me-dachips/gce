@@ -31,10 +31,18 @@ export async function fileWrite(path, content) {
   }
 }
 
-
-export async function dirWrite(path) {
+export async function createDir(path) {
   try {
     await mkdir(path, { recursive: true });
+    return true;
+  } catch(error) {
+    throw error;
+  }
+}
+
+export async function createFile(path) {
+  try {
+    writeFile(path, "",  GOUTFORMAT.encoding);
     return true;
   } catch(error) {
     throw error;
