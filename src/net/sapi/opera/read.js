@@ -1,4 +1,4 @@
-/* ** This file contains utility functions for read operations eg: fs, web etc**** */
+/* ** This file contains utility functions for read operations eg: fs**** */
 import { readFile, stat, readdir } from "node:fs/promises";
 import { GOUTFORMAT } from "../../../var/system.js";
 import { join } from "node:path";
@@ -56,6 +56,21 @@ export async function dirRead(path) {
         })
      }
      return fsLists;
+ } catch(error) {
+     throw error;
+ }
+}
+
+export async function getStatistics(path) {
+ try {
+     const stats = await stat(path);
+     return {
+        path: path,
+        size: stats.isDirectory() ?  0 : stats.size,
+        created: stats.ctime,
+        lmodified: stats.mtime,
+        isDir: stats.isDirectory(),
+     };
  } catch(error) {
      throw error;
  }
