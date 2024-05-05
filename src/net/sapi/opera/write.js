@@ -49,10 +49,10 @@ export async function createFile(path) {
   }
 }
 
-export async function renameFs(path, newlastname) {
+export async function renameFs(path, newbasename) {
   try {
     const pathBeforeBase = path.split(basename(path));
-    pathBeforeBase[pathBeforeBase.length - 1] = newlastname;
+    pathBeforeBase[pathBeforeBase.length - 1] = newbasename;
     const newPath = pathBeforeBase.join("");
     await rename(path, newPath);
     return true;
