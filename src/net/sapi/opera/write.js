@@ -1,7 +1,7 @@
 /* ** This file contains utility functions for write operations **** */
 import { writeFile, rm, mkdir, rename, cp, copyFile } from "node:fs/promises";
 import { GOUTFORMAT,  GPATHS } from "../../../var/system.js";
-import { basename } from "node:path";
+import { basename, join } from "node:path";
 import { existsAsync } from "../../../etc/existsAsync.js";
 import { Buffer } from "node:buffer";
 
@@ -98,4 +98,14 @@ export async function moveDir(source, destination) {
   }
 }
 
-// console.log(await moveDir(process.argv[2], process.argv[3]));
+export async function moveFile(source, destination) {
+  try {
+    const fileName = basename(source);
+    destination = join(destination, fileName);
+    await copyFile(source, destination);
+    await adminRemoveFs(source);
+    return true;
+  } catch(error) {
+    throw error;
+  }
+}
