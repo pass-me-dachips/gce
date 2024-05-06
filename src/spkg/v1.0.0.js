@@ -131,3 +131,11 @@ export function bin(deci) {
   } else return "Not A Number";
 }
 
+export function rgb(hex) {
+  if (hex.length === 6) {
+    hex = hex.split("");
+    const arrRep = [hex[0]+hex[1],hex[2]+hex[3],hex[4]+hex[5]]
+    return `rgb(${deci(arrRep[0])},${deci(arrRep[1])},${deci(arrRep[2])})`
+  } else return "Expected 6 characters for hex";
+}
+
