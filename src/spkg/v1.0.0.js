@@ -90,12 +90,15 @@ export function hex(deci) {
     };
     let current = deci;
     let remainders = [];
+    console.log(deci)
+    if (deci !== 0) {
     while (current !== 0) {
        const remainder = current % hexNo;
        remainders.push(hexTable[remainder]);
        current = Math.floor(current / hexNo);
-    }
+    } 
     return remainders.reverse().join("");
+    } else return "0";
   } else {
     return "Not A Number";
   }
@@ -137,11 +140,4 @@ export function rgb(hex) {
     const arrRep = [hex[0]+hex[1],hex[2]+hex[3],hex[4]+hex[5]]
     return `rgb(${deci(arrRep[0])},${deci(arrRep[1])},${deci(arrRep[2])})`
   } else return "Expected 6 characters for hex";
-}
-
-export function r2x(...rgb) {
-   //++++++ r2x as in rgb to hex
-  if (rgb.length === 3) {
-    return `#${hex(rgb[0])}-${hex(rgb[1])}-${hex(rgb[2])}`;
-  } else return "Expected r g b";
 }
