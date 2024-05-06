@@ -79,3 +79,26 @@ export function osPath(os = "", pathName) {
 export const ascii = asciiTable;
 export const ansiCodesForColouredOutput = acfco;
 
+export function hex(deci) {
+  deci = Number(deci);
+  if (String(deci) !== "NaN") {
+    const hexNo = 16;
+    const hexTable = {
+      0 : 0, 1 : 1, 2 : 2, 3 : 3, 4 : 4,
+      5 : 5, 6 : 6, 7 : 7, 8 : 8, 9 : 9,
+      10 : "A", 11 : "B", 12 : "C", 13 : "D", 14 : "E", 15: "F"
+    };
+    let current = deci;
+    let remainders = [];
+    while (current !== 0) {
+       const remainder = current % hexNo;
+       remainders.push(hexTable[remainder]);
+       current = Math.floor(current / hexNo);
+    }
+    return remainders.reverse().join("");
+  } else {
+    return "Not A Number";
+  }
+}
+
+
