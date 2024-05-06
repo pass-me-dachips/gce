@@ -139,3 +139,9 @@ export function rgb(hex) {
   } else return "Expected 6 characters for hex";
 }
 
+export function r2x(...rgb) {
+   //++++++ r2x as in rgb to hex
+  if (rgb.length === 3) {
+    return `#${hex(rgb[0])}-${hex(rgb[1])}-${hex(rgb[2])}`;
+  } else return "Expected r g b";
+}
