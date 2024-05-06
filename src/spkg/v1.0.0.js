@@ -2,6 +2,8 @@ import { freemem } from "node:os";
 import osPathLists from "./helpers/ospath.h.js";
 import asciiTable from "./helpers/asciitable.h.js";
 import acfco from "./helpers/acfco.h.js";
+import * as quickh from "./helpers/quick.h.js";
+import { fileWrite } from "../net/sapi/opera/write.js";
 
 export function add(...operands) {
  return operands.reduce((acum, elem)=> acum + Number(elem),0);
@@ -143,3 +145,16 @@ export function rgb(hex) {
 }
 
 export function end() { process.exit(0); }
+
+export async function quick(path,key) {
+  try {
+    const contentToWrite = quickh[key];
+    if (contentToWrite) {
+      await fileWrite(path, contentToWrite);
+      return true;
+    }
+    else throw { message: "NO PLACEHOLDER" }
+  } catch(error) {
+    throw error;
+  }
+}

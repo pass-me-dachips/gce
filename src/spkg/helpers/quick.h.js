@@ -1,6 +1,15 @@
-// This file contains short snippets for multiple langs
+// This file contains short snippets | placeholders for multiple langs
 // File meant to be used in spkg.quick
 // This file migth contain incorrect codes. be sure to crosscheck.
+
+
+export const short = "The quick brown fox jumps over the lazy dog.";
+
+export const fill = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam";
+
+export const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
+export const bacon = "Bacon ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
 export const actionscript = `
 trace("Hello, World!");
