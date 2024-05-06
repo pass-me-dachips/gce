@@ -1,4 +1,5 @@
 import { freemem } from "node:os";
+import osPathLists from "./helpers/ospath.h.js";
 
 export function add(...operands) {
  return operands.reduce((acum, elem)=> acum + Number(elem),0);
@@ -49,7 +50,7 @@ export async function marshal(json) {
  try {
    return JSON.stringify(JSON.parse(json), 0, 2);
  } catch(error) {
-   throw error;
+   return error.message;
  }
 }
 
@@ -64,16 +65,12 @@ export function hmr(bytes) {
   else return "out of range";
 }
 
-export function osPath(path, os) {
- if (path === "home") {}
- else if (path === "trash") {}
- else if (path === "data") {}
- else if (path === "config") {}
- else if (path === "temporary") {}
- else if (path === "appbin") {}
- else if (path === "nets") {}
- else if (path === "trash") {}
- else if (path === "trash") {}
- else {}
+export function osPath(os = "", pathName) {
+ os = os.toLowerCase();
+ if (os === "mac" || os === "windows" || os === "linux") {
+   const response = osPathLists[os][pathName];
+   return response ?? "cannnot determine part";
+ }
+ else return "unsupported os";
 }
 
