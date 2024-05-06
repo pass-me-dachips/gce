@@ -117,3 +117,17 @@ export function deci(hex) {
   } else return "Cannot Convert A None Hex To Deci";
 }
 
+export function bin(deci) {
+  deci = Number(deci);
+  if (String(deci) !== "NaN") {
+    const binNo = 2;
+    let current = deci;
+    const remainders = [];
+    while(current !== 0) {
+       remainders.push(mod(current, binNo));
+       current = Math.floor(current / binNo);
+    }
+    return remainders.reverse().join('');
+  } else return "Not A Number";
+}
+
