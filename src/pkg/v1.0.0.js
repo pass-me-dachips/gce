@@ -64,3 +64,16 @@ export function hmr(bytes) {
   else return "out of range";
 }
 
+export function osPath(path, os) {
+ if (path === "home") {}
+ else if (path === "trash") {}
+ else if (path === "data") {}
+ else if (path === "config") {}
+ else if (path === "temporary") {}
+ else if (path === "appbin") {}
+ else if (path === "nets") {}
+ else if (path === "trash") {}
+ else if (path === "trash") {}
+ else {}
+}
+

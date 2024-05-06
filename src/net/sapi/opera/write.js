@@ -113,7 +113,7 @@ export async function moveFile(source, destination) {
 
 export async function toTrash(isFile, path) {
   try {
-    if (platform() !== "win32") {
+    if (platform() === "linux") {
       if (isFile) await moveFile(path, GPATHS.posixTrash);
       else await moveDir(path, GPATHS.posixTrash);
       return true;
