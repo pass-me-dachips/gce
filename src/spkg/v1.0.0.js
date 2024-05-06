@@ -141,3 +141,5 @@ export function rgb(hex) {
     return `rgb(${deci(arrRep[0])},${deci(arrRep[1])},${deci(arrRep[2])})`
   } else return "Expected 6 characters for hex";
 }
+
+export function end() { process.exit(0); }
