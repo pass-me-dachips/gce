@@ -1,5 +1,6 @@
 import { freemem } from "node:os";
 import osPathLists from "./helpers/ospath.h.js";
+import asciiTable from "./helpers/asciitable.h.js";
 
 export function add(...operands) {
  return operands.reduce((acum, elem)=> acum + Number(elem),0);
@@ -74,3 +75,4 @@ export function osPath(os = "", pathName) {
  else return "unsupported os";
 }
 
+export const ascii = asciiTable;
