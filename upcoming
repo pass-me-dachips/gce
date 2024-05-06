@@ -5,3 +5,6 @@ operations that does not tolerate redundancy or a fan of idempotency, which
 specifies that another process is working on that file and the request has to be 
 delayed until finish. although this would likely happen, its better solved.
 
+THIS VERSION =>
+might add http rest client, golive, upcoming, remember, todo to the 
+current version.
