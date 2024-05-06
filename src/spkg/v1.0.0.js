@@ -101,3 +101,19 @@ export function hex(deci) {
   }
 }
 
+export function deci(hex) {
+  hex = hex?.split("") ?? [];
+  const hexReverseTable = {
+      0 : 0, 1 : 1, 2 : 2, 3 : 3, 4 : 4,
+      5 : 5, 6 : 6, 7 : 7, 8 : 8, 9 : 9,
+      A : 10, B : 11, C : 12, D : 13, E : 14, F: 15
+  };
+  const hexNo = 16;
+  const remainders = hex.reverse().map((elem, index)=> {
+    return hexReverseTable[elem] * pow(hexNo, index);
+  });
+  if (!remainders.includes(NaN)) {
+    return remainders.reduce((elem, acum) => elem + acum , 0);
+  } else return "Cannot Convert A None Hex To Deci";
+}
+
