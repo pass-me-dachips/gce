@@ -13,6 +13,8 @@ export function errorResponseHelper(error, oid) {
       error.code === ERRORCODES.notFile 
     ) {
       return JSON.stringify(code_0(false, "OSFORBIDEN", oid, null));
+  } else if (error.code === ERRORCODES.exists) {
+      return JSON.stringify(code_0(false, "DUPKEY", oid, null));
   } else if (error.code === ERRORCODES.online) {
       return JSON.stringify(code_0(false, "ONLINE", oid, null));
   } else return JSON.stringify(code_0(false, "STDERR", oid, error.message)); 
@@ -96,7 +98,7 @@ async function MAKEFILE(relativePath, oid, sdu) {
     const { servicePath } = sdu; const pathToDir = join(servicePath, relativePath);
     await createFile(pathToDir); report( `wrote 0B (make) to ${relativePath}`);
     return JSON.stringify(code_0(true, "ACK", oid, null)); 
-  } catch(error) {  return errorResponseHelper(error, oid); }
+  } catch(error) { return errorResponseHelper(error, oid); }
 }
 
 // ++++++++ the main fs api ++++++++++++++++++

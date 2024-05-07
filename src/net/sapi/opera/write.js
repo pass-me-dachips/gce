@@ -43,7 +43,9 @@ export async function createDir(path) {
 
 export async function createFile(path) {
   try {
-    writeFile(path, "",  GOUTFORMAT.encoding);
+    const doesExists = await existsAsync(path);
+    if (!doesExists) await writeFile(path, "",  GOUTFORMAT.encoding);
+    else throw { code: "DUPKEY" }
     return true;
   } catch(error) {
     throw error;

@@ -40,5 +40,6 @@ export const ERRORCODES = {
    notFound: "ENOENT",
    notdirectory: "ENOTDIR",
    notFile: "EISDIR",
-   online: "ONLINE"
+   online: "ONLINE",
+   exists: "DUPKEY"
 }

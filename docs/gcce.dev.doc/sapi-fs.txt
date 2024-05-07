@@ -164,3 +164,17 @@ file system using gce's service api.
     @return => if the request was acknowledged, you should get a response
       with signal `ACK`.
 ====================================================================================
+     
+  
+  MAKEFILE => 
+    the makefile operation allows clients to create a new file relative to the
+    service path.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "MAKEFILE",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": "relative/path/to/newfile"
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK`.
+====================================================================================
