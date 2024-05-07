@@ -8,8 +8,8 @@ file system using gce's service api.
 -- OPERATION TYPES =
 
   READDIR => 
-    the readdir allows you to read the direct contents/children of a directory 
-    relative to the service path.
+    the readdir operation allows clients to read the direct contents/children of a 
+    directory relative to the service path.
     @request => {
         "TYPE": "FS",
         "OPERA": "READDIR",
@@ -27,3 +27,26 @@ file system using gce's service api.
         ]
      }
      NOTE: size would always be 0 on type dir.
+     
+  
+  STATICS => 
+    the statics operation allows clients to retrieve information about a file or
+    directoy relative to the service path.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "STATICS",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": "relative/path/to/servicepath"
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK/HASPAYLOAD` where the payload is an object containing the
+      the information of the file or directory.
+    @payloadFormat => {
+        PAYLOAD: {
+         path: "absolute/path/to/the/requests/relative-path",
+         size: <0 for dir  || size for file>,
+         created: "YYYY-MM-DDTHH:MM:SS.MSSZ",
+         lmodified: "YYYY-MM-DDTHH:MM:SS.MSSZ",
+         isDir: <true || false>
+        }
+     }
