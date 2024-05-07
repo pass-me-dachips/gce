@@ -1,8 +1,3 @@
-import { join } from "node:path";
-import { code_0 } from "../codes.js";
-import { defopera } from "./default.js";
-import { dirRead } from "../opera/read.js";
-import { ERRORCODES } from "../../../var/system.js";
 
 async function READDIR(relativePath, oid, sdu) {
   try {
@@ -20,14 +15,3 @@ async function READDIR(relativePath, oid, sdu) {
     } else return JSON.stringify(code_0(false, "STDERR", oid, error.message)); 
   }
 }
-
-export default async function fs(request,sdu) {
-  let response;
-  const { OPERA, PAYLOAD, OID } = request;
-  switch (OPERA) {
-     case "READDIR" : response = await READDIR(PAYLOAD, OID, sdu); break
-     default: response = defopera(OPERA);
-  };
-  return response;
-}
-

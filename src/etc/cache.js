@@ -5,7 +5,7 @@ class Env {
   }
  add(key,proc) {
    const inTable = this.table.find(variable => key === variable.key);
-   if (inTable) return { SIG: "EXISTS" };
+   if (inTable) return { SIG: "DUPKEY" };
    else this.table.push({key, proc}); return { SIG: "ACK" };    
   }
  remove(key) {
@@ -14,11 +14,11 @@ class Env {
  }
  get(key) {
    const variable = this.table.find(variable => key === variable.key);
-   if (variable) return { SIG: "HASPAYLOAD", payload: variable };
-   else return { SIG: "NONE" }; 
+   if (variable) return { SIG: "ACK/HASPAYLOAD", payload: variable };
+   else return { SIG: "ACK" }; 
  }
  getAll() {
-   return { SIG: "HASPAYLOAD", payload: this.table }; 
+   return { SIG: "ACK/HASPAYLOAD", payload: this.table }; 
  }
  static EnvInstance() {
    if (!Env.instance) Env.instance = new Env();

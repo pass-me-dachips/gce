@@ -1,7 +1,7 @@
 import mime from "./mimetypes.js";
 import { join } from "node:path";
 import { readFile } from "node:fs/promises";
-import { GOUTFORMAT , GSYSTEM } from "../../var/system.js";
+import { ERRORCODES, GOUTFORMAT , GSYSTEM } from "../../var/system.js";
 
 export default async function handleRequests(req, res, sdu) {
   function finish(status = 200, mimets, message) {
@@ -25,7 +25,7 @@ export default async function handleRequests(req, res, sdu) {
     const unknownResponse = (message, code) => {
       finish(500, "application/json", JSON.stringify({ message, code }));
     }
-    if (err.code === "ENOENT") {
+    if (err.code === ERRORCODES.notFound) {
       try {
         const _404filePath = join(sdu.abs, sdu.notFound ?? "404.html");
         const page = await readFile(_404filePath, GOUTFORMAT.encoding);

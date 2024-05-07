@@ -13,10 +13,14 @@ export default function handleSapiRequests(ws, sdu) {
       data = data.toString();
       if (data.startsWith("{") && data.endsWith("}")) {
          const request = JSON.parse(data);
-         console.log(request)
-         if ("OPERA" in request && "TYPE" in request && "PAYLOAD" in request ) {
+         const requirements = 
+           "OPERA" in request && 
+           "TYPE" in request && 
+           "PAYLOAD" in request &&
+           "OID" in request;
+         if (requirements) {
             switch (request.TYPE) {
-              case "FS" : ws.send(await fs(request, options)); break
+              case "FS" : ws.send(await fs(request, sdu)); break
               default : ws.send(deftype(request.TYPE));
             };
         } else ws.send(stringify(code_1("required fields missing")));

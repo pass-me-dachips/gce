@@ -35,3 +35,8 @@ export const GPATHS = {
    gcelock: ".gcelock.",
    posixTrash: `${homedir}${osSeperator[platform()]}.local/share/Trash/files`
 }
+
+export const ERRORCODES = {
+   notFound: "ENOENT",
+   notdirectory: "ENOTDIR"
+}
