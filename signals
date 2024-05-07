@@ -1,0 +1,25 @@
+
+THE CURRENTLY AVAILABLE SIGNALS (SIG) FOR V1.0.0
+
+NOTE :
+--does not have a payload-- means the payload isnt null and you are recommended
+to extract the value since its must contain a value. an empty array still means the
+request has a payload.
+
+--does not have a payload-- means the payload would possibly still contain null,
+but it should be ignored as it is of no use and the signal it self tells the actual
+error.
+
+name                    description
+ACK/HASPAYLOAD          the operation was succesful, and the response has a payload.
+ACK                     the operation was succesful, but does not provide a payload.
+DUPKEY                  the key as in payload already exists in the requested 
+                        resource. this signal dont have a payload: commonly occurs 
+                        in pkg cache.
+STDERR                  the operation was unsucsesful due to a client made error, 
+                        and it contains a payload * must. which is the message.
+ENOENTRY                the requested resource was not found. this signal dont have 
+                        a payload.
+OSFORBIDEN              the request is forbiden at the os level eg: trying to read a 
+                        dir but provides a path to the file. this signal dont have a
+                        payload.
