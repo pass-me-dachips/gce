@@ -3,7 +3,7 @@ import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import { dirRead, fileRead, getStatistics } from "../opera/read.js";
 import { ERRORCODES } from "../../../var/system.js";
-import { createDir, fileWrite } from "../opera/write.js";
+import { createDir, createFile, fileWrite } from "../opera/write.js";
 import { report } from "../../../etc/report.js";
 
 export function errorResponseHelper(error, oid) {
@@ -91,6 +91,14 @@ async function MAKEDIR(relativePath, oid, sdu) {
   }
 }
 
+async function MAKEFILE(relativePath, oid, sdu) {
+  try {
+    const { servicePath } = sdu; const pathToDir = join(servicePath, relativePath);
+    await createFile(pathToDir); report( `wrote 0B (make) to ${relativePath}`);
+    return JSON.stringify(code_0(true, "ACK", oid, null)); 
+  } catch(error) {  return errorResponseHelper(error, oid); }
+}
+
 // ++++++++ the main fs api ++++++++++++++++++
 export default async function fs(request,sdu) {
   let response;
@@ -101,6 +109,7 @@ export default async function fs(request,sdu) {
      case "READFILE" : response = await READFILE(PAYLOAD, OID, sdu); break
      case "WRITEFILE" : response = await WRITEFILE(PAYLOAD, OID, sdu); break
      case "MAKEDIR" : response = await MAKEDIR(PAYLOAD, OID, sdu); break
+     case "MAKEFILE" : response = await MAKEFILE(PAYLOAD, OID, sdu); break
      default: response = defopera(OPERA);
   };
   return response;

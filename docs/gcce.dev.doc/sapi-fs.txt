@@ -153,7 +153,8 @@ file system using gce's service api.
   
   MAKEDIR => 
     the makedir operation allows clients to create a new directory relative to the
-    service path.
+    service path. the directory creation is ignored if it already exists, but you
+    would typically get the same response type still.
     @request => {
         "TYPE": "FS",
         "OPERA": "MAKEDIR",
