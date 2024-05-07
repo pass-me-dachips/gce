@@ -22,11 +22,12 @@ file system using gce's service api.
     @payloadFormat => {
         PAYLOAD: [
          { name: "<name>", type: "DIR", size: 0 }, 
-         { name: "<name>", type: "FILE", size: 4551 },
+         { name: "<name>", type: "FILE", size: 4551 <in bytes> },
          ...etc
         ]
      }
      NOTE: size would always be 0 on type dir.
+===================================================================================
      
   
   STATICS => 
@@ -44,9 +45,78 @@ file system using gce's service api.
     @payloadFormat => {
         PAYLOAD: {
          path: "absolute/path/to/the/requests/relative-path",
-         size: <0 for dir  || size for file>,
+         size: <0 for dir  || size of file in bytes>,
          created: "YYYY-MM-DDTHH:MM:SS.MSSZ",
          lmodified: "YYYY-MM-DDTHH:MM:SS.MSSZ",
          isDir: <true || false>
         }
      }
+====================================================================================
+
+
+  READFILE => 
+    the readfile operation allows clients to read a file relative to the service path.
+    the readfile provides two techniques for file reading : 
+    1: reads and return the entire contents of the file (default).
+    2: reads the contents of the file batch by batch by calculating the total number
+       of lines that are visible in the UI window and return only portion or more if
+       specified.
+       in this technique you would manually make requests to load the next sections
+       of the file.
+    NOTE: if the contents of the file is less than a megabyte, gce would use the 
+    default technique regardless of wether it was enabled or not.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "READFILE",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD":  {
+          "path" : "relative/path/to/file",
+          "useDefault" : <true || false>,
+        }
+      }
+     NOTE: `useDefault : false` tells gce to use the 2nd technique instead. 
+     you must specify the following fields in other for the second technique to work:
+     window : the windows height in px <default is 800>,
+     lineHeight: your gcce text lineHeight in px <default is 17>,
+     page: the page size. eg if you set the value to 2, then number of 
+        lines of text that are visible on the window * 2 is whats returned (pagination).
+        NOTE specifying 0 would cause the operation to return nothing as 0 means page
+        0 while the pages index starts from 1 in gce.  <default is 1>.
+        if you specify more pages than there is, gce would return everything.
+     startLine: the line at which the rendering should start from. if the startLine 
+        exceeds the number of lines then nothing is returned. you can use this to
+        indicate you have read the entire file completely.
+        <defult is 0> which starts from the first line of the file.
+     An example of the request payload if default technique is not used is:
+        "PAYLOAD":  {
+          "path" : "relative/path/to/file",
+          "useDefault" : false,
+          "window" : 700,
+          "lineHeight": 26,
+          "page": 2, //always use same value throughout
+          "startLine": 0,
+        }  
+      Next batch request can then goes like this :
+        "PAYLOAD":  {
+          "path" : "relative/path/to/file",
+          "useDefault" : false,
+          "window" : 700,
+          "lineHeight": 26,
+          "page": 2, //always use same value throughout
+          "startLine": <request 1 number of lines + 1>,
+        }  
+
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK/HASPAYLOAD` where the payload is an object containing the
+      following:
+    @payloadFormat => {
+       PAYLOAD: {
+        size: <size in bytes>,
+        lmodified: 'YYYY-MM-DDTHH:MM:SS.MSSZ',
+        data: <contents of the file>,
+        usedDefault:
+           <boolean indicating wether the opera used the default technique or not>
+       }
+     }
+=====================================================================================
+

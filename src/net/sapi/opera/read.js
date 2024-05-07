@@ -20,7 +20,7 @@ export async function fileRead(
      const { size, mtime } = await stat(path);
      const data = await readFile(path, GOUTFORMAT.encoding);
      const response = { size, lmodified: mtime }
-     if (useDefault) response["data"] = data;
+     if (useDefault) response["data"] = data, response["usedDefault"] = true;
      else {
       if (size >= (Math.pow(1024, 2) * 1)) {
         const lines = data.split("\n");
@@ -29,7 +29,8 @@ export async function fileRead(
         const linesRendering = linesPerPage * page;
         response["data"]  = 
          lines.slice(startLine,(linesRendering + startLine)).join("\n");
-      } else response["data"] = data; 
+        response["usedDefault"] = false;
+      } else response["data"] = data, response["usedDefault"] = true;
         //+++++ if the size is less than 1mb, useDefault
      }
      return response;
