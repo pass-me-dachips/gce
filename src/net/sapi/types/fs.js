@@ -3,7 +3,7 @@ import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import { dirRead, fileRead, getStatistics } from "../opera/read.js";
 import { ERRORCODES } from "../../../var/system.js";
-import { createDir, createFile, fileWrite } from "../opera/write.js";
+import { createDir, createFile, fileWrite, renameFs } from "../opera/write.js";
 import { report } from "../../../etc/report.js";
 
 export function errorResponseHelper(error, oid) {
@@ -101,6 +101,21 @@ async function MAKEFILE(relativePath, oid, sdu) {
   } catch(error) { return errorResponseHelper(error, oid); }
 }
 
+async function RENAME(payload, oid, sdu) {
+  try {
+    const { servicePath } = sdu;
+    const { path, new_basename } = payload;
+    if (path && new_basename) {
+      const pathToFs = join(servicePath, path);
+      await renameFs(pathToFs, new_basename);
+      report( `rn ${path} -> ${new_basename}`);
+      return JSON.stringify(code_0(true, "ACK", oid, null)); 
+    } else throw { 
+      message : "RENAME requires the path and new_basename fields." 
+    };
+  } catch(error) { return errorResponseHelper(error, oid); }
+}
+
 // ++++++++ the main fs api ++++++++++++++++++
 export default async function fs(request,sdu) {
   let response;
@@ -112,6 +127,7 @@ export default async function fs(request,sdu) {
      case "WRITEFILE" : response = await WRITEFILE(PAYLOAD, OID, sdu); break
      case "MAKEDIR" : response = await MAKEDIR(PAYLOAD, OID, sdu); break
      case "MAKEFILE" : response = await MAKEFILE(PAYLOAD, OID, sdu); break
+     case "RENAME" : response = await RENAME(PAYLOAD, OID, sdu); break
      default: response = defopera(OPERA);
   };
   return response;

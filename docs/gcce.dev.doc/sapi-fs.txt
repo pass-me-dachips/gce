@@ -178,3 +178,25 @@ file system using gce's service api.
     @return => if the request was acknowledged, you should get a response
       with signal `ACK`.
 ====================================================================================
+     
+  
+  RENAME => 
+    the rename operation allows clients to rename an existing file or directory
+    relative to the service path.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "MAKEFILE",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD":  {
+          "path" : "relative/path/to/target",
+          "new_basename" : "<name>"
+        }
+      }
+    Note that the rename opera does not rename the path, but only its lastpath or
+    basename. examples :
+         app.c - app.cpp  = app.cpp
+         src/bin/object.so -  object.dll = src/bin/object.dll
+         src/bin/object.so - src/bin/object.dll =  ENOENTRY
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK`.
+====================================================================================
