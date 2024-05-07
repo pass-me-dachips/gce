@@ -1,0 +1,29 @@
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+This file contains documentation for working with crud operations on the pc's 
+file system using gce's service api.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+-- SAPI TYPE = FS
+-- OPERATION TYPES =
+
+  READDIR => 
+    the readdir allows you to read the direct contents/children of a directory 
+    relative to the service path.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "READDIR",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": "relative/path/to/servicepath"
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK/HASPAYLOAD` where the payload is an array containing the
+      dir direct children.
+    @payloadFormat => {
+        PAYLOAD: [
+         { name: "<name>", type: "DIR", size: 0 }, 
+         { name: "<name>", type: "FILE", size: 4551 },
+         ...etc
+        ]
+     }
+     NOTE: size would always be 0 on type dir.

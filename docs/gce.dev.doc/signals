@@ -1,14 +1,18 @@
 
-THE CURRENTLY AVAILABLE SIGNALS (SIG) FOR V1.0.0
+THE CURRENT AVAILABLE SIGNALS (SIG) FOR V1.0.0
 
 NOTE :
---does not have a payload-- means the payload isnt null and you are recommended
-to extract the value since its must contain a value. an empty array still means the
-request has a payload.
+--provides a payload-- means the payload isnt null and the resource you
+requested was acknowledged and embeded to the response payload.
+an empty array is still considered as a response having a payload.
 
---does not have a payload-- means the payload would possibly still contain null,
-but it should be ignored as it is of no use and the signal it self tells the actual
-error.
+--does not provide a payload-- does not mean the payload field wouldnt be 
+present in the response, its more like its not needed an can be discarded similar
+to discarding a return value in languages like nim.
+in gce sapi for example an error migth not contain a payload if the signal has a 
+specific meaning eg ENOENTRY. there is no need for a payload in this case as this
+signal indicates the requested resource does'nt exists.
+
 
 name                    description
 ACK/HASPAYLOAD          the operation was succesful, and the response has a payload.
