@@ -1,6 +1,6 @@
 import { code_1 } from "./codes.js";
-// import TSAPI from "./types/SAPI.js"; //asin Type-ServiceAPI
-// import FS from "./types/FS.js";
+import { deftype } from "./types/default.js";
+import fs from "./types/fs.js";
 
 export default function handleSapiRequests(ws, sdu) {
    const error =  "error";
@@ -15,11 +15,10 @@ export default function handleSapiRequests(ws, sdu) {
          const request = JSON.parse(data);
          console.log(request)
          if ("OPERA" in request && "TYPE" in request && "PAYLOAD" in request ) {
-//         switch (request.TYPE) {
-//           case "SAPI" : ws.send(await TSAPI(request, options)); break
-//           case "FS" :  ws.send(await FS(request, options)); break
-//           default : ws.send(JSON.stringify(code_1(`UNKNOWN TYPE ${request.TYPE}`)));
-//         }
+            switch (request.TYPE) {
+              case "FS" : ws.send(await fs(request, options)); break
+              default : ws.send(deftype(request.TYPE));
+            };
         } else ws.send(stringify(code_1("required fields missing")));
       } else ws.send(stringify(code_1("request not of type json")));
   })
