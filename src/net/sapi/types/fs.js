@@ -3,7 +3,7 @@ import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import { dirRead, fileRead, getStatistics } from "../opera/read.js";
 import { ERRORCODES } from "../../../var/system.js";
-import { fileWrite } from "../opera/write.js";
+import { createDir, fileWrite } from "../opera/write.js";
 import { report } from "../../../etc/report.js";
 
 export function errorResponseHelper(error, oid) {
@@ -31,7 +31,7 @@ async function READDIR(relativePath, oid, sdu) {
   }
 }
 
-export async function STATICS(relativePath, oid, sdu) {
+async function STATICS(relativePath, oid, sdu) {
   try {
     // the readdir expects the payload to be the relative path to the file in 
     // which the user wants to read.
@@ -44,7 +44,7 @@ export async function STATICS(relativePath, oid, sdu) {
   }
 }
 
-export async function READFILE(payload, oid, sdu) {
+async function READFILE(payload, oid, sdu) {
   try {
     const { path, useDefault, window, lineHeight, page, startLine} = payload;
     if (path && typeof useDefault === "boolean") {
@@ -61,7 +61,7 @@ export async function READFILE(payload, oid, sdu) {
   } 
 }
 
-export async function WRITEFILE(payload, oid, sdu) {
+async function WRITEFILE(payload, oid, sdu) {
   try {
     const { path, content } = payload;
     if (path && content) {
@@ -77,6 +77,20 @@ export async function WRITEFILE(payload, oid, sdu) {
   }
 }    
 
+async function MAKEDIR(relativePath, oid, sdu) {
+  try {
+    const { servicePath } = sdu;
+    const pathToDir = join(servicePath, relativePath);
+    await createDir(pathToDir);
+    report(
+      `made directory ${relativePath.endsWith("/")?relativePath:relativePath+'/'}`
+    );
+    return JSON.stringify(code_0(true, "ACK", oid, null)); 
+  } catch(error) {
+    return errorResponseHelper(error, oid); 
+  }
+}
+
 // ++++++++ the main fs api ++++++++++++++++++
 export default async function fs(request,sdu) {
   let response;
@@ -86,6 +100,7 @@ export default async function fs(request,sdu) {
      case "STATICS" : response = await STATICS(PAYLOAD, OID, sdu); break
      case "READFILE" : response = await READFILE(PAYLOAD, OID, sdu); break
      case "WRITEFILE" : response = await WRITEFILE(PAYLOAD, OID, sdu); break
+     case "MAKEDIR" : response = await MAKEDIR(PAYLOAD, OID, sdu); break
      default: response = defopera(OPERA);
   };
   return response;

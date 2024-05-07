@@ -14,7 +14,7 @@ file system using gce's service api.
         "TYPE": "FS",
         "OPERA": "READDIR",
         "OID": "<REQEUSTID>",
-        "PAYLOAD": "relative/path/to/servicepath"
+        "PAYLOAD": "relative/path/to/dir"
       }
     @return => if the request was acknowledged, you should get a response
       with signal `ACK/HASPAYLOAD` where the payload is an array containing the
@@ -37,7 +37,7 @@ file system using gce's service api.
         "TYPE": "FS",
         "OPERA": "STATICS",
         "OID": "<REQEUSTID>",
-        "PAYLOAD": "relative/path/to/servicepath"
+        "PAYLOAD": "relative/path/to/path"
       }
     @return => if the request was acknowledged, you should get a response
       with signal `ACK/HASPAYLOAD` where the payload is an object containing the
@@ -129,7 +129,7 @@ file system using gce's service api.
         "OPERA": "WRITEFILE",
         "OID": "<REQEUSTID>",
         "PAYLOAD": {
-           "path": "relative/path/to/servicepath",
+           "path": "relative/path/to/file",
            "content": "<THE DATA TO WRITE>"
         }
       }
@@ -150,3 +150,16 @@ file system using gce's service api.
       containing the number of bytes written to the file.
 ===================================================================================
      
+  
+  MAKEDIR => 
+    the makedir operation allows clients to create a new directory relative to the
+    service path.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "MAKEDIR",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": "relative/path/to/newdir"
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK`.
+====================================================================================
