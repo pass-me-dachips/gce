@@ -21,7 +21,7 @@ export async function fileWrite(path, content) {
         await writeFile(path, content, GOUTFORMAT.encoding);
         await rm(lockPath, { maxRetries: 2 });
         return response;
-     } else throw { message: "ONLINE" };
+     } else throw { code: "ONLINE" };
       /**
        * an error with message ONLINE is thrown if the .gcelock.file.ext already
        * exists. it means another gce service or same is already working on that 

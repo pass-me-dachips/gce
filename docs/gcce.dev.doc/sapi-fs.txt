@@ -120,3 +120,33 @@ file system using gce's service api.
      }
 =====================================================================================
 
+
+  WRITEFILE => 
+    the writefile operation allows clients to write data to the specified file 
+    relative to the service path.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "WRITEFILE",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": {
+           "path": "relative/path/to/servicepath",
+           "content": "<THE DATA TO WRITE>"
+        }
+      }
+    NOTE : the file is created if it doesnt exists. in situation where you keep
+    getting responses with the ONLINE signal it means the .gcelock.<fsname> was
+    created but wasnt removed due to an error. in that case you cannot write
+    to that file anymore using a gce service unless you manualy navigate to the
+    path and remove the .gcelock.<fsname> file / folder.
+    note it migth be hidden on some operating systems due to the starting dot.
+    on posix you can run l -a to list entries files including hidden. the gce readdir
+    opera also reads and return hidden directories too.
+
+    For More Info About the .gcelock.<fsname> look at the gce.dev.doc to read how
+    gce works under the hood.
+
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK/HASPAYLOAD` where the payload is an unsigned integer 
+      containing the number of bytes written to the file.
+===================================================================================
+     

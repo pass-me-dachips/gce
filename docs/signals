@@ -27,3 +27,6 @@ ENOENTRY                the requested resource was not found. this signal dont h
 OSFORBIDEN              the request is forbiden at the os level eg: trying to read a 
                         dir but provides a path to the file. this signal dont have a
                         payload.
+ONLINE                  common in write operations: notifies the client 
+                        another service or previous request is still working on
+                        the specified resource eg a file.

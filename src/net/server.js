@@ -32,7 +32,7 @@ export default function Server(sdu) {
         `${GOUTFORMAT.tabA}\x1b[93minet = ${www.address().address}/lo, fixed`,
         `${GOUTFORMAT.tabA}family = ${www.address().family}`,
         `${GOUTFORMAT.tabA}port = ${port}, type = registered\x1b[0m\n`,
-        `service started running on http://localhost:${port}`
+        `service started running on http://localhost:${port}\n`
      ];
      stdout.forEach(c => console.log(c));
      execBrowser(`http://localhost:${port}`);

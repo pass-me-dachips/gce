@@ -38,5 +38,7 @@ export const GPATHS = {
 
 export const ERRORCODES = {
    notFound: "ENOENT",
-   notdirectory: "ENOTDIR"
+   notdirectory: "ENOTDIR",
+   notFile: "EISDIR",
+   online: "ONLINE"
 }

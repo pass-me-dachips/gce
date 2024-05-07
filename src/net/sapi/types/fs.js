@@ -3,12 +3,18 @@ import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import { dirRead, fileRead, getStatistics } from "../opera/read.js";
 import { ERRORCODES } from "../../../var/system.js";
+import { fileWrite } from "../opera/write.js";
+import { report } from "../../../etc/report.js";
 
 export function errorResponseHelper(error, oid) {
   if (error.code  === ERRORCODES.notFound) {
       return JSON.stringify(code_0(false, "ENOENTRY", oid, null)); 
-  } else if (error.code === ERRORCODES.notdirectory ) {
-      return JSON.stringify(code_0(false, "OSFORBIDEN", oid, null)); 
+  } else if (error.code === ERRORCODES.notdirectory || 
+      error.code === ERRORCODES.notFile 
+    ) {
+      return JSON.stringify(code_0(false, "OSFORBIDEN", oid, null));
+  } else if (error.code === ERRORCODES.online) {
+      return JSON.stringify(code_0(false, "ONLINE", oid, null));
   } else return JSON.stringify(code_0(false, "STDERR", oid, error.message)); 
 }
 
@@ -34,9 +40,7 @@ export async function STATICS(relativePath, oid, sdu) {
     const statistics = await getStatistics(path);
     return JSON.stringify(code_0(true, "ACK/HASPAYLOAD", oid, statistics)); 
   } catch (error) {
-    if (error.code === ERRORCODES.notFound) {
-      return JSON.stringify(code_0(false, "ENOENTRY", oid, null));  
-    } else return JSON.stringify(code_0(false, "STDERR", oid, error.message)); 
+    return errorResponseHelper(error, oid);
   }
 }
 
@@ -53,11 +57,25 @@ export async function READFILE(payload, oid, sdu) {
       message : "READFILE requires the path and useDefualt fields."
     };
   } catch (error) { 
-    if (error.code === ERRORCODES.notFound) {
-      return JSON.stringify(code_0(false, "ENOENTRY", oid, null));  
-    } else return JSON.stringify(code_0(false, "STDERR", oid, error.message)); 
+    return errorResponseHelper(error, oid);
   } 
 }
+
+export async function WRITEFILE(payload, oid, sdu) {
+  try {
+    const { path, content } = payload;
+    if (path && content) {
+      const filePath = join(sdu.servicePath, path);
+      const { bytesWritten } = await fileWrite(filePath, content);
+      report(`wrote ${bytesWritten}B to ${path}`);
+      return JSON.stringify(code_0(true, "ACK/HASPAYLOAD", oid, bytesWritten)); 
+    } else throw { 
+      message : "WRITEFILE requires the path and content fields." 
+    };
+  } catch (error) {
+    return errorResponseHelper(error, oid);
+  }
+}    
 
 // ++++++++ the main fs api ++++++++++++++++++
 export default async function fs(request,sdu) {
@@ -67,6 +85,7 @@ export default async function fs(request,sdu) {
      case "READDIR" : response = await READDIR(PAYLOAD, OID, sdu); break
      case "STATICS" : response = await STATICS(PAYLOAD, OID, sdu); break
      case "READFILE" : response = await READFILE(PAYLOAD, OID, sdu); break
+     case "WRITEFILE" : response = await WRITEFILE(PAYLOAD, OID, sdu); break
      default: response = defopera(OPERA);
   };
   return response;
