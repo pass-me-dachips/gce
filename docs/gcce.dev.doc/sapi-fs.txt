@@ -307,3 +307,46 @@ TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE.
     @return => if the request was acknowledged, you should get a response
       with signal `ACK`.
 ====================================================================================
+     
+  
+  REMOVE => 
+    the remove operation allows clients to remove a file or directory relative to 
+    the service path temporarily.
+    this option works exactly like the `move to trash native operation` and you
+    can think of it as the same.
+    GCE RECOMMENDS THE USAGE OF THIS OPERATION INSTEAD OF THE ADMINREMOVE AS FS
+    REMOVED USING THIS OPERATION CAN BE RETRIEVED AS LONG AS THE SERVICE IS STILL
+    RUNNING.
+    Note: gce uses a temporary file called .TRASHFILE to control the operation and
+    retrieval so it is generaly forbiden to remove a file called .TRASHFILE or
+    remove a directory containing any file named .TRASHFILE
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "REMOVE",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": {
+          "isFile" : <true || false>,
+          "path" : "relative/path/to/dir or file"
+        }
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK/HASPAYLOAD` where the payload is a pointer or reference
+      <id> to the path in which the removed fs is stored.
+====================================================================================
+     
+  
+  RESTORE => 
+    the restore operation allows clients to restore a file or directory removed
+    using the REMOVE operation.
+    Note: if the file or directory was already re-created <bearing the same name
+    in the same path>
+    and contains items, the restore operation would rewrite the contents.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "  RESTORE",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": "pointer or reference <id> to the removed fs"
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK`
+====================================================================================
