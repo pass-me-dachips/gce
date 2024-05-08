@@ -223,3 +223,25 @@ file system using gce's service api.
     @return => if the request was acknowledged, you should get a response
       with signal `ACK`.
 ====================================================================================
+     
+  
+  COPYDIR => 
+    the copydir operation allows clients to copy the contents of a directory 
+    including the sub directories and files to another.
+    NOTE that this operation copies the contents of the dir and not the directory 
+    itself.
+    if the dest does not exists gce creates it. if the source does not exists then 
+    an error is thrown, same goes if the source path points to a file.
+    the operation copies nothing if the source has noting in its dir.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "ADMINREMOVE",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": {
+          "source" : "relative/path/to/dir",
+          "dest" : "relative/path/to/dir"
+        }
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK`.
+====================================================================================

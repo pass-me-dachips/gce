@@ -3,7 +3,7 @@ import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import { dirRead, fileRead, getStatistics } from "../opera/read.js";
 import { ERRORCODES } from "../../../var/system.js";
-import { adminRemoveFs, createDir, createFile, fileWrite, renameFs } from "../opera/write.js";
+import { adminRemoveFs, copyDir, createDir, createFile, fileWrite, renameFs } from "../opera/write.js";
 import { report } from "../../../etc/report.js";
 
 export function errorResponseHelper(error, oid) {
@@ -69,7 +69,7 @@ async function WRITEFILE(payload, oid, sdu) {
     if (path && content) {
       const filePath = join(sdu.servicePath, path);
       const { bytesWritten } = await fileWrite(filePath, content);
-      report(`wrote ${bytesWritten}B to ${path}`);
+      report(`wrote ${bytesWritten}B to ${path}`, oid);
       return JSON.stringify(code_0(true, "ACK/HASPAYLOAD", oid, bytesWritten)); 
     } else throw { 
       message : "WRITEFILE requires the path and content fields." 
@@ -85,7 +85,8 @@ async function MAKEDIR(relativePath, oid, sdu) {
     const pathToDir = join(servicePath, relativePath);
     await createDir(pathToDir);
     report(
-      `made directory ${relativePath.endsWith("/")?relativePath:relativePath+'/'}`
+      `made directory ${relativePath.endsWith("/")?relativePath:relativePath+'/'}`,
+      oid
     );
     return JSON.stringify(code_0(true, "ACK", oid, null)); 
   } catch(error) {
@@ -96,7 +97,7 @@ async function MAKEDIR(relativePath, oid, sdu) {
 async function MAKEFILE(relativePath, oid, sdu) {
   try {
     const { servicePath } = sdu; const pathToDir = join(servicePath, relativePath);
-    await createFile(pathToDir); report( `wrote 0B (make) to ${relativePath}`);
+    await createFile(pathToDir); report( `wrote 0B (make) to ${relativePath}`, oid);
     return JSON.stringify(code_0(true, "ACK", oid, null)); 
   } catch(error) { return errorResponseHelper(error, oid); }
 }
@@ -108,7 +109,7 @@ async function RENAME(payload, oid, sdu) {
     if (path && new_basename) {
       const pathToFs = join(servicePath, path);
       await renameFs(pathToFs, new_basename);
-      report( `rn ${path} -> ${new_basename}`);
+      report( `rn ${path} -> ${new_basename}`, oid);
       return JSON.stringify(code_0(true, "ACK", oid, null)); 
     } else throw { 
       message : "RENAME requires the path and new_basename fields." 
@@ -121,9 +122,27 @@ async function ADMINREMOVE(relativePath, oid, sdu) {
     const { servicePath } = sdu; 
     const pathToFs = join(servicePath, relativePath);
     await adminRemoveFs(pathToFs);
-    report(`dangerously removed ${relativePath}`, "danger");
+    report(`dangerously removed ${relativePath}`, "danger", oid);
     return JSON.stringify(code_0(true, "ACK", oid, null)); 
   } catch (error) { return errorResponseHelper(error, oid); }
+}
+
+async function COPYDIR(payload, oid, sdu) {
+  try {
+    const { servicePath } = sdu;
+    let { source, dest } = payload;
+    if ( source, dest ) {
+      source = join(servicePath, source);
+      dest = join(servicePath, dest);
+      await copyDir(source, dest);
+      report(`copied dir ${payload.source} -> ${payload.dest}`, oid);
+      return JSON.stringify(code_0(true, "ACK", oid, null)); 
+    } else throw {
+      message : "COPYDIR requires the source and dest fields." 
+    }
+  } catch (error) {
+    return errorResponseHelper(error, oid);
+  }
 }
 
 // ++++++++ the main fs api ++++++++++++++++++
@@ -139,6 +158,7 @@ export default async function fs(request,sdu) {
      case "MAKEFILE" : response = await MAKEFILE(PAYLOAD, OID, sdu); break
      case "RENAME" : response = await RENAME(PAYLOAD, OID, sdu); break
      case "ADMINREMOVE" : response = await ADMINREMOVE(PAYLOAD, OID, sdu); break
+     case "COPYDIR" : response = await COPYDIR(PAYLOAD, OID, sdu); break
      default: response = defopera(OPERA);
   };
   return response;
