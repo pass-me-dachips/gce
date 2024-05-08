@@ -3,7 +3,17 @@ import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import { dirRead, fileRead, getStatistics } from "../opera/read.js";
 import { ERRORCODES } from "../../../var/system.js";
-import { adminRemoveFs, copyDir, copyF, createDir, createFile, fileWrite, renameFs } from "../opera/write.js";
+import { 
+  adminRemoveFs, 
+  copyDir, 
+  copyF, 
+  createDir, 
+  createFile, 
+  fileWrite, 
+  moveDir, 
+  moveFile, 
+  renameFs
+} from "../opera/write.js";
 import { report } from "../../../etc/report.js";
 
 export function errorResponseHelper(error, oid) {
@@ -160,6 +170,35 @@ async function COPYFILE(payload, oid, sdu) {
   } catch (error) { return errorResponseHelper(error, oid); }
 }
 
+async function MOVEDIR(payload, oid, sdu) {
+  try {
+    const { servicePath } = sdu; let { source, dest } = payload;
+    if ( source, dest ) {
+      source = join(servicePath, source); dest = join(servicePath, dest);
+      await moveDir(source, dest);
+      report(`moved dir ${payload.source} -> ${payload.dest}`, oid, "danger");
+      return JSON.stringify(code_0(true, "ACK", oid, null)); 
+    } else throw {
+      message : "MOVEDIR requires the source and dest fields." 
+    }
+  } catch (error) { return errorResponseHelper(error, oid); }
+}
+
+async function MOVEFILE(payload, oid, sdu) {
+  try {
+    const { servicePath } = sdu; let { source, dest } = payload;
+    if ( source, dest ) {
+      source = join(servicePath, source); dest = join(servicePath, dest);
+      await moveFile(source, dest);
+      report(`moved file ${payload.source} -> ${payload.dest}`, oid);
+      return JSON.stringify(code_0(true, "ACK", oid, null)); 
+    } else throw {
+      message : "MOVEFILE requires the source and dest fields." 
+    }
+  } catch (error) { return errorResponseHelper(error, oid); }
+}
+
+
 
 // ++++++++ the main fs api ++++++++++++++++++
 export default async function fs(request,sdu) {
@@ -176,6 +215,8 @@ export default async function fs(request,sdu) {
      case "ADMINREMOVE" : response = await ADMINREMOVE(PAYLOAD, OID, sdu); break
      case "COPYDIR" : response = await COPYDIR(PAYLOAD, OID, sdu); break
      case "COPYFILE" : response = await COPYFILE(PAYLOAD, OID, sdu); break
+     case "MOVEDIR" : response = await MOVEDIR(PAYLOAD, OID, sdu); break
+     case "MOVEFILE" : response = await MOVEFILE(PAYLOAD, OID, sdu); break
      default: response = defopera(OPERA);
   };
   return response;

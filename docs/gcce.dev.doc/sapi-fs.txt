@@ -2,6 +2,9 @@
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 This file contains documentation for working with crud operations on the pc's 
 file system using gce's service api.
+
+GCE RECOMMENDS DEVELOPERS TO PLAY WITH THE OPERATIONS PROVIDED IN THIS FILE
+TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE.
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 -- SAPI TYPE = FS
@@ -257,7 +260,47 @@ file system using gce's service api.
         "OPERA": "COPYFILE",
         "OID": "<REQEUSTID>",
         "PAYLOAD": {
+          "source" : "relative/path/to/file",
+          "dest" : "relative/path/to/dir"
+        }
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK`.
+====================================================================================
+     
+  
+  MOVEDIR => 
+    the movedir operation allows clients to move the contents of a directory to 
+    another, relative to the service path.
+    if source or dest is a file or source does not exists, an error is thrown. 
+    if dest does not exists, dest is created.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "MOVEDIR",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": {
           "source" : "relative/path/to/dir",
+          "dest" : "relative/path/to/dir"
+        }
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK`.
+====================================================================================
+     
+  
+  MOVEFILE => 
+    the movefile operation allows clients to move a file to a directory relative to 
+    the service path.
+    the destination path must point to a directory, and source path must point to a 
+    file.
+    if destination already has source, then the destination data is overwritten.
+    if source or destination does'nt exists, then an error is thrown.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "MOVEFILE",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": {
+          "source" : "relative/path/to/file",
           "dest" : "relative/path/to/dir"
         }
       }
