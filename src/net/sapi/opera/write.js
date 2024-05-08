@@ -4,7 +4,7 @@ import { GOUTFORMAT,  GPATHS } from "../../../var/system.js";
 import { basename, join } from "node:path";
 import { existsAsync } from "../../../etc/existsAsync.js";
 import { Buffer } from "node:buffer";
-import { platform } from "node:os";
+import { randomBytes } from "node:crypto";
 
 export async function fileWrite(path, content) {
   try {
@@ -113,13 +113,20 @@ export async function moveFile(source, destination) {
   }
 }
 
-export async function toTrash(isFile, path) {
+export async function toTrash(serviceId, isFile, name, path) {
   try {
-    if (platform() === "linux") {
-      if (isFile) await moveFile(path, GPATHS.posixTrash);
-      else await moveDir(path, GPATHS.posixTrash);
-      return true;
-    } else throw { message: "UNSUPPORTED PLATFORM" };
+    let pointer = "g" + randomBytes(6).toString("hex") + serviceId.split("x")[0];
+    const pathToServiceBin = join(GPATHS.trash, serviceId, pointer);
+    if (!await existsAsync(pathToServiceBin)) {
+      await mkdir(pathToServiceBin, { recursive: true });
+    }
+    // each item moved to the trash would create a directory (pointer) containing
+    // a .TRASHFILE contianing the original name of the file, and the trashed 
+    // directory or file, in the service trash folder.
+    await writeFile(join(pathToServiceBin, ".TRASHFILE"), name, GOUTFORMAT.encoding);
+    if (isFile === true) await moveFile(path, pathToServiceBin);
+    else await moveDir(path, pathToServiceBin);
+    return pointer;
   } catch(error) {
     throw error;
   } 
