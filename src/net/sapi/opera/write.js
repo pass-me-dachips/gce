@@ -1,5 +1,5 @@
 /* ** This file contains utility functions for write operations **** */
-import { writeFile, rm, mkdir, rename, cp, copyFile } from "node:fs/promises";
+import { writeFile, rm, mkdir, rename, cp, copyFile, readFile } from "node:fs/promises";
 import { GOUTFORMAT,  GPATHS } from "../../../var/system.js";
 import { basename, join } from "node:path";
 import { existsAsync } from "../../../etc/existsAsync.js";
@@ -123,11 +123,47 @@ export async function toTrash(serviceId, isFile, name, path) {
     // each item moved to the trash would create a directory (pointer) containing
     // a .TRASHFILE contianing the original name of the file, and the trashed 
     // directory or file, in the service trash folder.
-    await writeFile(join(pathToServiceBin, ".TRASHFILE"), name, GOUTFORMAT.encoding);
-    if (isFile === true) await moveFile(path, pathToServiceBin);
+    const trashfile = join(pathToServiceBin, ".TRASHFILE");
+    await writeFile(trashfile, `${name}\n${path}`, GOUTFORMAT.encoding);
+    if (isFile === true) {
+      await writeFile(
+        join(pathToServiceBin, "gfile"), 
+        GOUTFORMAT.tabA, 
+        GOUTFORMAT.encoding
+      );
+      await moveFile(path, pathToServiceBin);
+    }
     else await moveDir(path, pathToServiceBin);
     return pointer;
   } catch(error) {
     throw error;
   } 
 }
+
+export async function restore(serviceId, pointer) {
+  try {
+    const pathToServiceBin = join(GPATHS.trash, serviceId, pointer);
+    if (await existsAsync(pathToServiceBin)) {
+       const fsStatsPath = join(pathToServiceBin,".TRASHFILE");
+       const fsStats = await readFile(fsStatsPath, GOUTFORMAT.encoding);
+       //the trashfile is intrpreted as fsStats in this function.
+       const isFile = await existsAsync(join(pathToServiceBin, "gfile"));
+       let destination = fsStats.split("\n")[1];
+       if (isFile) {
+         destination = destination.split(basename(destination))[0]
+         await moveFile(join(pathToServiceBin, fsStats.split("\n")[0]), destination);
+         await adminRemoveFs(pathToServiceBin);
+       } else {
+         await moveDir(pathToServiceBin, destination);
+         await adminRemoveFs(join(destination, ".TRASHFILE"));
+       }
+       return true;
+    } else throw { 
+       message: 
+        `The provided pointer does not match any item in service ${serviceId}` 
+    }
+  } catch(error) {
+    throw error;
+  } 
+}
+
