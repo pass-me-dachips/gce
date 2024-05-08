@@ -1,4 +1,4 @@
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import { dirRead, fileRead, getStatistics } from "../opera/read.js";
@@ -12,7 +12,9 @@ import {
   fileWrite, 
   moveDir, 
   moveFile, 
-  renameFs
+  renameFs,
+  restore,
+  toTrash
 } from "../opera/write.js";
 import { report } from "../../../etc/report.js";
 
@@ -20,7 +22,7 @@ export function errorResponseHelper(error, oid) {
   if (error.code  === ERRORCODES.notFound) {
       return JSON.stringify(code_0(false, "ENOENTRY", oid, null)); 
   } else if (error.code === ERRORCODES.notdirectory || 
-      error.code === ERRORCODES.notFile 
+      error.code === ERRORCODES.notFile || error.code === "ERR_FS_CP_NON_DIR_TO_DIR"
     ) {
       return JSON.stringify(code_0(false, "OSFORBIDEN", oid, null));
   } else if (error.code === ERRORCODES.exists) {
@@ -141,7 +143,7 @@ async function COPYDIR(payload, oid, sdu) {
   try {
     const { servicePath } = sdu;
     let { source, dest } = payload;
-    if ( source, dest ) {
+    if ( source && dest ) {
       source = join(servicePath, source);
       dest = join(servicePath, dest);
       await copyDir(source, dest);
@@ -159,7 +161,7 @@ async function COPYFILE(payload, oid, sdu) {
   try {
     const { servicePath } = sdu;
     let { source, dest } = payload;
-    if ( source, dest ) {
+    if ( source && dest ) {
       source = join(servicePath, source); dest = join(servicePath, dest);
       await copyF(source, dest);
       report(`copied file ${payload.source} -> ${payload.dest}`, oid);
@@ -173,7 +175,7 @@ async function COPYFILE(payload, oid, sdu) {
 async function MOVEDIR(payload, oid, sdu) {
   try {
     const { servicePath } = sdu; let { source, dest } = payload;
-    if ( source, dest ) {
+    if ( source & dest ) {
       source = join(servicePath, source); dest = join(servicePath, dest);
       await moveDir(source, dest);
       report(`moved dir ${payload.source} -> ${payload.dest}`, oid, "danger");
@@ -187,7 +189,7 @@ async function MOVEDIR(payload, oid, sdu) {
 async function MOVEFILE(payload, oid, sdu) {
   try {
     const { servicePath } = sdu; let { source, dest } = payload;
-    if ( source, dest ) {
+    if ( source & dest ) {
       source = join(servicePath, source); dest = join(servicePath, dest);
       await moveFile(source, dest);
       report(`moved file ${payload.source} -> ${payload.dest}`, oid);
@@ -198,7 +200,29 @@ async function MOVEFILE(payload, oid, sdu) {
   } catch (error) { return errorResponseHelper(error, oid); }
 }
 
+async function REMOVE(payload, oid, sdu) {
+  try {
+    const { servicePath, serviceId } = sdu; 
+    let { isFile, path } = payload;
+    if ("isFile" in payload && path) {
+      path = join(servicePath, path); 
+      const pointer = await toTrash(serviceId, isFile, basename(path), path);
+      report(`removed (shift) ${payload.path} -> ${pointer}`, oid);
+      return JSON.stringify(code_0(true, "ACK/HASPAYLOAD", oid, pointer)); 
+    } else throw {
+      message : "REMOVE requires the isFile and path fields." 
+    }
+  } catch (error) { return errorResponseHelper(error, oid); }
+}
 
+async function RESTORE(pointer, oid, sdu) {
+  try {
+    const { serviceId } = sdu; 
+    await restore(serviceId, pointer);
+    report(`restored (reverse-shift) ${pointer}`, oid);
+    return JSON.stringify(code_0(true, "ACK", oid, null)); 
+  } catch (error) { return errorResponseHelper(error, oid); }
+}
 
 // ++++++++ the main fs api ++++++++++++++++++
 export default async function fs(request,sdu) {
@@ -217,6 +241,8 @@ export default async function fs(request,sdu) {
      case "COPYFILE" : response = await COPYFILE(PAYLOAD, OID, sdu); break
      case "MOVEDIR" : response = await MOVEDIR(PAYLOAD, OID, sdu); break
      case "MOVEFILE" : response = await MOVEFILE(PAYLOAD, OID, sdu); break
+     case "REMOVE" : response = await REMOVE(PAYLOAD, OID, sdu); break
+     case "RESTORE" : response = await RESTORE(PAYLOAD, OID, sdu); break
      default: response = defopera(OPERA);
   };
   return response;
