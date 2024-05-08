@@ -197,6 +197,29 @@ file system using gce's service api.
          app.c - app.cpp  = app.cpp
          src/bin/object.so -  object.dll = src/bin/object.dll
          src/bin/object.so - src/bin/object.dll =  ENOENTRY
+    when you rename the root of you directory, you would typically not be able
+    to make any other changes to the service anymore as gce stores the absolute path
+    in memory when the service is created, and would stick to that until the service
+    dies.
+    in this case, you would have to manually re-rename the fs to match the name
+    when creating the service. you migth want to use a shell or file explorer
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK`.
+====================================================================================
+     
+  
+  ADMINREMOVE => 
+    the adminremove operation allows clients to dangerously remove any file or 
+    directory relative to the service path.
+    THIS OPERATION PERMERNATELY DELTES THE FILE OR DIR SO BE VERY CAREFUL USING THIS.
+    GCE RECOMMENDS GCCE'S TO ALWAYS DISPLAY A CONFIRMATION POPUP BEFORE CALLING THIS
+    OPERATION.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "ADMINREMOVE",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": "relative/path/to/file"
+      }
     @return => if the request was acknowledged, you should get a response
       with signal `ACK`.
 ====================================================================================

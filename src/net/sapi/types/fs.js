@@ -3,7 +3,7 @@ import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import { dirRead, fileRead, getStatistics } from "../opera/read.js";
 import { ERRORCODES } from "../../../var/system.js";
-import { createDir, createFile, fileWrite, renameFs } from "../opera/write.js";
+import { adminRemoveFs, createDir, createFile, fileWrite, renameFs } from "../opera/write.js";
 import { report } from "../../../etc/report.js";
 
 export function errorResponseHelper(error, oid) {
@@ -116,6 +116,16 @@ async function RENAME(payload, oid, sdu) {
   } catch(error) { return errorResponseHelper(error, oid); }
 }
 
+async function ADMINREMOVE(relativePath, oid, sdu) {
+  try {
+    const { servicePath } = sdu; 
+    const pathToFs = join(servicePath, relativePath);
+    await adminRemoveFs(pathToFs);
+    report(`dangerously removed ${relativePath}`, "danger");
+    return JSON.stringify(code_0(true, "ACK", oid, null)); 
+  } catch (error) { return errorResponseHelper(error, oid); }
+}
+
 // ++++++++ the main fs api ++++++++++++++++++
 export default async function fs(request,sdu) {
   let response;
@@ -128,6 +138,7 @@ export default async function fs(request,sdu) {
      case "MAKEDIR" : response = await MAKEDIR(PAYLOAD, OID, sdu); break
      case "MAKEFILE" : response = await MAKEFILE(PAYLOAD, OID, sdu); break
      case "RENAME" : response = await RENAME(PAYLOAD, OID, sdu); break
+     case "ADMINREMOVE" : response = await ADMINREMOVE(PAYLOAD, OID, sdu); break
      default: response = defopera(OPERA);
   };
   return response;
