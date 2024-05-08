@@ -185,7 +185,7 @@ file system using gce's service api.
     relative to the service path.
     @request => {
         "TYPE": "FS",
-        "OPERA": "MAKEFILE",
+        "OPERA": "RENAME",
         "OID": "<REQEUSTID>",
         "PAYLOAD":  {
           "path" : "relative/path/to/target",
@@ -227,7 +227,7 @@ file system using gce's service api.
   
   COPYDIR => 
     the copydir operation allows clients to copy the contents of a directory 
-    including the sub directories and files to another.
+    including the sub directories and files to another relative to the service path.
     NOTE that this operation copies the contents of the dir and not the directory 
     itself.
     if the dest does not exists gce creates it. if the source does not exists then 
@@ -235,7 +235,26 @@ file system using gce's service api.
     the operation copies nothing if the source has noting in its dir.
     @request => {
         "TYPE": "FS",
-        "OPERA": "ADMINREMOVE",
+        "OPERA": "COPYDIR",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": {
+          "source" : "relative/path/to/dir",
+          "dest" : "relative/path/to/dir"
+        }
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK`.
+====================================================================================
+     
+  
+  COPYFILE => 
+    the copyfile operation allows clients to copy the contents of a file to another,
+    relative to the service path.
+    if the dest does not exists gce creates it. if source is a dir, does'nt exsits
+    or dest path has a parent dir or sub dir that does not exists, an error is thrown. 
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "COPYFILE",
         "OID": "<REQEUSTID>",
         "PAYLOAD": {
           "source" : "relative/path/to/dir",
