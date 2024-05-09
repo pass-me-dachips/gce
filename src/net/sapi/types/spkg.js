@@ -3,6 +3,7 @@ import { defopera } from "./default.js";
 import * as spkgUtils from "../../../spkg/v1.0.0.js";
 import { errorResponseHelper } from "./fs.js";
 import { join } from "node:path";
+import { report } from "../../../etc/report.js";
 
 const stdsignal = "ACK/HASPAYLOAD";
 
@@ -37,6 +38,14 @@ async function QUICK(payload, oid, sdu) {
     } else throw {  
       message : "QUICK requires the path and template fields."
     };
+  } catch(error) { return errorResponseHelper(error, oid); }
+}
+
+async function END(ws, sdu, oid) {
+  try {
+    report("service about to stop */*", oid,  "danger");
+    report("sending danger signal", oid, "danger");
+    spkgUtils.end(sdu, true, ws);
   } catch(error) { return errorResponseHelper(error, oid); }
 }
 
@@ -92,6 +101,7 @@ export default async function spkg(request, ws, sdu) {
      case "BIN" : ws.send(HEXDECIBINRGB("bin", PAYLOAD, OID)); break
      case "RGB" : ws.send(HEXDECIBINRGB("rgb", PAYLOAD, OID)); break
      case "QUICK" : ws.send(await QUICK(PAYLOAD, OID, sdu)); break
+     case "END" : END(ws, sdu, OID); break
      default: ws.send(defopera(OPERA)); //would change.
   };
 }

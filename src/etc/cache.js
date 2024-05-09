@@ -3,6 +3,10 @@ class Env {
   constructor() {
       this.table = [];
   }
+ clear() {
+   this.table = [];
+   return void 0;
+ }
  add(key,proc) {
    const inTable = this.table.find(variable => key === variable.key);
    if (inTable) return { SIG: "DUPKEY" };

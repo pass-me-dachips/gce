@@ -4,6 +4,12 @@ import asciiTable from "./helpers/asciitable.h.js";
 import acfco from "./helpers/acfco.h.js";
 import * as quickh from "./helpers/quick.h.js";
 import { fileWrite } from "../net/sapi/opera/write.js";
+import { GPATHS } from "../var/system.js";
+import { join } from "node:path";
+import Cache from "../etc/cache.js";
+import { code_0 } from "../net/sapi/codes.js";
+import { rm } from "node:fs/promises";
+import { existsAsync } from "../etc/existsAsync.js";
 
 export function add(...operands) {
  return operands.reduce((acum, elem)=> acum + Number(elem),0);
@@ -160,4 +166,23 @@ export async function quick(path,key) {
   }
 }
 
-export function end() { process.exit(0); }
+export async function end(sdu, sendWsSignal, ws) {
+  // remove service log =>  path: serviceLogPath + serviceId
+  // remove trash => path:  trashPath + serviceId
+  // if temp then wipe temp data => path: servicePath
+  // empty cache
+  // if sendWsSignal =>  send die signal using the ws param
+  // kill the process => pid: sdu.Pid
+
+  const { serviceId, servicePath , Pid } = sdu;
+  const logPath = join(GPATHS.serviceLog, serviceId);
+  const trashPath = join(GPATHS.trash, serviceId);
+  const rmOptions = { retryDelay: 200, recursive: true };
+  await rm(logPath, rmOptions);
+  if (await existsAsync(trashPath)) await rm(trashPath, rmOptions);
+  if (sdu.isTemporary) await rm(servicePath, rmOptions);
+  Cache.clear();
+  if (sendWsSignal) ws.send(JSON.stringify(code_0(true,"DIE", "DIE", null)));
+  process.kill(Pid);
+  return void 0;
+}

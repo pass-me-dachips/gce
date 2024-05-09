@@ -17,9 +17,10 @@ export default function Server(sdu) {
      while (!existsSync(GPATHS.serviceLog)) {
        mkdirSync(GPATHS.serviceLog, { recursive: true });
      }
-     writeFileSync(join(GPATHS.serviceLog,serviceId),JSON.stringify(sdu,"",4));
      sdu.serviceId = serviceId;
      sdu.servicePort = port;
+     sdu.Pid = process.pid;
+     writeFileSync(join(GPATHS.serviceLog,serviceId),JSON.stringify(sdu,"",4));
 
      const stdout = [
         `grand code environment(GCE) ${GSYSTEM.version}, serviceOptions -:`,

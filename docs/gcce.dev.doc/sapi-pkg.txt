@@ -144,3 +144,15 @@ DO NOT HESITATE TO REPORT BUGS ENCOUNTERED IN ANY OPERATION IN THIS FILE
      prolog, python, r, ruby, rust, scala, docker, k8s, nginx.
    NOTE: the file is created if it doesnt exists. a response with signal ENOENT 
    is responded if any of the directory specified in the path location does not exists.
+  
+   DIE => this package is the standard and recommended package for killing a gce 
+    service. when you kill a service using ctrl + c or z it is terminated prematu-
+    rely and gce would not be able to flush all helper files/utils and directories
+    created during runtime which can potentialy increase disk usage or cause
+    future fs conflict.
+    by using the die package gce would efficiently flush all created utilities
+    used throughout the service which may include serviceLogs, temporary services,
+    in-memory caches, service trashcan etc.
+   this Package would ignore the request payload.
+   upon success, you would get 1 last response with signal and OID "DIE" before
+   the service process is killed. 
