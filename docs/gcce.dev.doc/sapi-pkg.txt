@@ -10,6 +10,9 @@ TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE SERVICE TERMINAL.
 
 -- SAPI TYPE = PKG
 -- OPERATION TYPES =
+   FOR ALL OPERAS IN THIS FILE, THE REPONSE PAYLOAD HOLDS THE OPERATION's RESPONSE 
+   VALUE AND THE RESPONSE SIGNAL WOULD ALWAYS BE ACK/HASPAYLOAD REGARDLESS OF
+   WETHER GCE ENCOUNTERED AN ERROR OR NOT.
 
    ADD => adds x numbers together where, x means `as many numbers provided.`
    payload => [...numbers]
@@ -38,4 +41,17 @@ TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE SERVICE TERMINAL.
    switching from code editor to calculator or google search for maths expresssions.
    +++++++++++++++++++++++++++++++++++
 
+   UINT => returns the total amount of values an unsigned integer of (payload) bit
+   can store, where payload can only be 8, 16, 32, 64.
+   payload => <8 || 16 || 32 || 64>
 
+   INT => returns the total amount of values an integer of (payload) bit can
+   store, where payload can only be 8, 16, 32, 64
+   payload => <8 || 16 || 32 || 64>
+   +++++++++++++++++++++++++++++++++++
+   NOTE : THE UINT AND INT utilities/packages are useful when you (as a develeoper) 
+   wants to know the exact capacity of the int/uint datatype you are utililizing.
+   +++++++++++++++++++++++++++++++++++
+
+   BYTES => converts x number of bits to bytes where bit is the value of payload.
+   payload => <numberOfBitsToConvert>

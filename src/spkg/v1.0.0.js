@@ -45,7 +45,7 @@ export function int(bits) {
 
 export function bytes(bit) {
  bit = Number(bit);
- return Math.floor(div(bit, 8));
+ return div(bit, 8).toFixed(2);
 }
 export const free = freemem();
 export const defDirSize = 4096;
