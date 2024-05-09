@@ -55,3 +55,17 @@ TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE SERVICE TERMINAL.
 
    BYTES => converts x number of bits to bytes where bit is the value of payload.
    payload => <numberOfBitsToConvert>
+
+   FREE => returns the machine's currently avaialable memory in a human readable
+   format. this utitlity ignores the request payload.
+
+   DIRSIZE => a bonus utility that returns the most common disk size allocated 
+   for an empty directory, which is 4KB. 
+   this utitlity also ignores the request payload.
+
+   MARSHAL => converts the requested json to a more readable and prettier format.
+   payload => <the json to convert: must be of type string eg JSON.stringify()>
+   NOTE: the response payload would also be of type string so you migth want to
+   convert it to a json object.
+   on javascript: JSON.parse();
+   

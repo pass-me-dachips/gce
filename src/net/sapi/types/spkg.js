@@ -2,20 +2,22 @@ import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import * as spkgUtils from "../../../spkg/v1.0.0.js";
 
+const stdsignal = "ACK/HASPAYLOAD";
+
 function ADDSUBDIVMULTIPLYMODPOW(type, payload, oid) {
   if (payload && typeof payload === "object" && payload.length !== undefined) {
      const value = spkgUtils[type](...payload);
-     return JSON.stringify(code_0(true, "ACK/HASPAYLOAD",oid, value));
+     return JSON.stringify(code_0(true, stdsignal,oid, value));
   } else {
      const response = 
-      code_0(true, "ACK/HASPAYLOAD", oid, "expected payload of type array");
+      code_0(true, stdsignal, oid, "expected payload of type array");
      return JSON.stringify(response);
   }
 }
 
 function INTEGERSANDBASICBYTES(type, payload, oid) {
   let response = spkgUtils[type](payload);
-  return JSON.stringify(code_0(true, "ACK/HASPAYLOAD", oid, response));
+  return JSON.stringify(code_0(true, stdsignal, oid, response));
 }
 
 // ++++++++ the main spkg api ++++++++++++++++++
@@ -32,6 +34,20 @@ export default async function spkg(request, ws, sdu) {
      case "UINT" : ws.send(INTEGERSANDBASICBYTES("uint", PAYLOAD, OID)); break
      case "INT" : ws.send(INTEGERSANDBASICBYTES("int", PAYLOAD, OID)); break
      case "BYTES" : ws.send(INTEGERSANDBASICBYTES("bytes", PAYLOAD, OID)); break
+     case "FREE" : 
+       ws.send(JSON.stringify(code_0(true, stdsignal,OID,spkgUtils.free))); 
+       break
+     case "DIRSIZE" : 
+       ws.send(JSON.stringify(code_0(true, stdsignal,OID,spkgUtils.defDirSize))); 
+       break
+     case "MARSHAL" : 
+       ws.send(JSON.stringify(code_0(
+          true, stdsignal,
+          OID,
+          await spkgUtils.marshal(PAYLOAD)
+       ))); 
+       break
      default: ws.send(defopera(OPERA)); //would change.
   };
 }
+ 

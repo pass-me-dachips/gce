@@ -47,8 +47,8 @@ export function bytes(bit) {
  bit = Number(bit);
  return div(bit, 8).toFixed(2);
 }
-export const free = freemem();
-export const defDirSize = 4096;
+export const free = hmr(freemem());
+export const defDirSize = hmr(4096);
 
 export async function marshal(json) {
  try {
