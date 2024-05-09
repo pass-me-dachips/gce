@@ -1,0 +1,41 @@
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+This file contains documentation for working with both service and third party
+packages using gce's service api.
+
+GCE RECOMMENDS DEVELOPERS TO PLAY WITH THE OPERATIONS PROVIDED IN THIS FILE
+TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE SERVICE TERMINAL.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+-- SAPI TYPE = PKG
+-- OPERATION TYPES =
+
+   ADD => adds x numbers together where, x means `as many numbers provided.`
+   payload => [...numbers]
+   the payload should be an array containing the numbers to be added up.
+
+   SUB => subtracts x numbers, starting from payload[0]
+   payload => [...numbers]
+   the payload should be an array containing the numbers to be subtracted
+   by each other in a sequential order eg :
+   payload [ 20, 1, 33 ] = 20 - 1,  value - 33.
+
+   DIV => divides payload[0] by payload[1]
+   payload => [ operand1, operand2 ]
+
+   MULTIPLY => multiply payload[0] by payload[1]
+   payload => [ operand1, operand2 ]
+
+   MOD => divides payload[0] by payload[1] and returns its remainder (Modulo)
+   payload => [ operand1, operand2 ]
+
+   POW => returns the value of payload[0] ^ payload[1]
+   payload => [ operand1, operand2 ]
+   +++++++++++++++++++++++++++++++++++
+   NOTE : THE ADD, SUB, DIV, MULTIPLY, MOD, POW are ligthweigth utilities/packages 
+   for basic mathematics. thier purpose is to eleminate the need of rapid 
+   switching from code editor to calculator or google search for maths expresssions.
+   +++++++++++++++++++++++++++++++++++
+
+
