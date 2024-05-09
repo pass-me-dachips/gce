@@ -20,6 +20,11 @@ function INTEGERSANDBASICBYTES(type, payload, oid) {
   return JSON.stringify(code_0(true, stdsignal, oid, response));
 }
 
+function HEXDECIBINRGB(type, payload, oid) {
+  let response = spkgUtils[type](payload);
+  return JSON.stringify(code_0(true, stdsignal, oid, response));
+}
+
 // ++++++++ the main spkg api ++++++++++++++++++
 export default async function spkg(request, ws, sdu) {
   const { OPERA, PAYLOAD, OID } = request;
@@ -67,6 +72,10 @@ export default async function spkg(request, ws, sdu) {
           spkgUtils.ansiCodesForColouredOutput
        ))); 
        break
+     case "HEX" : ws.send(HEXDECIBINRGB("hex", PAYLOAD, OID)); break
+     case "DECI" : ws.send(HEXDECIBINRGB("deci", PAYLOAD, OID)); break
+     case "BIN" : ws.send(HEXDECIBINRGB("bin", PAYLOAD, OID)); break
+     case "RGB" : ws.send(HEXDECIBINRGB("rgb", PAYLOAD, OID)); break
      default: ws.send(defopera(OPERA)); //would change.
   };
 }

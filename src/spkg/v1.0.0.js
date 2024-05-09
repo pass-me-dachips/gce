@@ -83,7 +83,9 @@ export const ansiCodesForColouredOutput = acfco;
 
 export function hex(deci) {
   deci = Number(deci);
-  if (String(deci) !== "NaN" && !String(deci).startsWith("-")) {
+  if (String(deci) !== "NaN" && 
+     !String(deci).startsWith("-") && 
+     !String(deci).includes(".")) {
     const hexNo = 16;
     const hexTable = {
       0 : 0, 1 : 1, 2 : 2, 3 : 3, 4 : 4,
@@ -92,7 +94,6 @@ export function hex(deci) {
     };
     let current = deci;
     let remainders = [];
-    console.log(deci)
     if (deci !== 0) {
     while (current !== 0) {
        const remainder = current % hexNo;
@@ -102,7 +103,7 @@ export function hex(deci) {
     return remainders.reverse().join("");
     } else return "0";
   } else {
-    return "Not A Number";
+    return "Not A Whole Number";
   }
 }
 
@@ -124,7 +125,9 @@ export function deci(hex) {
 
 export function bin(deci) {
   deci = Number(deci);
-  if (String(deci) !== "NaN" && !String(deci).startsWith("-")) {
+  if (String(deci) !== "NaN" && 
+     !String(deci).startsWith("-") && 
+     !String(deci).includes(".")) {
     const binNo = 2;
     let current = deci;
     const remainders = [];
@@ -133,7 +136,7 @@ export function bin(deci) {
        current = Math.floor(current / binNo);
     }
     return remainders.reverse().join('');
-  } else return "Not A Number";
+  } else return "Not A Whole Number";
 }
 
 export function rgb(hex) {

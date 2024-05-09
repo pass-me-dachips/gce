@@ -10,6 +10,8 @@ TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE SERVICE TERMINAL.
 DO NOT HESITATE TO REPORT BUGS ENCOUNTERED IN ANY OPERATION IN THIS FILE
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+-- KEYWORDS =  
+     utility: same as package
 -- SAPI TYPE = PKG
 -- OPERATION TYPES =
    FOR ALL OPERAS IN THIS FILE, THE REPONSE PAYLOAD HOLDS THE OPERATION's RESPONSE 
@@ -103,3 +105,29 @@ DO NOT HESITATE TO REPORT BUGS ENCOUNTERED IN ANY OPERATION IN THIS FILE
 
    ANSI => returns an ansi table containing ansi codes for colored terminal ouputs
    this utitlity also ignores the request payload.
+
+   HEX => the hex utility/package converts a decimal number to hexadecimal.
+   payload => <decimalToConvert>
+   NOTE: GCE RECOMMENDS THE PAYLOAD TO BE A WHOLE NUMBER
+   YOU MIGTH GET INCORRECT RESULTS IF THE PAYLOAD IS TOO BIG WHICH IS BECAUSE OF THE 
+   WAY JAVASCRIPT MIGTH INTERPRETE THE NUMBER DIVISION. GCE RECOMMENDS THE PAYLOAD
+   STAYS LESS THAN 15 DIGITS LONG.
+   this utitlity also ignores the request payload.
+
+   DECI => the deci utility/package converts a hexadecimal unit to decimal.
+   payload => "<hexToConvert>"
+   if the payload isnt a legal hexadecimal eg :
+   must be UPPERCASE for letters and A - F, 0 - 9, a payload with string
+  `Cannot Convert A None Hex To Deci` is returned.
+   if the return decimal is to big, gce would break it down to 
+   number.coninuatione+coninuation where coninuation and number are actual numbers.
+
+   BIN => the bin utility/package converts a decimal unit to binary.
+   payload => <decimalToConvert>
+
+   RGB => the rgb utility/package converts a hexadecimal color to rgb format.
+   payload => "<hex>"
+   NOTE: do not include the hashtag at the starting point of the payload value
+   as you would typically do in css.
+   this package expects the payload to be of length 6 characters eg 03FFCC
+   
