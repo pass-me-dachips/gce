@@ -1,6 +1,8 @@
 import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
 import * as spkgUtils from "../../../spkg/v1.0.0.js";
+import { errorResponseHelper } from "./fs.js";
+import { join } from "node:path";
 
 const stdsignal = "ACK/HASPAYLOAD";
 
@@ -23,6 +25,19 @@ function INTEGERSANDBASICBYTES(type, payload, oid) {
 function HEXDECIBINRGB(type, payload, oid) {
   let response = spkgUtils[type](payload);
   return JSON.stringify(code_0(true, stdsignal, oid, response));
+}
+
+async function QUICK(payload, oid, sdu) {
+  try {
+    let { path, template } = payload;
+    if (path && template) {
+      path = join(sdu.servicePath, path);
+      await spkgUtils.quick(path, template);
+      return JSON.stringify(code_0(true, "ACK", oid, null)); 
+    } else throw {  
+      message : "QUICK requires the path and template fields."
+    };
+  } catch(error) { return errorResponseHelper(error, oid); }
 }
 
 // ++++++++ the main spkg api ++++++++++++++++++
@@ -76,6 +91,7 @@ export default async function spkg(request, ws, sdu) {
      case "DECI" : ws.send(HEXDECIBINRGB("deci", PAYLOAD, OID)); break
      case "BIN" : ws.send(HEXDECIBINRGB("bin", PAYLOAD, OID)); break
      case "RGB" : ws.send(HEXDECIBINRGB("rgb", PAYLOAD, OID)); break
+     case "QUICK" : ws.send(await QUICK(PAYLOAD, OID, sdu)); break
      default: ws.send(defopera(OPERA)); //would change.
   };
 }

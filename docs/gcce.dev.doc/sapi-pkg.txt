@@ -129,3 +129,18 @@ DO NOT HESITATE TO REPORT BUGS ENCOUNTERED IN ANY OPERATION IN THIS FILE
    as you would typically do in css.
    this package expects the payload to be of length 6 characters eg 03FFCC
    
+   QUICK => the quick package generates basic templates for files.
+   the quick package serves the same purpose as the vscode HTML:5 
+   and lorem functions that lets you fill up a file with a template.
+   payload => {
+     "path": "relative/path/to/the/file/the/template/should/be/written"
+     "template": "<theactualtemplate: eg html,etc...>" 
+   }
+   some of the avaialable template includes
+     short, fill, lorem, bacon, actionscript, ada, applescript, assembly, autoit,
+     basic, c, cpp ,csharp, clojure, cobol, coffeescript, d, dart, eiffel, erlang,
+     fortran, go, groovy, haskell, html, java, javascript, julia, kotlin, latex,
+     lisp, lua, matlab, mysql, nim, nodejs, objectivec, ocaml, perl, php, powershell,
+     prolog, python, r, ruby, rust, scala, docker, k8s, nginx.
+   NOTE: the file is created if it doesnt exists. a response with signal ENOENT 
+   is responded if any of the directory specified in the path location does not exists.
