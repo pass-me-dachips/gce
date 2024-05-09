@@ -11,5 +11,5 @@ ________________________________________________________________________________
 |    sapi  -   as in service api.
 |    www   -   points to webserver related functionalities.
 |    opera -   stores fs core operations.
-|    spkg  -   software/service packages.
+|    spkg  -   service packages.
 |___________________________________________________________________________________
