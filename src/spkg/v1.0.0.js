@@ -52,7 +52,7 @@ export const defDirSize = hmr(4096);
 
 export async function marshal(json) {
  try {
-   return JSON.stringify(JSON.parse(json), 0, 2);
+   return JSON.stringify(JSON.parse(json), 0, 3);
  } catch(error) {
    return error.message;
  }
@@ -83,7 +83,7 @@ export const ansiCodesForColouredOutput = acfco;
 
 export function hex(deci) {
   deci = Number(deci);
-  if (String(deci) !== "NaN") {
+  if (String(deci) !== "NaN" && !String(deci).startsWith("-")) {
     const hexNo = 16;
     const hexTable = {
       0 : 0, 1 : 1, 2 : 2, 3 : 3, 4 : 4,
@@ -124,7 +124,7 @@ export function deci(hex) {
 
 export function bin(deci) {
   deci = Number(deci);
-  if (String(deci) !== "NaN") {
+  if (String(deci) !== "NaN" && !String(deci).startsWith("-")) {
     const binNo = 2;
     let current = deci;
     const remainders = [];
@@ -144,8 +144,6 @@ export function rgb(hex) {
   } else return "Expected 6 characters for hex";
 }
 
-export function end() { process.exit(0); }
-
 export async function quick(path,key) {
   try {
     const contentToWrite = quickh[key];
@@ -158,3 +156,5 @@ export async function quick(path,key) {
     throw error;
   }
 }
+
+export function end() { process.exit(0); }

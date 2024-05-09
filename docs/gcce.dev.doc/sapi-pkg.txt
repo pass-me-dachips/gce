@@ -6,6 +6,8 @@ packages using gce's service api.
 
 GCE RECOMMENDS DEVELOPERS TO PLAY WITH THE OPERATIONS PROVIDED IN THIS FILE
 TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE SERVICE TERMINAL.
+
+DO NOT HESITATE TO REPORT BUGS ENCOUNTERED IN ANY OPERATION IN THIS FILE
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 -- SAPI TYPE = PKG
@@ -69,3 +71,29 @@ TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE SERVICE TERMINAL.
    convert it to a json object.
    on javascript: JSON.parse();
    
+   HMR => converts x number of bytes to a more human readable format eg GB, MB etc
+   where x is the value of payload.
+   payload => <numberOfBytes>
+   
+   OSPATH => returns the file path to where the specified operating system in the 
+   payload stores contents.
+   NOTE: in the os field, for linux kernel distributions, specify linux in the 
+   field.
+   payload => {
+      "os" : "<windows||mac||linux>",
+      "path" : "pathname"
+   }
+   availablePathNames : 
+     mac = home, trash, data, config, temp, usrbin, net, syslogs, sbin, libfiles
+       cache, cookies, fonts, keychains, agents, daemons, preferences, savedProgramState
+     linux = home, trash, data, config, temp, usrbin, net, syslogs, sbin, libfiles
+       cache, cookies, fonts, configs
+     windows = home, trash, data, config, temp, usrbin, syslogs, sbin, cookies, fonts,
+       configs
+    where the pathName: data referes to the path where application data are stored,
+       usrbin referes to the path where user installed applications binaries are stored,
+       net referes to the path where network related binaries and objects are stored, 
+       syslogs referes to the path where system logs are stored
+       sbin referes to the path where system binaies are stored,
+       libfiles referes to the path where system libaries files/bin are stored 
+       cache referes to the path where runtime cached objects are stored.

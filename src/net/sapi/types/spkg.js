@@ -47,6 +47,16 @@ export default async function spkg(request, ws, sdu) {
           await spkgUtils.marshal(PAYLOAD)
        ))); 
        break
+     case "HMR" : 
+       ws.send(JSON.stringify(code_0(true, stdsignal,OID,spkgUtils.hmr(PAYLOAD)))); 
+       break
+     case "OSPATH" : 
+       ws.send(JSON.stringify(code_0(
+          true, stdsignal,
+          OID,
+          await spkgUtils.osPath(PAYLOAD.os, PAYLOAD.path)
+       ))); 
+       break
      default: ws.send(defopera(OPERA)); //would change.
   };
 }
