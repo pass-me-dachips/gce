@@ -8,7 +8,7 @@ const asciiTable = `
 Source rapidtables.com
 Credit To https://www.rapidtables.com/code/text/ascii-table.html
 
-Dec	Hex	Binary	HTML	Char	Description
+Dec	Hex	Binary    	HTML	Char   	Description
 0	00	00000000	&#0;	NUL	Null
 1	01	00000001	&#1;	SOH	Start of Heading
 2	02	00000010	&#2;	STX	Start of Text

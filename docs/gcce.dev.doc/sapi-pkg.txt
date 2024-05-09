@@ -97,3 +97,9 @@ DO NOT HESITATE TO REPORT BUGS ENCOUNTERED IN ANY OPERATION IN THIS FILE
        sbin referes to the path where system binaies are stored,
        libfiles referes to the path where system libaries files/bin are stored 
        cache referes to the path where runtime cached objects are stored.
+
+   ASCII => returns/embed an ascii table to the response payload. 
+   this utitlity ignores the request payload.
+
+   ANSI => returns an ansi table containing ansi codes for colored terminal ouputs
+   this utitlity also ignores the request payload.

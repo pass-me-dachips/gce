@@ -57,6 +57,16 @@ export default async function spkg(request, ws, sdu) {
           await spkgUtils.osPath(PAYLOAD.os, PAYLOAD.path)
        ))); 
        break
+     case "ASCII" : 
+       ws.send(JSON.stringify(code_0(true, stdsignal,OID,spkgUtils.ascii))); 
+       break
+     case "ANSI" : 
+       ws.send(JSON.stringify(code_0(
+          true, stdsignal,
+          OID,
+          spkgUtils.ansiCodesForColouredOutput
+       ))); 
+       break
      default: ws.send(defopera(OPERA)); //would change.
   };
 }
