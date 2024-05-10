@@ -43,8 +43,8 @@ async function QUICK(payload, oid, sdu) {
 
 async function END(ws, sdu, oid) {
   try {
-    report("service about to stop */*", oid,  "danger");
-    report("sending danger signal", oid, "danger");
+    report("service about to stop */*", oid,  "others");
+    report("sending danger signal", oid, "others");
     spkgUtils.end(sdu, true, ws);
   } catch(error) { return errorResponseHelper(error, oid); }
 }

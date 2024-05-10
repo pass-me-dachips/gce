@@ -7,6 +7,7 @@ import url from "node:url";
 import { join } from "node:path";
 import { GSYSTEM, GOUTFORMAT, GPATHS } from "../var/system.js";
 import { writeFileSync, existsSync, mkdirSync } from "node:fs";
+import Cache from "../etc/cache.js";
 import execBrowser from "./www/openBrower.js";
 
 export default function Server(sdu) {
@@ -17,10 +18,12 @@ export default function Server(sdu) {
      while (!existsSync(GPATHS.serviceLog)) {
        mkdirSync(GPATHS.serviceLog, { recursive: true });
      }
+     sdu.createdAt = new Date();
      sdu.serviceId = serviceId;
      sdu.servicePort = port;
      sdu.Pid = process.pid;
-     writeFileSync(join(GPATHS.serviceLog,serviceId),JSON.stringify(sdu,"",4));
+     const pathToServiceLog = join(GPATHS.serviceLog,serviceId);
+     writeFileSync(pathToServiceLog,JSON.stringify(sdu,"",4));
 
      const stdout = [
         `grand code environment(GCE) ${GSYSTEM.version}, serviceOptions -:`,
@@ -36,6 +39,7 @@ export default function Server(sdu) {
         `service started running on http://localhost:${port}\n`
      ];
      stdout.forEach(c => console.log(c));
+     Cache.handleUpload(pathToServiceLog);
      execBrowser(`http://localhost:${port}`);
   };
 
