@@ -16,11 +16,13 @@ Special Note:
 Command:
     gcce -         List all installed gcce's.
     globalConfig - Set up a global configuration for all gce services.
-    install -      Install A new gcce 
+    install -      Install a new gcce.
                    (1 option) = <relative_path_to_gcce>
-    remove -       Removes An existing gcce
+    kill -         Kill a running gce service.
+                   (1 option) = <serviceId> | <no_option>
+    remove -       Remove an existing gcce.
                    (1 option) = <name_of_gcce>
-    resetGlobalConfig - resets the gce globalConfig.
+    resetGlobalConfig - reset the gce globalConfig.
     services -     List all gce running services.
 Options:
   --FAIAF                   Notify gce to treath the first argument arg[0] as a
