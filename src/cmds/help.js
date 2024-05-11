@@ -23,14 +23,20 @@ Command:
     remove -       Remove an existing gcce.
                    (1 option) = <name_of_gcce>
     resetGlobalConfig - reset the gce globalConfig.
-    services -     List all gce running services.
+    services -     List the ids of all running gce services.
 Options:
   --FAIAF                   Notify gce to treath the first argument arg[0] as a
                             File or Folder regardless of the value.
   --help                    Show this help.
   --port:<port>             Specify a custom port to run your gce service on.
+  -s <serviceId>            Only avaialable on the \`gce services\` command:
+                            List more extensive information about a specific 
+                            service <serviceId>.                   
   --temp                    Marks the service as a temporary service, meaning
                             once the process dies, all data's are wiped out.
+  -x                        Only avaialable on the \`gce services\` command:
+                            List all running gce services and additional info
+                            about each. 
 `
   console.log(content);
   return void 0;
