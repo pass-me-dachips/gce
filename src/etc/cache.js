@@ -1,4 +1,4 @@
-import { cacheTemplate } from "../var/templates.js";
+import { cacheTemplate, extensionTable } from "../var/templates.js";
 import { readFile, writeFile } from "node:fs/promises";
 import { GOUTFORMAT } from "../var/system.js";
 import { report } from "./report.js";
@@ -17,6 +17,7 @@ class Env {
     const portions = fileName.split(".");
     extension = portions[portions.length - 1];
    }
+   extension = extensionTable[`E${extension}`] ?? extension;
    this.table.stack[extension] = 
       this.table.stack[extension] !== undefined ? 
         this.table.stack[extension] + 1 : 1;
@@ -78,9 +79,5 @@ class Env {
 }
 
 const Cache = Env.EnvInstance();
-// process.argv.slice(2).forEach(elem => {
-//   Cache.addStack(elem)
-// })
-// console.log(Cache.getStack())
 
 export default Cache;

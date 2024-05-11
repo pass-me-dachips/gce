@@ -6,7 +6,9 @@ import { readdirSync, readFileSync, existsSync } from "node:fs";
 export default async function Kill(args) {
   if (args.length === 1) {
     const services = readdirSync(GPATHS.serviceLog, GOUTFORMAT.encoding).length;
-    console.log(`assass1n: ${services} targets, ${services} ready to be killed.`);
+    console.log(
+      `assass1n: ${services} target${services > 1 ? "s": ""}, ${services} ready to be killed.`
+    );
     return void 0;
   } else { 
     const serviceId = args[1];
