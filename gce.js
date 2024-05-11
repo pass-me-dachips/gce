@@ -23,8 +23,8 @@ if (args.length > 0) {
       case "kill" : { Kill(args); break }
       case "remove" : { Remove(args); break }
       case "resetGlobalConfig" : { ResetGlobalC(); break }
-      case "services" : { Services(); break }
+      case "services" : { Services(args); break }
       default : await Main(args) 
     }
   }
-} else Core()
+} else Core();
