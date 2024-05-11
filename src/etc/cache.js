@@ -2,6 +2,7 @@ import { cacheTemplate, extensionTable } from "../var/templates.js";
 import { readFile, writeFile } from "node:fs/promises";
 import { GOUTFORMAT } from "../var/system.js";
 import { report } from "./report.js";
+
 class Env {
   constructor() {
     this.table = {...cacheTemplate};

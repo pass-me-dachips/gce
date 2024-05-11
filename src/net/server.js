@@ -40,6 +40,7 @@ export default function Server(sdu) {
      ];
      stdout.forEach(c => console.log(c));
      Cache.handleUpload(pathToServiceLog);
+    //  setInterval(()=> console.log(Cache.getStack(),Cache.getFs() ), 2000)
      execBrowser(`http://localhost:${port}`);
   };
 

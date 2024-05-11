@@ -5,9 +5,11 @@ import { basename, join } from "node:path";
 import { existsAsync } from "../../../etc/existsAsync.js";
 import { Buffer } from "node:buffer";
 import { randomBytes } from "node:crypto";
+import Cache from "../../../etc/cache.js";
 
 export async function fileWrite(path, content) {
   try {
+     Cache.addStack(basename(path));
      const lockFile = GPATHS.gcelock + basename(path);
      const pathBeforeBase = path.split(basename(path));
      pathBeforeBase[pathBeforeBase.length - 1] = lockFile;
@@ -15,19 +17,24 @@ export async function fileWrite(path, content) {
      const lockPath = pathBeforeBase.join("");
 
      if (!await existsAsync(lockPath)) {
-        const response = { bytesWritten: Buffer.byteLength(content) };
+        const response = { bytesWritten: Buffer.byteLength(content, GOUTFORMAT.encoding) };
         await writeFile(lockPath, GOUTFORMAT.tabA, GOUTFORMAT.encoding);
         /* write the lock file so no other gce service can work on the cwf */
         await writeFile(path, content, GOUTFORMAT.encoding);
         await rm(lockPath, { maxRetries: 2 });
+        Cache.fsupgradeBytes(false, response.bytesWritten);
         return response;
-     } else throw { code: "ONLINE" };
+     } else {
+         Cache.fsupgradeBytes(true, Buffer.byteLength(content, GOUTFORMAT.encoding)); 
+         throw { code: "ONLINE" };
+     }
       /**
        * an error with message ONLINE is thrown if the .gcelock.file.ext already
        * exists. it means another gce service or same is already working on that 
        * file.
        */
   } catch(error) {
+    Cache.fsupgradeBytes(true, Buffer.byteLength(content, GOUTFORMAT.encoding)); 
     throw error;
   }
 }
@@ -35,14 +42,17 @@ export async function fileWrite(path, content) {
 export async function createDir(path) {
   try {
     await mkdir(path, { recursive: true });
+    Cache.fsupgradeDir(false);
     return true;
   } catch(error) {
+    Cache.fsupgradeDir(true);
     throw error;
   }
 }
 
 export async function createFile(path) {
   try {
+    Cache.addStack(basename(path));
     const doesExists = await existsAsync(path);
     if (!doesExists) await writeFile(path, "",  GOUTFORMAT.encoding);
     else throw { code: "DUPKEY" }
