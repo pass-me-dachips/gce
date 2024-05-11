@@ -7,6 +7,7 @@ import Kill from "./src/cmds/kill.js";
 import Main from "./src/cmds/main.js";
 import Remove from "./src/cmds/remove.js";
 import ResetGlobalC from "./src/cmds/resetGlobalC.js";
+import Rkill from "./src/cmds/rkill.js";
 import Services from "./src/cmds/services.js";
 
 process.on("uncaughtException", ( error )=> console.log(error.message));
@@ -23,6 +24,7 @@ if (args.length > 0) {
       case "kill" : { Kill(args); break }
       case "remove" : { Remove(args); break }
       case "resetGlobalConfig" : { ResetGlobalC(); break }
+      case "rkill" : { await Rkill(); break }
       case "services" : { Services(args); break }
       default : await Main(args) 
     }

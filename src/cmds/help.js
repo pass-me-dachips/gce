@@ -23,6 +23,7 @@ Command:
     remove -       Remove an existing gcce.
                    (1 option) = <name_of_gcce>
     resetGlobalConfig - reset the gce globalConfig.
+    rkill -        recursively kill all running gce services.
     services -     List the ids of all running gce services.
 Options:
   --FAIAF                   Notify gce to treath the first argument arg[0] as a
