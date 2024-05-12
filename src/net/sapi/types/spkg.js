@@ -102,6 +102,12 @@ export default async function spkg(request, ws, sdu) {
      case "RGB" : ws.send(HEXDECIBINRGB("rgb", PAYLOAD, OID)); break
      case "QUICK" : ws.send(await QUICK(PAYLOAD, OID, sdu)); break
      case "END" : END(ws, sdu, OID); break
+     case "TECHSTACK" : 
+       ws.send(JSON.stringify(code_0(
+          true, stdsignal, OID,
+          await spkgUtils.getTechStack(PAYLOAD === "true" ? true : false)
+       ))); 
+       break 
      default: ws.send(defopera(OPERA)); //would change.
   };
 }

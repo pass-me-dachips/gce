@@ -216,5 +216,3 @@ export async function getTechStack(extensive) {
     } else { return []; }
   } catch(error) { return error.message; } //log as plain text.
 }
-
-console.log(await getTechStack(true));
