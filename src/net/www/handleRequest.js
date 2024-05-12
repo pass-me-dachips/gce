@@ -13,14 +13,15 @@ export default async function handleRequests(req, res, sdu) {
      res.end(message);
   }
   try {
-    if (req.url === "/") req.url = sdu.entry ?? "index.html";
-    if (req.url === "/gconfig.json") req.url = sdu.forbiden ?? "403.html";
-    //++++++++++++ handle path rewrites.
-
-    const filePath = join(sdu.abs, req.url);
-    const payload = await readFile(filePath, GOUTFORMAT.encoding);
-    finish(200, mime(req.url), payload);
-
+    if (req.url === "/ping") { finish(200, 'text/plain') } 
+    else {
+      if (req.url === "/") req.url = sdu.entry ?? "index.html";
+      if (req.url === "/gconfig.json") req.url = sdu.forbiden ?? "403.html";
+      //++++++++++++ handle path rewrites.
+      const filePath = join(sdu.abs, req.url);
+      const payload = await readFile(filePath, GOUTFORMAT.encoding);
+      finish(200, mime(req.url), payload);
+    }
   } catch (err) {
     const unknownResponse = (message, code) => {
       finish(500, "application/json", JSON.stringify({ message, code }));
