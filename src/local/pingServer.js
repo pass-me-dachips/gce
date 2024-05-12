@@ -2,17 +2,17 @@
 import { request } from "node:http";
 import { GOUTFORMAT } from "../var/system.js";
 
-async function ping(port, cb) {
+export default function ping(elem,index, cb) {
   let pong;
   try {
     const options = {
     host: "localhost",
-    port,
+    port: elem.split("x")[0],
     path: "/ping",
     method: "GET",
     headers: {
-       'Content-Type': 'application/json',
-       'Content-Length': 0
+       "Content-Type": "application/json",
+       "Content-Length": 0
     }
     }
     const req = request(options, (res)=> {
@@ -25,11 +25,11 @@ async function ping(port, cb) {
     })
     req.on("error", () => { pong = false })
     req.end();
-    req.on("close", ()=> cb(pong));
+    req.on("close", ()=> cb(pong, elem, index));
   } catch { pong = false; return pong; }
 }
 
 // usage =>
-// await ping(8501, (res)=> {
+// ping(3921xS...., 0, (res)=> {
 //    console.log(res)
 // })

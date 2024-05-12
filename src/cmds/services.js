@@ -2,15 +2,28 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { GOUTFORMAT, GPATHS } from "../var/system.js";
 import { hmr } from "../spkg/v1.0.0.js";
+import ping from "../local/pingServer.js";
 
 function s1() {
   const services =  existsSync(GPATHS.serviceLog) ?
   readdirSync(GPATHS.serviceLog, GOUTFORMAT.encoding) : [];
-  services.forEach((elem, index) => {
-    process.stdout.write(
-       GOUTFORMAT.tabA + (index+1 === services.length ? elem+'\n' : elem)
-    );
-  });
+  if (services.length !== 0) {
+    const servicesFound = services.length;
+    console.log(`pinging (${servicesFound}) service${servicesFound > 1 ? "s": ""} :`);
+    let servicesRunning = 0;
+    const cb = (pong, elem, index) => {
+      if (pong) { 
+        console.log(GOUTFORMAT.tabA +  elem); 
+        servicesRunning = servicesRunning + 1; 
+      }
+      if (index+1 === servicesFound) {
+        console.log(`(${servicesFound}) found, (${servicesRunning}) running `)
+      }
+    }
+    services.forEach((elem, index) => {
+      ping(elem, index, cb) 
+    });
+  } else { console.log("no running service"); }
   return void 0;
 }
 
