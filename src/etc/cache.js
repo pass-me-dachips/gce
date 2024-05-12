@@ -1,7 +1,10 @@
 import { cacheTemplate, extensionTable } from "../var/templates.js";
-import { readFile, writeFile } from "node:fs/promises";
-import { GOUTFORMAT } from "../var/system.js";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { GOUTFORMAT, GPATHS } from "../var/system.js";
 import { report } from "./report.js";
+import { existsAsync } from "./existsAsync.js";
+import { join } from "node:path";
+import mergeObjects from "../local/mergeObjects.js";
 
 class Env {
   constructor() {
@@ -23,6 +26,7 @@ class Env {
       this.table.stack[extension] !== undefined ? 
         this.table.stack[extension] + 1 : 1;
    this.table.lastUpdate = new Date();
+   this.table.stackLastUpdate = String(new Date());
    return void 0;
  }
  getStack() {
@@ -72,6 +76,55 @@ class Env {
    },TBI);
    return void 0;
  }
+
+ handleStackUpload() {
+   const TBI = 120000 //Time Before Interval: every 2 minute;
+   let prevUpdateTime = null;
+   setInterval(async ()=> {
+      try {
+        if (this.table.stackLastUpdate !== prevUpdateTime) {
+          while (!await existsAsync(GPATHS.stack)) {
+             await mkdir(GPATHS.stack, { recursive: true });
+          }
+          const stackLock = join(GPATHS.stack, ".stacklock");
+          const trials = {
+            tries: 0,
+            qouta: 7
+          };
+          const write = async () => {
+            if (!await existsAsync(stackLock)) {
+               const stackpath = join(GPATHS.stack, ".gcestack");
+               let prevStackContents;
+               if (await existsAsync(stackpath)) {
+                 const contents = JSON.parse(
+                  await readFile(stackpath, GOUTFORMAT.encoding)
+                 );
+                 prevStackContents = contents;
+               } else prevStackContents = {}
+               // Terminated until next loop if prevContents not of type object
+               const newStackContents =
+                 mergeObjects(prevStackContents, this.table.stack);
+
+               await writeFile(stackLock, "", GOUTFORMAT.encoding); 
+               // lock the file so no any other running service can write to it.
+               await writeFile(stackpath, JSON.stringify(newStackContents), GOUTFORMAT.encoding);
+               await rm(stackLock); //unlock the file.
+               prevUpdateTime = this.table.stackLastUpdate;
+            }
+          }
+          while (await existsAsync(stackLock)) {
+            trials.tries = trials.tries + 1;
+            if (trials.tries === trials.qouta) break;
+            else await write();
+          }
+          await write();
+        } 
+        // only handle writes if there are new updates on the service 
+        // programming stack.
+      } catch { return void 0;} 
+   },TBI);
+   return void 0;
+ } 
 
  static EnvInstance() {
    if (!Env.instance) Env.instance = new Env();

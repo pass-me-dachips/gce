@@ -9,6 +9,7 @@ export const cacheTemplate= {
     fs: {}, 
     packages: {},  
     stack: {},
+    stackLastUpdate: null
 };
 
 export const extensionTable = {

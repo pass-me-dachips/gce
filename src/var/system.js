@@ -33,7 +33,8 @@ export const GPATHS = {
    serviceLog: join(tempDir, "SERVICELOG"),
    seperator: osSeperator[platform()],
    gcelock: ".gcelock.",
-   trash: join(tempDir, "Trash")
+   trash: join(tempDir, "Trash"),
+   stack: join(dataDir, "Stack")
 }
 
 export const ERRORCODES = {
