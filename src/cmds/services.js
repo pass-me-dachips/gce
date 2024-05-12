@@ -9,7 +9,7 @@ function s1() {
   readdirSync(GPATHS.serviceLog, GOUTFORMAT.encoding) : [];
   if (services.length !== 0) {
     const servicesFound = services.length;
-    console.log(`pinging (${servicesFound}) service${servicesFound > 1 ? "s": ""} (found):`);
+    console.log(`pinging (${servicesFound}) service${servicesFound > 1 ? "s": ""} (ghosts inclusive):`);
     console.log('services currently running')
     const cb = (pong, elem) => {
       if (pong) {console.log(GOUTFORMAT.tabA +  elem)};
@@ -20,6 +20,7 @@ function s1() {
 }
 
 function s2() {
+  console.log("listing services (ghosts exclusive)")
   const services =  existsSync(GPATHS.serviceLog) ?
   readdirSync(GPATHS.serviceLog, GOUTFORMAT.encoding).reverse() : [];
   let Index = 0;
