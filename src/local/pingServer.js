@@ -2,7 +2,7 @@
 import { request } from "node:http";
 import { GOUTFORMAT } from "../var/system.js";
 
-export default function ping(elem,index, cb) {
+export default function ping(elem, cb) {
   let pong;
   try {
     const options = {
@@ -25,11 +25,11 @@ export default function ping(elem,index, cb) {
     })
     req.on("error", () => { pong = false })
     req.end();
-    req.on("close", ()=> cb(pong, elem, index));
+    req.on("close", ()=> cb(pong, elem));
   } catch { pong = false; return pong; }
 }
 
 // usage =>
-// ping(3921xS...., 0, (res)=> {
+// ping(3921xS...., (res)=> {
 //    console.log(res)
 // })

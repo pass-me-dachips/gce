@@ -9,20 +9,16 @@ function s1() {
   readdirSync(GPATHS.serviceLog, GOUTFORMAT.encoding) : [];
   if (services.length !== 0) {
     const servicesFound = services.length;
-    console.log(`pinging (${servicesFound}) service${servicesFound > 1 ? "s": ""} :`);
+    console.log(`pinging (${servicesFound}) service${servicesFound > 1 ? "s": ""} (found):`);
+    console.log('services currently running')
     let servicesRunning = 0;
-    const cb = (pong, elem, index) => {
+    const cb = (pong, elem) => {
       if (pong) { 
         console.log(GOUTFORMAT.tabA +  elem); 
         servicesRunning = servicesRunning + 1; 
       }
-      if (index+1 === servicesFound) {
-        console.log(`(${servicesFound}) found, (${servicesRunning}) running `)
-      }
     }
-    services.forEach((elem, index) => {
-      ping(elem, index, cb) 
-    });
+    services.forEach((elem) => { ping(elem, cb) });
   } else { console.log("no running service"); }
   return void 0;
 }
