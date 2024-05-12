@@ -11,12 +11,8 @@ function s1() {
     const servicesFound = services.length;
     console.log(`pinging (${servicesFound}) service${servicesFound > 1 ? "s": ""} (found):`);
     console.log('services currently running')
-    let servicesRunning = 0;
     const cb = (pong, elem) => {
-      if (pong) { 
-        console.log(GOUTFORMAT.tabA +  elem); 
-        servicesRunning = servicesRunning + 1; 
-      }
+      if (pong) {console.log(GOUTFORMAT.tabA +  elem)};
     }
     services.forEach((elem) => { ping(elem, cb) });
   } else { console.log("no running service"); }
@@ -26,28 +22,36 @@ function s1() {
 function s2() {
   const services =  existsSync(GPATHS.serviceLog) ?
   readdirSync(GPATHS.serviceLog, GOUTFORMAT.encoding).reverse() : [];
-  for (let i = 0; i < services.length; i++) {
-    const servicePath = join(GPATHS.serviceLog, services[i]);
-    const serviceDetails = 
-      JSON.parse(readFileSync(servicePath, GOUTFORMAT.encoding));
-    const {
-      servicePort:port,
-      serviceId: id,
-      createdAt,
-      isTemporary: isTemp,
-      Pid
-    } = serviceDetails;
-    const gcce = serviceDetails.serviceGcce.name;
-    const version = serviceDetails.serviceGcce.version;
-    const mem = serviceDetails?.memUsage?.heapUsed ?
-       hmr(serviceDetails?.memUsage?.heapUsed) : "no records";
-    const tmem = serviceDetails?.memUsage?.rss ?
-       hmr(serviceDetails?.memUsage?.rss) : "no records";
+  let Index = 0;
+  const cb = (pong, elem) => {
+    if (pong) {
+      Index = Index + 1;
+      const servicePath = join(GPATHS.serviceLog, elem);
+      const serviceDetails = 
+        JSON.parse(readFileSync(servicePath, GOUTFORMAT.encoding));
+      const {
+        servicePort:port,
+        serviceId: id,
+        createdAt,
+        isTemporary: isTemp,
+        Pid
+      } = serviceDetails;
+      const gcce = serviceDetails.serviceGcce.name;
+      const version = serviceDetails.serviceGcce.version;
+      const mem = serviceDetails?.memUsage?.heapUsed ?
+         hmr(serviceDetails?.memUsage?.heapUsed) : "no records";
+      const tmem = serviceDetails?.memUsage?.rss ?
+         hmr(serviceDetails?.memUsage?.rss) : "no records";
 
-    console.log(`service (${i})`);
-    console.log( GOUTFORMAT.tabA + `port ${port}, id ${id}, temp ${isTemp}`);
-    console.log( GOUTFORMAT.tabA + `gcce ${gcce}, v ${version}, cat ${createdAt}`);
-    console.log( GOUTFORMAT.tabA + `pid ${Pid}, s-mem ${mem}, r-mem ${tmem} \n`);
+      console.log(`service (${Index})`);
+      console.log( GOUTFORMAT.tabA + `port ${port}, id ${id}, temp ${isTemp}`);
+      console.log( GOUTFORMAT.tabA + `gcce ${gcce}, v ${version}, cat ${createdAt}`);
+      console.log( GOUTFORMAT.tabA + `pid ${Pid}, s-mem ${mem}, r-mem ${tmem} \n`);
+    }
+  }
+  for (let i = 0; i < services.length; i++) {
+    const elem = services[i];
+    ping(elem, cb);
   }
   if (services.length > 0) {
   console.log("\x1b[93ms-mem > total memory currently used by the service.\x1b[0m");
@@ -58,7 +62,8 @@ function s2() {
 
 function s3(serviceId) {
   const servicePath = join(GPATHS.serviceLog, serviceId);
-  if (existsSync(servicePath)) {
+  const cb = (pong) => {
+  if (pong && existsSync(servicePath)) {
     const serviceDetails = 
       JSON.parse(readFileSync(servicePath, GOUTFORMAT.encoding));
     const {
@@ -95,6 +100,8 @@ function s3(serviceId) {
     console.log( GOUTFORMAT.tabA + `uptime = \x1b[92m${uptime ?? "no records"}\x1b[0m, idle-since = \x1b[92m${idleSince ?? "no records"}\x1b[0m`);
     console.log( GOUTFORMAT.tabA + `pid = \x1b[92m${Pid}\x1b[0m, s-mem = \x1b[92m${mem}\x1b[0m, r-mem = \x1b[92m${tmem}\x1b[0m \n`);
   } else console.log("service %s does not exists", serviceId)
+  }
+  ping(serviceId, cb);
 }
 
 export default function Services(args) {
