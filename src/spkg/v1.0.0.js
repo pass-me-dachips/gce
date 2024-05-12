@@ -4,11 +4,11 @@ import asciiTable from "./helpers/asciitable.h.js";
 import acfco from "./helpers/acfco.h.js";
 import * as quickh from "./helpers/quick.h.js";
 import { fileWrite } from "../net/sapi/opera/write.js";
-import { GPATHS } from "../var/system.js";
+import { GOUTFORMAT, GPATHS } from "../var/system.js";
 import { join } from "node:path";
 import Cache from "../etc/cache.js";
 import { code_0 } from "../net/sapi/codes.js";
-import { rm } from "node:fs/promises";
+import { readFile, rm } from "node:fs/promises";
 import { existsAsync } from "../etc/existsAsync.js";
 
 export function add(...operands) {
@@ -186,3 +186,35 @@ export async function end(sdu, sendWsSignal, ws) {
   process.kill(Pid);
   return void 0;
 }
+
+export async function getTechStack(extensive) {
+  try {
+    const stackPath = join(GPATHS.stack, ".gcestack");
+    if (await existsAsync(stackPath)) {
+      const contents = JSON.parse(await readFile(stackPath, GOUTFORMAT.encoding));
+      const techs = Object.keys(contents);
+      let rankings = [];
+      techs.forEach(elem => {
+          rankings.push({
+            tech: elem,
+            score: contents[elem]
+          });
+      });
+      rankings = rankings.sort((a,b)=> b.score - a.score);
+      if (!extensive) {
+        rankings = rankings.slice(0, 3);
+      }
+      // calculate rankings percentage.
+      const whole = rankings.reduce((accum, elem)=> accum + elem.score, 0);
+      rankings = rankings.map(elem => {
+        return {
+          tech: elem.tech,
+          percentage: Math.round((elem.score/whole) * 100)
+        }
+      });
+      return rankings;
+    } else { return []; }
+  } catch(error) { return error.message; } //log as plain text.
+}
+
+console.log(await getTechStack(true));

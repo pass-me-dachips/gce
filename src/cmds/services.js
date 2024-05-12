@@ -20,7 +20,7 @@ function s1() {
 }
 
 function s2() {
-  console.log("listing services (ghosts exclusive)")
+  console.log("listing services (ghosts exclusive)");
   const services =  existsSync(GPATHS.serviceLog) ?
   readdirSync(GPATHS.serviceLog, GOUTFORMAT.encoding).reverse() : [];
   let Index = 0;
