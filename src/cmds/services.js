@@ -12,7 +12,7 @@ function s1() {
     console.log(`pinging (${servicesFound}) service${servicesFound > 1 ? "s": ""} (ghosts inclusive):`);
     console.log('services currently running')
     const cb = (pong, elem) => {
-      if (pong) {console.log(GOUTFORMAT.tabA +  elem)};
+      if (pong !== null && pong === elem) {console.log(GOUTFORMAT.tabA +  elem)};
     }
     services.forEach((elem) => { ping(elem, cb) });
   } else { console.log("no running service"); }
@@ -25,7 +25,7 @@ function s2() {
   readdirSync(GPATHS.serviceLog, GOUTFORMAT.encoding).reverse() : [];
   let Index = 0;
   const cb = (pong, elem) => {
-    if (pong) {
+    if (pong !== null && pong === elem) {
       Index = Index + 1;
       const servicePath = join(GPATHS.serviceLog, elem);
       const serviceDetails = 
@@ -64,7 +64,7 @@ function s2() {
 function s3(serviceId) {
   const servicePath = join(GPATHS.serviceLog, serviceId);
   const cb = (pong) => {
-  if (pong && existsSync(servicePath)) {
+  if (pong !== null && pong === serviceId && existsSync(servicePath)) {
     const serviceDetails = 
       JSON.parse(readFileSync(servicePath, GOUTFORMAT.encoding));
     const {

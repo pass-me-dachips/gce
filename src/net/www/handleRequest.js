@@ -13,7 +13,7 @@ export default async function handleRequests(req, res, sdu) {
      res.end(message);
   }
   try {
-    if (req.url === "/ping") { finish(200, 'text/plain') } 
+    if (req.url === "/ping") { finish(200, 'text/plain', sdu.serviceId) } 
     else {
       if (req.url === "/") req.url = sdu.entry ?? "index.html";
       if (req.url === "/gconfig.json") req.url = sdu.forbiden ?? "403.html";

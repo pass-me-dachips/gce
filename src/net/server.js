@@ -44,7 +44,11 @@ export default function Server(sdu) {
      execBrowser(`http://localhost:${port}`);
   };
 
-  const www = createServer((req,res) => handleRequests(req, res, sdu.serviceGcce));
+  const www = createServer((req,res) => {
+    let cbParams = sdu.serviceGcce;
+    cbParams['serviceId'] = sdu.serviceId;
+    handleRequests(req, res, sdu.serviceGcce);
+  });
   const wss = new WebSocketServer({ noServer: true });
 
   wss.on("connection", (ws) => { handleSapiRequests(ws, sdu) });

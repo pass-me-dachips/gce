@@ -17,19 +17,20 @@ export default function ping(elem, cb) {
     }
     const req = request(options, (res)=> {
       res.setEncoding(GOUTFORMAT.encoding);
-      res.on("data", ()=> {}); //do nothing
+      let data = "";
+      res.on("data", (chunk)=> data += chunk ); //do nothing
       res.on("end", ()=> {
-      if (res.statusCode === 200) pong = true;
-      else pong = false;
+      if (res.statusCode === 200) pong = data;
+      else pong = null;
       });
     })
-    req.on("error", () => { pong = false })
+    req.on("error", () => { pong = null })
     req.end();
     req.on("close", ()=> cb(pong, elem));
   } catch { pong = false; return pong; }
 }
 
 // usage =>
-// ping(3921xS...., (res)=> {
+// ping("8501xS....", (res)=> {
 //    console.log(res)
 // })
