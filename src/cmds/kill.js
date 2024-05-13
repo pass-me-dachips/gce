@@ -14,8 +14,10 @@ export default async function Kill(args) {
     const serviceId = args[1];
     const servicePath = join(GPATHS.serviceLog, serviceId);
     if (existsSync(servicePath)) {
+      try {
       const sdu = readFileSync(servicePath, GOUTFORMAT.encoding);
-      await end(JSON.parse(sdu), false);
+      await end(JSON.parse(sdu), false, false, true);
+      } catch { console.log("kill ESRCH: ghost removed.") }
     } else console.log("cannot find service %s", serviceId);
     return void 0;
   }
