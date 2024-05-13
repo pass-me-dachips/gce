@@ -25,7 +25,7 @@ export default async function Rkill() {
             await end(JSON.parse(sdu), false);
             console.log(`\x1b[93mkilled service ${serviceId} [success]\x1b[0m`);
          } else console.log(`\x1b[95mcannot find service ${serviceId} [failed]\x1b[0m`);
-       } catch { console.log(`\x1b[95mfailed to kill ${serviceId} [failed]\x1b[0m`); }
+       } catch { console.log(`\x1b[93mremoved ghost ${serviceId} [success]\x1b[0m`); }
     }
   } else console.log("no service to kill");
   return void 0;
