@@ -166,7 +166,7 @@ export async function quick(path,key) {
   }
 }
 
-export async function end(sdu, sendWsSignal, ws) {
+export async function end(sdu, sendWsSignal, ws, throwErrToCaller) {
   // remove service log =>  path: serviceLogPath + serviceId
   // remove trash => path:  trashPath + serviceId
   // if temp then wipe temp data => path: servicePath
@@ -183,7 +183,9 @@ export async function end(sdu, sendWsSignal, ws) {
   if (sdu.isTemporary) await rm(servicePath, rmOptions);
   Cache.clear();
   if (sendWsSignal) ws.send(JSON.stringify(code_0(true,"DIE", "DIE", null)));
-  process.kill(Pid);
+  if (throwErrToCaller) {
+    try { process.kill(Pid); } catch(error) { throw {error}; }
+  } else { process.kill(Pid); }
   return void 0;
 }
 

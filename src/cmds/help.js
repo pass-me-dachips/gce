@@ -14,6 +14,7 @@ Special Note:
     command is executed instead. see options on how to avoid this situation.
 
 Command:
+    clean -        Similar to rkill but removes only ghost services.
     gcce -         List all installed gcce's.
     globalConfig - Set up a global configuration for all gce services.
     install -      Install a new gcce.
@@ -30,6 +31,10 @@ Options:
                             File or Folder regardless of the value.
   --help                    Show this help.
   --port:<port>             Specify a custom port to run your gce service on.
+  --nosleep                 Only available on the \`gce clean\` command:
+                            Notify gce to keep the process running and recur-
+                            sively remove ghost services after a certain interv-
+                            al.
   -s <serviceId>            Only avaialable on the \`gce services\` command:
                             List more extensive information about a specific 
                             service <serviceId>.                   

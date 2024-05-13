@@ -19,7 +19,7 @@ if (args.length > 0) {
   else {  
     switch(args[0]) {
       case "--help" : { Help(); break }
-      case "clean" : { Clean(); break }
+      case "clean" : { Clean(args); break }
       case "gcce" : { Gcce(); break }
       case "globalConfig" : { GlobalC(); break }
       case "install" : { Install(args); break }
