@@ -33,8 +33,8 @@ Options:
   -s <serviceId>            Only avaialable on the \`gce services\` command:
                             List more extensive information about a specific 
                             service <serviceId>.                   
-  --temp                    Marks the service as a temporary service, meaning
-                            once the process dies, all data's are wiped out.
+  --temp                    Marks the service \`temporary\`, which means
+                            once the service dies, all data's are wiped out.
   -x                        Only avaialable on the \`gce services\` command:
                             List all running gce services and additional info
                             about each. 
