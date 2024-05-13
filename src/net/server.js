@@ -8,7 +8,7 @@ import { join } from "node:path";
 import { GSYSTEM, GOUTFORMAT, GPATHS } from "../var/system.js";
 import { writeFileSync, existsSync, mkdirSync } from "node:fs";
 import Cache from "../etc/cache.js";
-import execBrowser from "./www/openBrower.js";
+import execGcce from "./www/execGcce.js";
 
 export default function Server(sdu) {
   
@@ -41,7 +41,7 @@ export default function Server(sdu) {
      stdout.forEach(c => console.log(c));
      Cache.handleUpload(pathToServiceLog);
      Cache.handleStackUpload();
-     execBrowser(`http://localhost:${port}`);
+     execGcce(sdu.serviceGcce, port);
   };
 
   const www = createServer((req,res) => {
