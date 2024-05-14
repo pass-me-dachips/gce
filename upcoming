@@ -10,4 +10,4 @@ for changes made outside the gce services, and notify the client via ws
 using custom OID,SIG.
 
 THIS VERSION =>
-might add http rest client, golive, remember to the current version.
+might add http rest client, golive, find|grep, remember to the current version.
