@@ -13,5 +13,8 @@ a service package for handling terminal windows with functionalities like
 creating a new termial window or bringing an existing window back to the 
 foreground.
 
+an additional support for web urls(git to be precised) instead of paths in 
+cmd install, pkg add.
+
 THIS VERSION =>
 might add http rest client, golive, find|grep, remember to the current version.

@@ -5,12 +5,12 @@ export const TglobalConfig = {
 }
 
 /* pkgs-lock => 
-{
+{ 
   "packageName": {
     "version": <v>,
-    "usefstart": <bool>,
-    "fstart": "string",
-    "cstart": "string"
+    "cmd": "string",
+    "fpath": "{PATH}string",
+    "args": [...any]
   }
 }  
 */
