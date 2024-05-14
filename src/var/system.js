@@ -12,7 +12,10 @@ export const GSYSTEM = {
    name: "gce",
    version: "1.0.0",
    releaseDate: "2024-05-05",
-   ESTsize: "2MB"
+   ESTsize: "1MB",
+   ESTcommands: 9,
+   Estoptions: 7,
+   Estspkg: 23
 }
 
 export const GOUTFORMAT = {
@@ -34,7 +37,8 @@ export const GPATHS = {
    seperator: osSeperator[platform()],
    gcelock: ".gcelock.",
    trash: join(tempDir, "Trash"),
-   stack: join(dataDir, "Stack")
+   stack: join(dataDir, "Stack"),
+   pkgs: join(dataDir, "usr"),
 }
 
 export const ERRORCODES = {

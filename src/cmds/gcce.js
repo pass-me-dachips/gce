@@ -23,7 +23,7 @@ export default function Gcce() {
       }
    } // determine the default editor
    console.log(
-    `gcce: installed = ${configContent.length}, global-default <${defaultGcce}>`
+    `gcce: installed = ${configContent.length}, global-default ${defaultGcce}`
    );
    for (let k = 0; k < configContent.length; k++) {
      let elem = configContent[k];

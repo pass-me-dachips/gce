@@ -1,8 +1,19 @@
-/*+++++++++++ TEMPLATES ++++++++++++++++++*/
+//..... templates
 
 export const TglobalConfig = {
  def: "<def>"
 }
+
+/* pkgs-lock => 
+{
+  "packageName": {
+    "version": <v>,
+    "usefstart": <bool>,
+    "fstart": "string",
+    "cstart": "string"
+  }
+}  
+*/
 
 export const cacheTemplate= {
     lastUpdate: null, 
