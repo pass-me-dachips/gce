@@ -1,13 +1,17 @@
 
 NEXT VERSION =>
 in later versions, the gce.lock file would be created during none sapi i/o 
-operations that does not tolerate redundancy or a fan of idempotency, which 
-specifies that another process is working on that file and the request has to be 
-delayed until finish. although this would likely happen.
+operations that does not tolerate redundancy, which specifies that another process
+is working on that file and the request has to be delayed until finish. 
+although this would likely happen.
 
 a watch function that watches the top level of the current working directory 
 for changes made outside the gce services, and notify the client via ws 
 using custom OID,SIG.
+
+a service package for handling terminal windows with functionalities like 
+creating a new termial window or bringing an existing window back to the 
+foreground.
 
 THIS VERSION =>
 might add http rest client, golive, find|grep, remember to the current version.

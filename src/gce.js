@@ -6,6 +6,7 @@ import Help from "./cmds/help.js";
 import Install from "./cmds/install.js";
 import Kill from "./cmds/kill.js";
 import Main from "./cmds/main.js";
+import Pkg from "./cmds/pkg.js";
 import Remove from "./cmds/remove.js";
 import ResetGlobalC from "./cmds/resetGlobalC.js";
 import Rkill from "./cmds/rkill.js";
@@ -24,6 +25,7 @@ if (args.length > 0) {
       case "globalConfig" : { GlobalC(); break }
       case "install" : { Install(args); break }
       case "kill" : { Kill(args); break }
+      case "pkg" : { Pkg(args); break }
       case "remove" : { Remove(args); break }
       case "resetGlobalConfig" : { ResetGlobalC(); break }
       case "rkill" : { Rkill(); break }
