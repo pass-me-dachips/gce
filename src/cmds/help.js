@@ -55,7 +55,7 @@ Instructions:
 
 Run gce man <commandName> to list detailed information about each command,
 its sub-commands, sub-command-arguments, and options.
-Want to dive deeper? Run gce man.
+Want to know everything bout gce? Run gce man.
 `
   console.log(content);
   return void 0;
