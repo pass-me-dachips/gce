@@ -21,6 +21,14 @@ Command:
                    (1 option) = <relative_path_to_gcce>
     kill -         Kill a running gce service.
                    (1 option) = <serviceId> | <no_option>
+    pkg -          Work with packages (4 options)
+                   add - adds a new packages.
+                    (1 option) = <relative_path_to_package>
+                   man - returns the manual of the package.
+                   show - list all added packages.
+                    (1 option) - <name_of_package || exclude option>
+                   remove - remove an existing package.
+                    (1 option) - <name_of_package>
     remove -       Remove an existing gcce.
                    (1 option) = <name_of_gcce>
     resetGlobalConfig - reset the gce globalConfig.
