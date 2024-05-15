@@ -13,7 +13,7 @@ export const GSYSTEM = {
    version: "1.0.0",
    releaseDate: "2024-05-05",
    ESTsize: "1MB",
-   ESTcommands: 9,
+   ESTcommands: 10,
    Estoptions: 7,
    Estspkg: 23
 }
