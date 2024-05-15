@@ -5,7 +5,7 @@ export default function Help() {
   console.log("Published at %s", GSYSTEM.releaseDate);
   console.log("Copyright (c) 2024 by David.A,  github:<pass-me-dachips>");
   const content = `
-Usage: gce command [--options or no-option]
+Usage: gce command [sub-command || sub-command-argument] [--options or no-option]
 
 Special Note:
     The first argument after gce: arg[0] must be the relative path to your file
@@ -18,19 +18,19 @@ Command:
     gcce -         List all installed gcce's.
     globalConfig - Set up a global configuration for all gce services.
     install -      Install a new gcce.
-                   (1 option) = <relative_path_to_gcce>
+                   (1 sub-command-arg) = <relative_path_to_gcce>
     kill -         Kill a running gce service.
-                   (1 option) = <serviceId> | <no_option>
+                   (1 sub-command-arg) = <serviceId> | <no_arg>
     pkg -          Work with packages (4 options)
                    add - adds a new packages.
-                    (1 option) = <relative_path_to_package>
+                    (1 sub-command-arg) = <relative_path_to_package>
                    man - returns the manual of the package.
                    show - list all added packages.
-                    (1 option) - <name_of_package || exclude option>
+                    (1 sub-command-arg) - <name_of_package || exclude arg>
                    remove - remove an existing package.
-                    (1 option) - <name_of_package>
+                    (1 sub-command-arg) - <name_of_package>
     remove -       Remove an existing gcce.
-                   (1 option) = <name_of_gcce>
+                   (1 sub-command-arg) = <name_of_gcce>
     resetGlobalConfig - reset the gce globalConfig.
     rkill -        recursively kill all running gce services.
     services -     List the ids of all running gce services.
