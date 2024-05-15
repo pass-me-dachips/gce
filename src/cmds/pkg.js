@@ -1,6 +1,8 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
 import { GOUTFORMAT, GPATHS, GSYSTEM } from "../var/system.js";
+import { join } from "node:path";
+
+const pkgs_lock_path = join(GPATHS.pkgs,".pkgs-lock");
 
 function add(relativePath) {
   if (relativePath) {
@@ -21,7 +23,6 @@ function add(relativePath) {
         gceVersion: GSYSTEM.version
       }
       while (!existsSync(GPATHS.pkgs)) {mkdirSync(GPATHS.pkgs,{recursive: true});}
-      const pkgs_lock_path = join(GPATHS.pkgs,".pkgs-lock");
       const update = (content) => 
          writeFileSync(pkgs_lock_path, content, GOUTFORMAT.encoding);
 
@@ -56,8 +57,29 @@ function remove() {
   console.log("remove")
 }
 
-function show() {
-  console.log("show")
+function show(pkg) {
+  if (existsSync(pkgs_lock_path)) {
+    const packages = JSON.parse(readFileSync(pkgs_lock_path, GOUTFORMAT.encoding));
+    if (!pkg) {
+      const packagesName = Object.keys(packages);
+      console.log(`listing all packages........ ${packagesName.length} found`);
+      packagesName.forEach(elem => {
+        console.log(`\x1b[92m${elem}\x1b[0m  ${packages[elem].version}  ${packages[elem].fpath}`);
+      })
+    } else {
+      console.log("retrieving info about package %s ......", pkg);
+      const packageInfo = packages[pkg];
+      if (packageInfo) {
+        console.log(`  \x1b[92mname\x1b[0m  ${packageInfo.name}`);
+        console.log(`  \x1b[92mversion\x1b[0m  ${packageInfo.version}`);
+        console.log(`  \x1b[92mlocation\x1b[0m  ${packageInfo.fpath}`);
+        console.log(`  \x1b[92madded\x1b[0m  ${packageInfo.dateAdded}`);
+        console.log(`  \x1b[92mgce_v\x1b[0m  ${packageInfo.gceVersion}`);
+        console.log("want to upgrade/update this package? \x1b[92mrun gce pkg add %s\x1b[0m", pkg);
+        console.log("want to remove this package? \x1b[92mrun gce pkg remove %s \x1b[0m\n", pkg);
+      } else throw { message: `could not retreive info about package ${pkg}. \x1b[93mare you sure it exists?\x1b[0m`}
+    }
+  } else throw { message: "no packages found" }
 }
 
 
@@ -68,7 +90,7 @@ export default function Pkg(args) {
     switch(option) {
       case "add": add(identifier); break;
       case "man": man(); break;
-      case "show": show(); break;
+      case "show": show(identifier); break;
       case "remove": remove(); break;
       default: throw { message: `ABORTED: invalid option ${option}`}
     }
