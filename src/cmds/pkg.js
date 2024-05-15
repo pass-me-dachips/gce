@@ -1,7 +1,13 @@
 "use strict";
 
 import * as readLine from "node:readline";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+    existsSync, 
+    mkdirSync, 
+    readFileSync, 
+    rmSync, 
+    writeFileSync 
+} from "node:fs";
 import { GOUTFORMAT, GPATHS, GSYSTEM } from "../var/system.js";
 import { join } from "node:path";
 
