@@ -5,7 +5,7 @@ export default function Help() {
   console.log("Published at %s", GSYSTEM.releaseDate);
   console.log("Copyright (c) 2024 by David.A,  github:<pass-me-dachips>");
   const content = `
-Usage: gce command [sub-command || sub-command-argument] [--options or no-option]
+Usage: gce command [sub-command || sub-command-argument] [--options || -instructions or no-option/instruction ]
 
 Special Note:
     The first argument after gce: arg[0] must be the relative path to your file
@@ -42,15 +42,20 @@ Options:
   --nosleep                 Only available on the \`gce clean\` command:
                             Notify gce to keep the process running and recur-
                             sively remove ghost services after a certain interv-
-                            al.
-  -s <serviceId>            Only avaialable on the \`gce services\` command:
-                            List more extensive information about a specific 
-                            service <serviceId>.                   
+                            al.                 
   --temp                    Marks the service \`temporary\`, which means
                             once the service dies, all data's are wiped out.
+Instructions:
+  -s <serviceId>            Only avaialable on the \`gce services\` command:
+                            List more extensive information about a specific 
+                            service <serviceId>.  
   -x                        Only avaialable on the \`gce services\` command:
                             List all running gce services and additional info
                             about each. 
+
+Run gce man <commandName> to list detailed information about each command,
+its sub-commands, sub-command-arguments, and options.
+Want to dive deeper? Run gce man.
 `
   console.log(content);
   return void 0;
