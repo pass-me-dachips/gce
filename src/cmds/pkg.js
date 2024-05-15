@@ -1,8 +1,11 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { GOUTFORMAT, GPATHS, GSYSTEM } from "../var/system.js";
 import { join } from "node:path";
+import * as readLine from "node:readline";
 
 const pkgs_lock_path = join(GPATHS.pkgs,".pkgs-lock");
+const update = (content) => 
+   writeFileSync(pkgs_lock_path, content, GOUTFORMAT.encoding);
 
 function add(relativePath) {
   if (relativePath) {
@@ -23,8 +26,6 @@ function add(relativePath) {
         gceVersion: GSYSTEM.version
       }
       while (!existsSync(GPATHS.pkgs)) {mkdirSync(GPATHS.pkgs,{recursive: true});}
-      const update = (content) => 
-         writeFileSync(pkgs_lock_path, content, GOUTFORMAT.encoding);
 
       if (existsSync(pkgs_lock_path)) {
         const previousContents = 
@@ -53,8 +54,32 @@ function man() {
   console.log("man")
 }
 
-function remove() {
-  console.log("remove")
+function remove(pkg) {
+  if (existsSync(pkgs_lock_path)) {
+    const packages = JSON.parse(readFileSync(pkgs_lock_path, GOUTFORMAT.encoding));
+    if (pkg) {
+      console.log("removing package %s .......", pkg);
+      if (pkg in packages) {
+        delete packages[pkg];
+        update(JSON.stringify(packages, "", 4));
+        console.log("removed 1 package");
+      } else throw { message: `package ${pkg} does not exists` }
+    } else {
+      console.log("\x1b[92myou are about to remove all existing packages\x1b[0m");
+      const cb = answer => {
+         rl.close();
+         if (answer === "ACK") {
+          rmSync(pkgs_lock_path);
+          console.log(`removed ${Object.keys(packages).length} packages`);
+         }
+         else throw { message: "request not acknowledge" } 
+       }
+      const rl = readLine.createInterface({
+        input: process.stdin, output: process.stdout
+      });
+      rl.question("Enter `ACK` to acknowledge request ", cb);
+    }
+  } else throw { message: "no packages found" }
 }
 
 function show(pkg) {
@@ -91,7 +116,7 @@ export default function Pkg(args) {
       case "add": add(identifier); break;
       case "man": man(); break;
       case "show": show(identifier); break;
-      case "remove": remove(); break;
+      case "remove": remove(identifier); break;
       default: throw { message: `ABORTED: invalid option ${option}`}
     }
   } else {
