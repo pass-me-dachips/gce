@@ -4,6 +4,8 @@
    errors occuring in this file are caugth by the global error handler.
    ==============++++++++++++++++++++++++++++++==================================
 */
+import * as readLine from "node:readline";
+import { GOUTFORMAT, GPATHS, GSYSTEM } from "../var/system.js";
 import { join } from "node:path";
 import { 
    readFileSync,
@@ -11,9 +13,8 @@ import {
    existsSync, 
    statSync
 } from "node:fs";
-import * as readLine from "node:readline/promises";
-import { GOUTFORMAT, GPATHS, GSYSTEM } from "../var/system.js";
 import Server from "../net/server.js";
+import { promisify } from "node:util";
 
 export default async function Main(args) {
  const serviceOptions = args.slice(1);
@@ -92,14 +93,15 @@ export default async function Main(args) {
          const rl = readLine.createInterface({
              output: process.stdout, input: process.stdin
          })
+         let rlAsync = promisify(rl.question).bind(rl);
          const prompt = "- specify a gcce and its version eg = <gccename>,<version> "
-         let gcceNV = await rl.question(prompt); //NV as in name, version
+         let gcceNV = await rlAsync(prompt); //NV as in name, version
          const gcceSelected = (gcceNV) => {
             let gcce = gcces.find(elem => elem?.name === gcceNV?.split(",")[0] && 
             elem?.version === gcceNV?.split(",")[1])
             return gcce;
          }
-         while (!gcceSelected(gcceNV)) { gcceNV = await rl.question(prompt); }
+         while (!gcceSelected(gcceNV)) { gcceNV = await rlAsync(prompt); }
          rl.close();
          serviceGcce = gcceSelected(gcceNV);
        }
