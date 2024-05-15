@@ -1,7 +1,7 @@
-import { TglobalConfig } from "../var/templates.js";
-import { GPATHS, GOUTFORMAT } from "../var/system.js";
-import { writeFileSync, existsSync, mkdirSync, readFileSync, rmSync} from "node:fs";
 import * as readLine from "node:readline";
+import { GPATHS, GOUTFORMAT } from "../var/system.js";
+import { TglobalConfig } from "../var/templates.js";
+import { writeFileSync, existsSync, mkdirSync, readFileSync, rmSync} from "node:fs";
 
 export default function GlobalC() {
   const TEMPFILENAME = "SETCONFIG.json";

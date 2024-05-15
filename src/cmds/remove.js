@@ -1,5 +1,5 @@
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import * as readLine from "node:readline";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { GPATHS, GOUTFORMAT } from "../var/system.js";
 
 export default function Remove(args) {

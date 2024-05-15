@@ -1,6 +1,6 @@
-import { join } from "node:path";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { GPATHS, GOUTFORMAT } from "../var/system.js";
+import { join } from "node:path";
 
 function successLog(config) {
   console.log("COMMAND=install options <One-Option>=standard");

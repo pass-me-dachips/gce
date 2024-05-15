@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
 import { GOUTFORMAT, GPATHS } from "../var/system.js";
 import { hmr } from "../spkg/v1.0.0.js";
+import { join } from "node:path";
 import ping from "../local/pingServer.js";
 
 function s1() {
