@@ -1,6 +1,7 @@
-import { platform } from "node:os";
+import * as readLine from "node:readline";
 import { exec } from "node:child_process";
-import * as readLine from "node:readline/promises";
+import { platform } from "node:os";
+import { promisify } from "node:util";
 
 export default async function execBrowser(sdu, port) {
   if ("start" in sdu && sdu.start !== "default") {
@@ -15,9 +16,10 @@ export default async function execBrowser(sdu, port) {
       output: process.stdout
     });
     const message = "reply (y) to proceed or (x) to abort: ";
-    let answer = await rl.question(message);
+    let rlAsync = promisify(rl.question).bind(rl);
+    let answer = await rlAsync(message);
     while (answer !== "y" && answer !== "x") {
-      answer = await rl.question(message);
+      answer = await rlAsync(message);
     };
     rl.close();
     if (answer === "y") exec(start, (error, string)=> {
