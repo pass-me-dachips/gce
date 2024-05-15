@@ -1,3 +1,5 @@
+"use strict";
+
 import * as readLine from "node:readline";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { GOUTFORMAT, GPATHS, GSYSTEM } from "../var/system.js";
@@ -50,6 +52,9 @@ function add(relativePath) {
   } else throw { message: "cannot add a package without its relative path to the source code.\nHint: make sure you run \x1b[92m\`gce pkg add <relative_path_to_package>\`\x1b[0m next time!"}
 }
 
+/**
+ *@{}
+ */
 function man() {
   console.log("man")
 }
