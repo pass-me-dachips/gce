@@ -5,7 +5,7 @@ import * as readLine from "node:readline/promises";
 export default async function execBrowser(sdu, port) {
   if ("start" in sdu && sdu.start !== "default") {
     let { start, name, version } = sdu;
-    start = start.replaceAll("{port}", port);
+    start = start.replaceAll("{PORT}", port);
     console.log(
       `${name} v${version} uses a different start script which might not be trusted.`
     );
