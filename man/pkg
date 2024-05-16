@@ -1,8 +1,8 @@
-COMMAND pkgs, v1.0.0
+COMMAND pkg, v1.0.0
 want to build? visit https://github.com/pass-me-dachips/pkg-contrib.github.io
 
 DESCRIPTION
-    packages are add-ins created by individuals that provides additional support to gce services
+    packages are add-ins created by users that provides additional support to gce services
     rather than just the regular built in fs i/o operations.
     they provide various kind of functionalities: http clients (simlar to vscode REST client),
     live server, word finders, custom service api and lot more.
@@ -12,12 +12,12 @@ DESCRIPTION
 LIMITATIONS
     unlike other code editors/environments like vscode, packages does not provide
     a user interface for interating with a service instead there communicate using
-    custom protocols. similar to apis.
+    custom stateless protocols. similar to apis.
 
 UNIQUE_FEATURES
   -  since the gce package acts as an add-in api, it can be written in any 
      of your prefered language: node, python, ruby, java, platform specific executables (bin) in c, c++, rust, go, nim
-     etc as long as it runs on native desktops and the machine has the neccessary requirements (eg: interpreted language for packages that aren't native binaries),
+     etc as long as it runs properly in the environment and the machine has the neccessary requirements (eg: interpreted languages for packages that aren't native binaries),
      you are good to go.
   -  a mirror or custom repository that stores meta data about packages and can be
      easily accessed, cached, and modified etc. 
