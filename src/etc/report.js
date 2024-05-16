@@ -1,5 +1,12 @@
 "use strict";
 
+/**
+ * logs reports to the terminal.
+ * @param {string} message the report message to log 
+ * @param {string} oid the operation id
+ * @param {string} type the type of log. values can only be "fs", "others" or "danger".
+ * @returns {void}
+ */
 export function report(message, oid, type) {
   oid = `OID ${oid}`;
   const date = new Date().toUTCString();
