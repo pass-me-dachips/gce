@@ -6,6 +6,7 @@ import { access, constants } from "fs/promises";
 /**
  * Asynchronoulsy checks if the file exists. returns true if the path exists, 
  * false otherwise.
+ * @author david, pass-me-dachips
  * @param {string} path 
  * @returns {bool}
  */
