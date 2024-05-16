@@ -1,59 +1,66 @@
-// import * as readLine from "node:readline";
-// import { existsSync, readFileSync, writeFileSync } from "node:fs";
-// import { GPATHS, GOUTFORMAT } from "../var/system.js";
 
+"use strict";
+
+import * as readLine from "node:readline";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { PATHS, SYSTEM } from "../var/system.js";
+
+/**
+ * handle for remove command
+ * @param {Array} args 
+ * @returns {void}
+ */
 export default function Remove(args) {
-//   if (args.length === 2) {
-//     const gcceName = args[1];
-//     if (existsSync(GPATHS.gcceConfig)) {
-//       const configContent = JSON.parse(readFileSync(
-//         GPATHS.gcceConfig, GOUTFORMAT.encoding
-//       ));
-//       let gcceExists = false;
-//       for (let f = 0; f < configContent.length; f++) {
-//         if (configContent[f]?.name === gcceName) {gcceExists = true; break};
-//       } // checks if the gcce exists
+  if (args.length === 2) {
+    const gcceName = args[1];
+    if (existsSync(PATHS.gcceConfig)) {
+      const registry = JSON.parse(readFileSync(
+        PATHS.gcceConfig, SYSTEM.encoding
+      ));
+      let gcceExists = false;
+      for (let gcce = 0; gcce < registry.length; gcce++) {
+        if (registry[gcce]?.name === gcceName) { gcceExists = true; break };
+      } // checks if the gcce exists
 
-//       if (gcceExists) {
-//         const gcceDuplicate = [];
-//         let isgcceDuplicate = false;
+      if (gcceExists) {
+        const gcceDuplicate = [];
+        let isgcceDuplicate = false;
 
-//         for (let d = 0; d <= configContent.length; d++) {
-//           const elem = configContent[d];
-//           if (elem?.name === gcceName && gcceDuplicate.includes(elem?.name)) {
-//             isgcceDuplicate = true
-//             break;
-//           } else gcceDuplicate.push(elem?.name);
-//         } // checks if they are duplicates
+        for (let d = 0; d <= registry.length; d++) {
+          const gcce = registry[d];
+          if (gcce?.name === gcceName && gcceDuplicate.includes(gcce?.name)) {
+            isgcceDuplicate = true
+            break;
+          } else gcceDuplicate.push(gcce?.name);
+        } // checks if they are duplicates
 
-//         if (isgcceDuplicate) {
-//           const rl = readLine.createInterface({
-//             output:process.stdout, 
-//             input:process.stdin 
-//           });
-//           rl.question("Duplicates Found. input a version to remove ", (v)=> {
-//              const contentEncapsulated = [];
-//              configContent.forEach(elem => {
-//                if(elem?.name !== gcceName || elem?.name === gcceName
-//                && elem?.version !== v) contentEncapsulated.push(elem)
-//              })
-//              writeFileSync(GPATHS.gcceConfig, JSON.stringify(contentEncapsulated));
-//              // ----++++++ If the version wasnt found, gce wont notify you. 
-//              // run gce gcce to confirm removal +++++++----------
-//              rl.close();
-//           });
-//         } else {
-//           const contentEncapsulated = [];
-//           configContent.forEach(elem => {
-//              if (elem?.name !== gcceName) contentEncapsulated.push(elem)
-//           });
-//           writeFileSync(GPATHS.gcceConfig, JSON.stringify(contentEncapsulated));
-//         }
-//       } else throw { message: "ABORTED: gcce does not exist" }
-//     } else throw { message: "ABORTED: no gcce installed" }
-//   } else {
-//     let message = "ABORTED: cmd expects only 1 argument: <name_of_gcce>";
-//     throw { message }
-//   }
-console.log("remove", args)
+        if (isgcceDuplicate) {
+          const rl = readLine.createInterface({
+            output:process.stdout, 
+            input:process.stdin 
+          });
+          rl.question("Duplicates Found. input a version to remove ", (v)=> {
+             const newregistry = [];
+             registry.forEach(gcce => {
+               if(gcce?.name !== gcceName || gcce?.name === gcceName
+               && gcce?.version !== v) newregistry.push(gcce)
+             })
+             writeFileSync(PATHS.gcceConfig, JSON.stringify(newregistry));
+             // ----++++++ If the version is not found, gce wont notify you. 
+             // run gce gcce to confirm removal +++++++----------
+             rl.close();
+          });
+        } else {
+          const newregistry = [];
+          registry.forEach(gcce => {
+             if (gcce?.name !== gcceName) newregistry.push(gcce)
+          });
+          writeFileSync(PATHS.gcceConfig, JSON.stringify(newregistry));
+        }
+      } else throw { message: "gcce does not exist" }
+    } else throw { message: "no gcce installed" }
+  } else {
+    const message = "remove expects only 1 argument which is the name of the gcce";
+    throw { message }
+  }
 }

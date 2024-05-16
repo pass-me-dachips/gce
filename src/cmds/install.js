@@ -2,8 +2,8 @@
 "use strict";
 
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { PATHS, SYSTEM } from "../var/system.js";
 import { join } from "node:path";
+import { PATHS, SYSTEM } from "../var/system.js";
 
 /**
  * a function that logs a success message upon gcce installation

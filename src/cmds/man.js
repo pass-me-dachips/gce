@@ -24,7 +24,7 @@ export default function Man(args) {
       case "install":  man(manualPath("install"), 30); break;
       case "kill":  ""; break;
       case "pkg":  ""; break;
-      case "remove":  ""; break;
+      case "remove":  man(manualPath("remove"), 30); break;
       case "resetGlobalConfig":  ""; break;
       case "rkill":  ""; break;
       case "services":  ""; break;

@@ -1,0 +1,20 @@
+cmd: remove, v1.0.0
+status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+
+DESCRIPTION
+    this commnad provides features for removing an existing gcce.
+
+USAGE
+    `gce remove <gcce_name>`
+    where '<gcce_name>' is the name of a valid gcce currently installed.
+    in cases where multiple versions of the gcce are installed, gce would
+    be unable to decide which to keep and which to remove in this case, you 
+    would get a prompt to specify the version of the gcce you want to remove.
+    if executed successfully, the process is closed without a response.
+    note: if you were prompted to input a version and none of the gcces where that 
+    version, you would not get an error, but instead same behaviour similar
+    to if the gcce was successfully removed.
+    in other to confirm the gcce removal, run `gce gcce`
+
+ 
+documented and created by david <pass-me-dachips> 16-5-2024
