@@ -8,7 +8,7 @@ import { request } from "node:http";
  * ping a service to test its avaialabilty
  * @author david, pass-me-dachips
  * @param {string} serviceId the service id
- * @param {function(string | null, string)} cb a function to be called when the pinging stops 
+ * @param {function(string | null, string)} cb a function that is called when the pinging stops 
  * regarless of wether it was successful or not. the cb should expect 2 arguments. the serviceReply and 
  * serviceId arguments. if successful the serviceReply argument would be the serviceId, else null 
  * @returns {void} 

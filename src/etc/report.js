@@ -2,7 +2,7 @@
 "use strict";
 
 /**
- * logs reports to the terminal.
+ * log reports to the terminal.
  * @author david, pass-me-dachips
  * @param {string} message the report message to log 
  * @param {string} oid the operation id

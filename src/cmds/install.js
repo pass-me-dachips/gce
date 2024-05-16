@@ -41,7 +41,9 @@ export default function Install(args) {
           forbiden
          ) {
          gconfigContent["path"] = join(process.cwd(), gccePath);
-         while (!existsSync(PATHS.configDir)) mkdirSync(PATHS.configDir);
+         while (!existsSync(PATHS.configDir)) mkdirSync(PATHS.configDir, {
+           recursive: true
+         });
          // creates the os configdir if not existing
          
          console.log(`installing ${name}, v${version}........`);
@@ -71,7 +73,7 @@ export default function Install(args) {
          }
        } else {
          const message =
-           "gcce requirements not meet.\nare you sure the gcces's gconfig.json has the following fields? \x1b[92mstart, author, name, repo, version, entry, notFound, forbiden\x1b[0m";
+           "gcce requirements not met.\nare you sure the gcces's gconfig.json has the following fields? \x1b[92mstart, author, name, repo, version, entry, notFound, forbiden\x1b[0m";
          throw { message }
        }
     } else throw { message: `cannot find ${gconfigPath}`}
