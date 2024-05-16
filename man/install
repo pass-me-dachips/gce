@@ -1,0 +1,28 @@
+COMMAND install, v1.0.0
+
+DESCRIPTION
+    this commnad provides functionalities for installing a gcce.
+    if your'e not familiar with the term `gcce`, gce recommends running `gce
+    man about` to understand what a gcce is all about.
+
+
+UNIQUE_FEATURES
+    when you install a gcce, gce does not copy the code base of the gcce to an 
+    isolated folder or similar, gce only reads the `gconfig.json` file located in
+    the root directory of every gcce codebase, and copies its contents to its own 
+    config file.
+    this approach is to give gcce developers a more convient way to test gcces
+    on developement.
+    gce recommends users to store the codebase of all installed gcces in a dedicated
+    file path for example <home>/gce/gcce/ so as to maintain readability and prevent
+    tampering of the code since changes made to the gcce codebase would reflect in
+    every service on start, restart or reload.
+
+USAGE
+    `gce install <relative/path/to/gcce>`
+    where '<relative/path/to/gcce>' should be the actual relative path to the gcce.
+    if written successfully, the gcce is added to gce's config file and the gcce
+    can now be used in any gce service. congrats!
+
+ 
+documented and created by david <pass-me-dachips>

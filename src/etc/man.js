@@ -2,7 +2,7 @@
 "use strict";
 
 import * as readLine from "node:readline";
-import { system } from "../var/system.js";
+import { SYSTEM } from "../var/system.js";
 import { readFileSync } from "node:fs";
 import { stdin, stdout } from "node:process";
 
@@ -15,7 +15,7 @@ import { stdin, stdout } from "node:process";
  * per pages where each page is {lenPerPage}
  */
 function getPages(path, lenPerPage) {
-  let pageLines = readFileSync(path, system.encoding);
+  let pageLines = readFileSync(path, SYSTEM.encoding);
   pageLines = pageLines.split("\n");
 
   let currentPageLen = 0;

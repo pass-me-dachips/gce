@@ -1,7 +1,7 @@
 
 "use strict";
 
-import { system } from "../../var/system.js";
+import { SYSTEM } from "../../var/system.js";
 import { request } from "node:http";
 
 /**
@@ -27,7 +27,7 @@ export default function ping(serviceId, cb) {
     }
     }
     const req = request(options, (res)=> {
-      res.setEncoding(system.encoding);
+      res.setEncoding(SYSTEM.encoding);
       let data = "";
       res.on("data", (chunk)=> data += chunk );
       res.on("end", ()=> {

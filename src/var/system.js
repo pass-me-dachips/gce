@@ -23,7 +23,7 @@ export const ERRORCODES = {
 export const SYSTEM = {
   encoding: "ascii",
   ESTsize: "1MB",
-  ESTcommands: 10,
+  ESTcommands: 11,
   Estoptions: 1,
   Estspkg: 23,
   name: "gce",
