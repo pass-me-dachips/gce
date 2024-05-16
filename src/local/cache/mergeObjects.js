@@ -3,6 +3,7 @@
 
 /**
  * merge two objects together where object values must be integers.
+ * @author david, pass-me-dachips
  * @param {object} objectA 
  * @param {object} objectB 
  * @returns {object} the merged object
