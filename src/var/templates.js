@@ -1,25 +1,12 @@
-//..... templates
+// templates
 
-export const TglobalConfig = {
- def: "<def>"
-}
-
-/* pkgs-lock => 
-{ 
-  "packageName": {
-    "version": <v>,
-    "cmd": "string",
-    "fpath": "{PATH}string",
-    "args": [...any]
-  }
-}  
-*/
-
-export const cacheTemplate= {
+export const cacheTemplate = {
     lastUpdate: null, 
     fs: {}, 
     packages: {},  
+    vpackage: {},
     stack: {},
+    packageRequests: {},
     stackLastUpdate: null
 };
 
@@ -128,4 +115,8 @@ export const extensionTable = {
   Exhtml: "Xhtml",
   Eyaml: "Yaml", Eyml: "Yaml",
   Ezsh: "Zsh",
+}
+
+export const globalConfigTemplate = {
+ default: "<gcce_name>"
 }

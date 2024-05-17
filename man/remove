@@ -15,6 +15,5 @@ USAGE
     version, you would not get an error, but instead same behaviour similar
     to if the gcce was successfully removed.
     in other to confirm the gcce removal, run `gce gcce`
-
  
 documented and created by david <pass-me-dachips> 16-5-2024

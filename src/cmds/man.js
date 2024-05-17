@@ -20,7 +20,7 @@ export default function Man(args) {
       case "upcoming":  ""; break;
       case "clean":  ""; break;
       case "gcce":  man(manualPath("gcce"), 12); break;
-      case "globalConfig":  ""; break;
+      case "globalConfig":  man(manualPath("globalConfig"), 30); break;
       case "install":  man(manualPath("install"), 30); break;
       case "kill":  ""; break;
       case "pkg":  ""; break;
