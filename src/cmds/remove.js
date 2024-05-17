@@ -6,7 +6,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { PATHS, SYSTEM } from "../var/system.js";
 
 /**
- * handle for remove command
+ * handler for the remove command
  * @param {Array} args 
  * @returns {void}
  */

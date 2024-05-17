@@ -1,34 +1,41 @@
-// import { existsSync, readFileSync } from "node:fs";
-// import { GPATHS , GOUTFORMAT } from "../var/system.js";
 
+"use strict";
+
+import { existsSync, readFileSync } from "node:fs";
+import { PATHS , SYSTEM } from "../var/system.js";
+
+/**
+ * handler for the gcce command
+ * @author david, pass-me-dachips
+ * @returns {void}
+ */
 export default function Gcce() {
-  // if (existsSync(GPATHS.gcceConfig)) {
-  //   const configContent = JSON.parse(readFileSync(
-  //     GPATHS.gcceConfig, GOUTFORMAT.encoding
-  //   ));
-  //  let defaultGcce = "unable_to_determine";
-  //  if (existsSync(GPATHS.globalConfig)) {
-  //     const globalConfig = JSON.parse(readFileSync(
-  //       GPATHS.globalConfig,
-  //       GOUTFORMAT.encoding
-  //     ));
-  //     if ("def" in globalConfig) {
-  //       for (let i = 0; i <= configContent.length; i++) {
-  //         let elem = configContent[i];
-  //         if (elem?.name === globalConfig?.def) { 
-  //            defaultGcce = globalConfig?.def; 
-  //            break;
-  //         }
-  //       }
-  //     }
-  //  } // determine the default editor
-  //  console.log(
-  //   `gcce: installed = ${configContent.length}, global-default ${defaultGcce}`
-  //  );
-  //  for (let k = 0; k < configContent.length; k++) {
-  //    let elem = configContent[k];
-  //    console.log(`${GOUTFORMAT.tabA}gcce ${elem?.name}, version ${elem?.version}`);
-  //  }
-  // } else throw { message: "ABORTED: no gcce found" }
-  console.log("gcce")
+  if (existsSync(PATHS.gcceConfig)) {
+    const registry = JSON.parse(readFileSync(
+      PATHS.gcceConfig, SYSTEM.encoding
+    ));
+   let defaultGcce = "cannot determine";
+   if (existsSync(PATHS.globalConfig)) {
+      const globalConfig = JSON.parse(readFileSync(
+        PATHS.globalConfig,
+        SYSTEM.encoding
+      ));
+      if ("default" in globalConfig) {
+        for (let i = 0; i <= registry.length; i++) {
+          let gcce = registry[i];
+          if (gcce?.name === globalConfig?.default) { 
+             defaultGcce = globalConfig?.default; 
+             break;
+          }
+        }
+      }
+   } // determine the default gcce
+   console.log(
+    `gcce installed = ${registry.length}, global-default = ${defaultGcce}`
+   );
+   for (let i = 0; i < registry.length; i++) {
+     let gcce = registry[i];
+     console.log(`${SYSTEM.tabA}gcce ${gcce?.name}, v ${gcce?.version}, repo \x1b[95m${gcce?.repo}\x1b[0m`);
+   }
+  } else throw { message: "no gcce installed" }
 }

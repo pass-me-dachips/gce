@@ -19,7 +19,7 @@ export default function Man(args) {
       case "contrib":  ""; break;
       case "upcoming":  ""; break;
       case "clean":  ""; break;
-      case "gcce":  ""; break;
+      case "gcce":  man(manualPath("gcce"), 12); break;
       case "globalConfig":  ""; break;
       case "install":  man(manualPath("install"), 30); break;
       case "kill":  ""; break;
