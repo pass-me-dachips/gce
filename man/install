@@ -2,7 +2,7 @@ cmd: install, v1.0.0
 status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
 
 DESCRIPTION
-    this commnad provides features for installing a gcce.
+    this command provides features for installing a gcce.
     if youre not familiar with the term `gcce`, gce recommends running `gce
     man about` to understand what a gcce is all about.
 
