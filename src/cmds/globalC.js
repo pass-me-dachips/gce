@@ -1,3 +1,6 @@
+
+"use strict";
+
 import * as readLine from "node:readline";
 import { execSync } from "node:child_process";
 import { globalConfigTemplate } from "../var/templates.js";
