@@ -160,7 +160,7 @@ function show(packageName) {
         Object.keys(packageInfo).forEach(elem => {
           console.log(`  \x1b[92m${elem}\x1b[0m  ${packageInfo[elem]}`);
         });
-        console.log("want to update this package? \x1b[92mrun gce pkg add %s\x1b[0m", packageName);
+        console.log("want to update this package? \x1b[92mrun gce pkg add path/to/package\x1b[0m");
         console.log("want to remove this package? \x1b[92mrun gce pkg remove %s \x1b[0m\n", packageName);
       } else throw { message: `could not retreive info about package ${packageName}. \x1b[93mare you sure it exists?\x1b[0m`}
     }
