@@ -29,8 +29,9 @@ USAGE
 
 SUB_COMMANDS 
   - add
-  - remove
   - man
+  - remove
+  - show
 
  add - adds a package to gce's registry
   usage `gce pkg add <relative_path_to_package>`
@@ -42,5 +43,12 @@ SUB_COMMANDS
   package, the subcommand would require an argument which is the name of the 
   package.
   usage `gce pkg remove <packageName>
+
+ show - lists all existing packages in the registry
+  usage `gce pkg show`
+  this command lists all packages in the registry, in other to list more info
+  about a specific package, the subcommand would require an argument which is the 
+  name of the package.
+  usage `gce pkg show <packageName>
 
 documented and created by david <pass-me-dachips> 18-5-2024

@@ -138,32 +138,34 @@ function remove(packageName) {
   } else throw { message: "no packages found" }
 }
 
-// function show(pkg) {
-//   if (existsSync(pkgs_lock_path)) {
-//     const packages = JSON.parse(readFileSync(pkgs_lock_path, SYSTEM.encoding));
-//     if (!pkg) {
-//       const packagesName = Object.keys(packages);
-//       console.log(`listing all packages........ ${packagesName.length} found`);
-//       packagesName.forEach(elem => {
-//         console.log(`\x1b[92m${elem}\x1b[0m  ${packages[elem].version}  ${packages[elem].fpath}`);
-//       })
-//     } else {
-//       console.log("retrieving info about package %s ......", pkg);
-//       const packageInfo = packages[pkg];
-//       if (packageInfo) {
-//         console.log(`  \x1b[92mname\x1b[0m  ${packageInfo.name}`);
-//         console.log(`  \x1b[92mversion\x1b[0m  ${packageInfo.version}`);
-//         console.log(`  \x1b[92mlocation\x1b[0m  ${packageInfo.fpath}`);
-//         console.log(`  \x1b[92madded\x1b[0m  ${packageInfo.dateAdded}`);
-//         console.log(`  \x1b[92mgce_v\x1b[0m  ${packageInfo.gceVersion}`);
-//         console.log("want to upgrade/update this package? \x1b[92mrun gce pkg add %s\x1b[0m", pkg);
-//         console.log("want to remove this package? \x1b[92mrun gce pkg remove %s \x1b[0m\n", pkg);
-//       } else throw { message: `could not retreive info about package ${pkg}. \x1b[93mare you sure it exists?\x1b[0m`}
-//     }
-//   } else throw { message: "no packages found" }
-// }
-
-
+/**
+ * a sub-command for listing existing packages
+ * @author david, pass-me-dachips
+ * @param {*} packageName 
+ * @returns {void}
+ */
+function show(packageName) {
+  if (existsSync(pkgs_registry_path)) {
+    const packages = JSON.parse(readFileSync(pkgs_registry_path, SYSTEM.encoding));
+    if (!packageName) {
+      const packagesName = Object.keys(packages);
+      console.log(`listing all packages........ ${packagesName.length} found`);
+      packagesName.forEach(elem => {
+        console.log(`\x1b[92m${elem}\x1b[0m  ${packages[elem].version}  \x1b[95m${packages[elem].cmd1}\x1b[0m`);
+      });
+    } else {
+      console.log("retrieving info of package %s ......", packageName);
+      const packageInfo = packages[packageName];
+      if (packageInfo) {
+        Object.keys(packageInfo).forEach(elem => {
+          console.log(`  \x1b[92m${elem}\x1b[0m  ${packageInfo[elem]}`);
+        });
+        console.log("want to update this package? \x1b[92mrun gce pkg add %s\x1b[0m", packageName);
+        console.log("want to remove this package? \x1b[92mrun gce pkg remove %s \x1b[0m\n", packageName);
+      } else throw { message: `could not retreive info about package ${packageName}. \x1b[93mare you sure it exists?\x1b[0m`}
+    }
+  } else throw { message: "no packages found" }
+}
 
 /**
  * handler for the pkg command
@@ -177,8 +179,8 @@ export default function Pkg(args) {
     const option = args[0]; const sub_command_arg = args[1];
     switch(option) {
       case "add": add(sub_command_arg); break;
-      case "show": show(sub_command_arg); break;
       case "remove": remove(sub_command_arg); break;
+      case "show": show(sub_command_arg); break;
       default: throw { message: `invalid sub-command ${option}`}
     }
   } else {
