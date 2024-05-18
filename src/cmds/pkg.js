@@ -21,7 +21,7 @@ const update = (content) =>
 
 
 /**
- * a sub-command that adds packages to gce's global registry
+ * a sub-command for adding packages to gce's global registry
  * @author david, pass-me-dachips
  * @param {string} relativePath relative path to the package
  * @returns {void}
@@ -105,38 +105,42 @@ async function add(relativePath) {
   } else console.log("cannot add a package without its relative path to the source code.\nHint: make sure you run \x1b[92m\`gce pkg add <relative_path_to_package>\`\x1b[0m next time!"); process.exit(1);
 }
 
-
-// function remove(pkg) {
-//   if (existsSync(pkgs_lock_path)) {
-//     const packages = JSON.parse(readFileSync(pkgs_lock_path, GOUTFORMAT.encoding));
-//     if (pkg) {
-//       console.log("removing package %s .......", pkg);
-//       if (pkg in packages) {
-//         delete packages[pkg];
-//         update(JSON.stringify(packages, "", 4));
-//         console.log("removed 1 package");
-//       } else throw { message: `package ${pkg} does not exists` }
-//     } else {
-//       console.log("\x1b[92myou are about to remove all existing packages\x1b[0m");
-//       const cb = answer => {
-//          rl.close();
-//          if (answer === "ACK") {
-//           rmSync(pkgs_lock_path);
-//           console.log(`removed ${Object.keys(packages).length} packages`);
-//          }
-//          else throw { message: "request not acknowledge" } 
-//        }
-//       const rl = readLine.createInterface({
-//         input: process.stdin, output: process.stdout
-//       });
-//       rl.question("Enter `ACK` to acknowledge request ", cb);
-//     }
-//   } else throw { message: "no packages found" }
-// }
+/**
+ * a sub-command for removing existing packages from gce's global registry
+ * @author david, pass-me-dachips
+ * @param {string} packageName 
+ * @returns {void}
+ */
+function remove(packageName) {
+  if (existsSync(pkgs_registry_path)) {
+    const packages = JSON.parse(readFileSync(pkgs_registry_path, SYSTEM.encoding));
+    if (packageName) {
+      console.log("removing package %s .......", packageName);
+      if (packageName in packages) {
+        delete packages[packageName];
+        update(JSON.stringify(packages, "", 4));
+        console.log("removed 1 package");
+      } else throw { message: `package ${packageName} does not exists` }
+    } else {
+        console.log("\x1b[92myou are about to remove all existing packages\x1b[0m");
+        const cb = answer => {
+          rl.close();
+          if (answer === "ACK") {
+             rmSync(pkgs_registry_path);
+             console.log(`removed ${Object.keys(packages).length} packages`);
+          } else throw { message: "request not acknowledge" } 
+        }
+        const rl = readLine.createInterface({
+          input: process.stdin, output: process.stdout
+        });
+        rl.question("reply `ACK` to acknowledge request ", cb);
+    }
+  } else throw { message: "no packages found" }
+}
 
 // function show(pkg) {
 //   if (existsSync(pkgs_lock_path)) {
-//     const packages = JSON.parse(readFileSync(pkgs_lock_path, GOUTFORMAT.encoding));
+//     const packages = JSON.parse(readFileSync(pkgs_lock_path, SYSTEM.encoding));
 //     if (!pkg) {
 //       const packagesName = Object.keys(packages);
 //       console.log(`listing all packages........ ${packagesName.length} found`);

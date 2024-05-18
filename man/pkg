@@ -34,6 +34,11 @@ SUB_COMMANDS
 
  add - adds a package to gce's registry
   usage `gce pkg add <relative_path_to_package>`
-  if the package already exists, gce would update.
+  if the package already exists, gce would update it.
 
-
+ remove - removes a package from gce's registry 
+  usage `gce pkg remove`
+  this command removes all packages in the registry, in other to remove a specific
+  package, the subcommand would require an argument which is the name of the 
+  package.
+  usage `gce pkg remove <packageName>
