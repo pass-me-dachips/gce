@@ -1,5 +1,5 @@
 COMMAND pkg, v1.0.0
-status: linux(experinmental), android(experinmental), windows(experinmental), mac(experinmental)
+status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
 want to build a package? visit https://github.com/pass-me-dachips/pkg-contrib.github.io
  
 DESCRIPTION
@@ -42,3 +42,5 @@ SUB_COMMANDS
   package, the subcommand would require an argument which is the name of the 
   package.
   usage `gce pkg remove <packageName>
+
+documented and created by david <pass-me-dachips> 18-5-2024
