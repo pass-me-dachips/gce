@@ -37,6 +37,9 @@ SUB_COMMANDS
   usage `gce pkg add <relative_path_to_package>`
   if the package already exists, gce would update it.
 
+ man - returns the manual/docs of the specified package
+  usage `gce pkg man <packageName>`
+  
  remove - removes a package from gce's registry 
   usage `gce pkg remove`
   this command removes all packages in the registry, in other to remove a specific

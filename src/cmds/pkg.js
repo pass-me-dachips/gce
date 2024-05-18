@@ -10,6 +10,7 @@ import {
     rmSync, 
     writeFileSync 
 } from "node:fs";
+import * as manual from "../etc/man.js";
 import { PATHS, SYSTEM } from "../var/system.js";
 import { platform } from "node:os";
 import { promisify } from "node:util";
@@ -106,6 +107,27 @@ async function add(relativePath) {
 }
 
 /**
+ * a sub-command for outputing the specified package's manual
+ * @author david, pass-me-dachips
+ * @param {string} packageName 
+ * @returns {void}
+ */
+function man(packageName) {
+ if (packageName) {
+   const packages = existsSync(pkgs_registry_path) ?
+    JSON.parse(readFileSync(pkgs_registry_path, SYSTEM.encoding)) : {};
+   const pkg = packages[packageName];
+   if (pkg) {
+     const pathToManfile = pkg.man;
+     if (existsSync(pathToManfile)) {
+        manual.default(pathToManfile, 30);
+        return void 0;
+     } else throw { message: `could not find ${packageName}'s manual file ` }
+   } else throw { message: `could not find package ${packageName}` }
+ } else throw { message: "sub-command man expected the name of the package" }
+}
+
+/**
  * a sub-command for removing existing packages from gce's global registry
  * @author david, pass-me-dachips
  * @param {string} packageName 
@@ -179,6 +201,7 @@ export default function Pkg(args) {
     const option = args[0]; const sub_command_arg = args[1];
     switch(option) {
       case "add": add(sub_command_arg); break;
+      case "man": man(sub_command_arg); break;
       case "remove": remove(sub_command_arg); break;
       case "show": show(sub_command_arg); break;
       default: throw { message: `invalid sub-command ${option}`}
