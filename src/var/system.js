@@ -21,6 +21,7 @@ export const ERRORCODES = {
 }
 
 export const SYSTEM = {
+  buildAPackage_repo: "https://github.com/pass-me-dachips/pkg-contrib.github.io",
   encoding: "ascii",
   ESTsize: "1MB",
   ESTcommands: 11,

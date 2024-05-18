@@ -1,17 +1,18 @@
 COMMAND pkg, v1.0.0
-want to build? visit https://github.com/pass-me-dachips/pkg-contrib.github.io
-
+status: linux(experinmental), android(experinmental), windows(experinmental), mac(experinmental)
+want to build a package? visit https://github.com/pass-me-dachips/pkg-contrib.github.io
+ 
 DESCRIPTION
     packages are add-ins created by users that provides additional support to gce services
     rather than just the regular built in fs i/o operations.
-    they provide various kind of functionalities: http clients (simlar to vscode REST client),
-    live server, word finders, custom service api and lot more.
+    they provide various kinds of functionalities: http clients (simlar to vscode REST client),
+    live servers, word finders, custom service api and lot more.
     the gce `pkg` command provides sub commands that allows adding, removing,
     updating, listing and documenting packages etc.
 
 LIMITATIONS
     unlike other code editors/environments like vscode, packages does not provide
-    a user interface for interating with a service instead there communicate using
+    an user interface for interating with a service instead there communicate using
     custom stateless protocols. similar to apis.
 
 UNIQUE_FEATURES
@@ -27,3 +28,12 @@ USAGE
 
 
 SUB_COMMANDS 
+  - add
+  - remove
+  - man
+
+ add - adds a package to gce's registry
+  usage `gce pkg add <relative_path_to_package>`
+  if the package already exists, gce would update.
+
+

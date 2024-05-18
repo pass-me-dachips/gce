@@ -1,69 +1,110 @@
-// "use strict";
 
-// import * as readLine from "node:readline";
-// import {
-//     existsSync, 
-//     mkdirSync, 
-//     readFileSync, 
-//     rmSync, 
-//     writeFileSync 
-// } from "node:fs";
-// import { GOUTFORMAT, GPATHS, GSYSTEM } from "../var/system.js";
-// import { join } from "node:path";
+"use strict";
 
-// const pkgs_lock_path = join(GPATHS.pkgs,".pkgs-lock");
-// const update = (content) => 
-//    writeFileSync(pkgs_lock_path, content, GOUTFORMAT.encoding);
+import * as readLine from "node:readline";
+import { basename, join } from "node:path";
+import {
+    existsSync, 
+    mkdirSync, 
+    readFileSync, 
+    rmSync, 
+    writeFileSync 
+} from "node:fs";
+import { PATHS, SYSTEM } from "../var/system.js";
+import { platform } from "node:os";
+import { promisify } from "node:util";
+import { supportedPlatforms as gceSupportedPlatforms } from "../var/osPaths.js";
 
-// function add(relativePath) {
-//   if (relativePath) {
-//    const pathToGPKG = join(process.cwd(), relativePath);
-//    const pathTo_gpkgconfig = join(pathToGPKG, "gpkg.json");
-//    const gpkg = JSON.parse(readFileSync(pathTo_gpkgconfig, GOUTFORMAT.encoding));
-//    let { name, version, cmd, fpath, args } = gpkg;
-//    if (name && version && cmd && fpath) {
-//       fpath = fpath.split("{PATH}");
-//       fpath[0] = pathToGPKG;
-//       fpath = join(...fpath);
-//       if (cmd === "{BIN}") {
-//         cmd = cmd.replace("{BIN}", `chmod +x ${fpath} &&`);
-//       }
-//       const encaps = {
-//         name, version, cmd, fpath, args: args ?? [],
-//         dateAdded: new Date(),
-//         gceVersion: GSYSTEM.version
-//       }
-//       while (!existsSync(GPATHS.pkgs)) {mkdirSync(GPATHS.pkgs,{recursive: true});}
+const pkgs_registry_path = join(PATHS.pkgs,".pkgs_reg");
+const update = (content) => 
+   writeFileSync(pkgs_registry_path, content, SYSTEM.encoding);
 
-//       if (existsSync(pkgs_lock_path)) {
-//         const previousContents = 
-//           JSON.parse(readFileSync(pkgs_lock_path, GOUTFORMAT.encoding));
-//         if (name in previousContents) {
-//           console.log(`Alert: ${name} already added to the extended packages.`);
-//           console.log(`Gce would upgrade or update the previous entry with this.`);
-//           let contentToWrite = {...previousContents};
-//           contentToWrite[name] = encaps;
-//           contentToWrite = JSON.stringify(contentToWrite, "", 4);
-//           update(contentToWrite);
-//         } else {
-//           let contentToWrite = {...previousContents, [name]:{...encaps}}
-//           contentToWrite = JSON.stringify(contentToWrite, "", 4);
-//           update(contentToWrite);
-//         }
-//       } else {
-//         const contentToWrite = JSON.stringify({[name]: {...encaps}},"", 4);
-//         update(contentToWrite);
-//       }
-//    } else throw { message: `package does not meet gce's requirements.\nname, version, cmd and fpath must be present in ${pathTo_gpkgconfig}`}
-//   } else throw { message: "cannot add a package without its relative path to the source code.\nHint: make sure you run \x1b[92m\`gce pkg add <relative_path_to_package>\`\x1b[0m next time!"}
-// }
 
-// /**
-//  *@{}
-//  */
-// function man() {
-//   console.log("man")
-// }
+/**
+ * a sub-command that adds packages to gce's global registry
+ * @author david, pass-me-dachips
+ * @param {string} relativePath relative path to the package
+ * @returns {void}
+ */
+async function add(relativePath) {
+  if (relativePath) {
+   const pathToPackage = join(process.cwd(), relativePath);
+   const pathToHeaderfile = join(pathToPackage, "Headerfile.json");
+   const Headerfile = JSON.parse(readFileSync(pathToHeaderfile, SYSTEM.encoding));
+   let {
+      author,
+      name,
+      version,
+      repo,
+      man,
+      desc,
+      requirements,
+      supportedPlatforms,
+      cmd,
+      cmd1,
+      args
+   } = Headerfile;
+   if (
+      author && name && version && repo && man && desc && requirements && 
+      Array.isArray(requirements) && supportedPlatforms && Array.isArray(supportedPlatforms) &&
+      cmd && cmd1 && args && Array.isArray(args) && basename(man) === "Manfile"
+    ) {
+      man = join(process.cwd(), relativePath, man); // switch to absoulte path
+      if (requirements.length > 0) {
+         const rl = readLine.createInterface({
+           input : process.stdin,
+           output : process.stdout
+         });
+         const questionAsync = promisify(rl.question).bind(rl);
+         console.log(`\x1b[92m${name} requires the following \x1b[0m`);
+         requirements.forEach(elem => console.log(` ~ ${elem}`));
+         await questionAsync("\x1b[95mare you sure you met the specified requirements?\x1b[0m hit enter to continue ");
+         rl.close();
+      }
+      const osplatform = platform();
+      if (supportedPlatforms.includes(osplatform) && 
+          gceSupportedPlatforms.includes(osplatform)) {
+         cmd1 = cmd1.split("{PATH}");
+         cmd1[0] = pathToPackage;
+         cmd1 = join(...cmd1);
+         if (cmd === "{BIN}" &&
+             osplatform === "android" || 
+             osplatform === "darwin" || 
+             osplatform === "linux") {
+           cmd = cmd.replace("{BIN}", `chmod +x ${cmd1} && `);
+         } else cmd = "";
+        const encaps = {
+          author, name, version, repo, man, desc, requirements, supportedPlatforms,
+          cmd, cmd1, args,
+          dateAdded: new Date(),
+          gceVersion: SYSTEM.version
+        }
+
+        while (!existsSync(PATHS.pkgs)) {mkdirSync(PATHS.pkgs,{recursive: true});}
+        if (existsSync(pkgs_registry_path)) {
+           const previousContents = 
+             JSON.parse(readFileSync(pkgs_registry_path, SYSTEM.encoding));
+           if (name in previousContents) {
+            console.log(`Alert: ${name} already added to the registry.`);
+            console.log(`Gce would upgrade or update the previous entry with this.`);
+            let contentToWrite = { ...previousContents };
+            contentToWrite[name] = encaps;
+            contentToWrite = JSON.stringify(contentToWrite, "", 4);
+            update(contentToWrite);
+          } else {
+            let contentToWrite = {...previousContents, [name]:{...encaps}};
+            contentToWrite = JSON.stringify(contentToWrite, "", 4);
+            update(contentToWrite);
+          }
+        } else {
+          const contentToWrite = JSON.stringify({[name]: {...encaps}},null, 4);
+          update(contentToWrite);
+        }  
+      } else { console.log(`\x1b[5;94m${name} does not support platform: ${osplatform}\x1b[0m`); process.exit(1); }
+   } else console.log(`package does not meet gce's requirements.\nvisit \x1b[95m${SYSTEM.buildAPackage_repo}\x1b[0m to learn more about Headerfiles`); process.exit(1);
+  } else console.log("cannot add a package without its relative path to the source code.\nHint: make sure you run \x1b[92m\`gce pkg add <relative_path_to_package>\`\x1b[0m next time!"); process.exit(1);
+}
+
 
 // function remove(pkg) {
 //   if (existsSync(pkgs_lock_path)) {
@@ -119,20 +160,25 @@
 // }
 
 
+
+/**
+ * handler for the pkg command
+ * @author david, pass-me-dachips
+ * @param {Array} args 
+ * @returns {void}
+ */
 export default function Pkg(args) {
-//   args = args.slice(1);
-//   if (args[0]) {
-//     const option = args[0]; const identifier = args[1];
-//     switch(option) {
-//       case "add": add(identifier); break;
-//       case "man": man(); break;
-//       case "show": show(identifier); break;
-//       case "remove": remove(identifier); break;
-//       default: throw { message: `ABORTED: invalid option ${option}`}
-//     }
-//   } else {
-//     const message = `ABORTED: cmd expects at least 1 option, got ${args.length}`;
-//     throw { message}
-//   }
-console.log("package")
+  args = args.slice(1);
+  if (args[0]) {
+    const option = args[0]; const sub_command_arg = args[1];
+    switch(option) {
+      case "add": add(sub_command_arg); break;
+      case "show": show(sub_command_arg); break;
+      case "remove": remove(sub_command_arg); break;
+      default: throw { message: `invalid sub-command ${option}`}
+    }
+  } else {
+    const message = "pkg expected at least 1 sub-command, got 0";
+    throw { message}
+  }
 }

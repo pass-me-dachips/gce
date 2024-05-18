@@ -65,17 +65,17 @@ below is a complete snippet of what the Headerfile.json **must** contain.
   NOTE: the filename of the manual must be **Manfile** with no extension.
 - ther `desc` field specifies the description of the package.
 - the `requirements` field must be an array containing the requirements needed in order for the package to function. gce would not perform any action to make sure the requirements are meet, instead it logs each of the requirements to the user before intalling the package, alerting the user to make sure the requirements are met before installation.
-- the `supportedPlatforms` field must be an array containing the supported platforms in other to run the application. possible values: windows, linux, android, mac.
+- the `supportedPlatforms` field must be an array containing the supported platforms in other to run the application. possible values: win32, linux, android, darwin.
   gce would perform actions to make sure the platform is supported before installation.
 - the `cmd` field specifies the command to run while making the request to the package.
   examples of this values can be `node` if node-based application , `python` if python-based application, and so on....
-  if the package is runned as an executable binary, shell, bat, or cmd script etc that does not have a start command but might require executable permissions to run, then the value of the cmd field must be `{BIN}`. eg:
+  if the package is runned as an executable binary, shell etc that does not have a start command but might require executable permissions to run (usually on posix), then the value of the cmd field must be `{BIN}`. eg:
 
 ```json
 { "cmd": "{BIN}" }
 ```
 
-this allows gce to effectively set the neccessary permisions based on the os,
+this allows gce to effectively set the neccessary permisions on posix,
 and execute the binary.
 
 - the `cmd1` field specifies the relative part to the entry point of the package.
