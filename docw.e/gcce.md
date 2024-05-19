@@ -20,3 +20,8 @@ if u omit the field gce would open the browser by default. if u add the field
 but set the value to default, gce would do same.
 NOTE gce would show the script to the user and ask for acknowledgedment before
 continuation.
+
+UNLIKE OPERAS, THESE PACKAGES DOES NOT RAISE ANY ERRORS EVEN AFTER OCCURENECE.
+THEY ARE RESPONDED AS PLAIN STRINGS.
+
+NOTE THE QUICK SPKG WOULD THROW ERRORS SINCE IT DEALS WITH FS.

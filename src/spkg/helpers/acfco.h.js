@@ -1,6 +1,5 @@
 
 //acfco = ansi codes for coloured output.
-
 const acfco = `
 Colors	        FG    BG    CODE
 Black           30    40    \\x1b[{num}m

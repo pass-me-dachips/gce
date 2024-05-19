@@ -1,6 +1,8 @@
-// This file contains short snippets | placeholders for multiple langs
-// File meant to be used in spkg.quick
-// This file migth contain incorrect codes. be sure to crosscheck.
+/* 
+ * This file contains short snippets | placeholders for multiple langs
+ * File meant to be used in spkg.quick
+ * This file migth contain incorrect codes. be sure to crosscheck.
+*/
 
 
 export const short = "The quick brown fox jumps over the lazy dog.";
