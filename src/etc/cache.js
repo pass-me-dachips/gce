@@ -1,19 +1,32 @@
+
+"use strict";
+
 import { cacheTemplate, extensionTable } from "../var/templates.js";
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
-import { GOUTFORMAT, GPATHS } from "../var/system.js";
-import { report } from "./report.js";
 import { existsAsync } from "./existsAsync.js";
 import { join } from "node:path";
-import mergeObjects from "../local/mergeObjects.js";
+import mergeObjects from "../local/cache/mergeObjects.js";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { report } from "./report.js";
+import { SYSTEM, PATHS } from "../var/system.js";
 
 class Env {
   constructor() {
     this.table = {...cacheTemplate};
   }
+
+ /** clears the cache
+  * @author david, pass-me-dachips
+  * @returns {void}
+  */
  clear() {
    this.table = {...cacheTemplate};
    return void 0;
  }
+
+  /** adds fileName(extension) to the tech stack
+  * @author david, pass-me-dachips
+  * @returns {void}
+  */
  addStack(fileName) {
    let extension;
    if (!fileName.includes(".")) extension = fileName;
@@ -29,10 +42,23 @@ class Env {
    this.table.stackLastUpdate = String(new Date());
    return void 0;
  }
+
+  /** returns the cached stack
+  * @author david, pass-me-dachips
+  * @returns {void}
+  */
  getStack() {
    return this.table.stack;
  }
- 
+
+  /** 
+  * updates the total number of bytes written/dropped to files from the gce 
+  * throughout the entire service life-span
+  * @author david, pass-me-dachips
+  * @param {boolean} forDropped specifies if the update is for bytes dropped
+  * @param {string} bytes the number of bytes
+  * @returns {void}
+  */
  fsupgradeBytes(forDropped, bytes) {
    bytes = Number(bytes);
    const placeholder = forDropped ? "total_bytes_dropped" : "total_bytes_written";
@@ -44,6 +70,14 @@ class Env {
    this.table.lastUpdate = new Date();
    return void 0;
  }
+
+  /** 
+  * increaments the total numbers of directoies written/dropped throughout the 
+  * entire service life-span
+  * @author david, pass-me-dachips
+  * @param {boolean} forDropped specifies if the update is for dirs dropped
+  * @returns {void}
+  */
  fsupgradeDir(forDropped) {
    const placeholder = forDropped ? "total_dirs_dropped" : "total_dirs_written";
    const total_dirs = this.table.fs[placeholder];
@@ -54,22 +88,33 @@ class Env {
    this.table.lastUpdate = new Date();
    return void 0;
  }
+
+  /** returns the cached fs analytics
+  * @author david, pass-me-dachips
+  * @returns {void}
+  */
  getFs() {
    return this.table.fs;
  }
 
+
+  /** uploads cache/service meta data to service log after every minute
+  * @author david, pass-me-dachips
+  * @param {string} path path to service log
+  * @returns {void}
+  */
  handleUpload(path) {
-   const TBI = 60000 //Time Before Interval: every 1 minute;
+   const TBI = 60000; //Time Before Interval: every 1 minute
    setInterval(async ()=> {
       try {
-         const prevUpload = await readFile(path, GOUTFORMAT.encoding);
+         const prevUpload = await readFile(path, SYSTEM.encoding);
          const newUpload = {...JSON.parse(prevUpload)};
          newUpload["memUsage"] = process.memoryUsage();
          newUpload["uptime"] = process.uptime();
          newUpload["idleSince"] = this.table.lastUpdate;
          newUpload["fs"] = this.table.fs;
-         await writeFile(path, JSON.stringify(newUpload, "", 4), GOUTFORMAT.encoding);
-         report("captured analysis", "SYSTEM", "others");
+         await writeFile(path, JSON.stringify(newUpload, null, 4), SYSTEM.encoding);
+         report("captured analytics", "SYSTEM", "others");
       } catch(error) {
         report(error.message, "SYSTEM", "others");
       } 
@@ -77,37 +122,42 @@ class Env {
    return void 0;
  }
 
+  /** updates the global tech stack with cached
+  * @author david, pass-me-dachips
+  * @returns {void}
+  */
  handleStackUpload() {
-   const TBI = 120000 //Time Before Interval: every 2 minute;
+  //  const TBI = 120000; //Time Before Interval: every 2 minute
+   const TBI = 4000; //Time Before Interval: every 2 minute
    let prevUpdateTime = null;
    setInterval(async ()=> {
       try {
         if (this.table.stackLastUpdate !== prevUpdateTime) {
-          while (!await existsAsync(GPATHS.stack)) {
-             await mkdir(GPATHS.stack, { recursive: true });
+          while (!await existsAsync(PATHS.stack)) {
+             await mkdir(PATHS.stack, { recursive: true });
           }
-          const stackLock = join(GPATHS.stack, ".stacklock");
+          const stackLock = join(PATHS.stack, ".stacklock");
           const trials = {
             tries: 0,
             qouta: 7
           };
           const write = async () => {
             if (!await existsAsync(stackLock)) {
-               const stackpath = join(GPATHS.stack, ".gcestack");
+               const stackpath = join(PATHS.stack, ".gcestack");
                let prevStackContents;
                if (await existsAsync(stackpath)) {
                  const contents = JSON.parse(
-                  await readFile(stackpath, GOUTFORMAT.encoding)
+                  await readFile(stackpath, SYSTEM.encoding)
                  );
                  prevStackContents = contents;
                } else prevStackContents = {}
-               // Terminated until next loop if prevContents not of type object
+
                const newStackContents =
                  mergeObjects(prevStackContents, this.table.stack);
 
-               await writeFile(stackLock, "", GOUTFORMAT.encoding); 
+               await writeFile(stackLock, "", SYSTEM.encoding); 
                // lock the file so no any other running service can write to it.
-               await writeFile(stackpath, JSON.stringify(newStackContents), GOUTFORMAT.encoding);
+               await writeFile(stackpath, JSON.stringify(newStackContents), SYSTEM.encoding);
                await rm(stackLock); //unlock the file.
                prevUpdateTime = this.table.stackLastUpdate;
             }
@@ -121,7 +171,7 @@ class Env {
         } 
         // only handle writes if there are new updates on the service 
         // programming stack.
-      } catch { return void 0;} 
+      } catch { return void 0; } 
    },TBI);
    return void 0;
  } 
@@ -132,6 +182,11 @@ class Env {
  }
 }
 
+/**
+ * the gce's cache for handling stack updates, analytics, packages etc.
+ * @author david, pass-me-dachips
+ * @returns {void}
+ */
 const Cache = Env.EnvInstance();
 
 export default Cache;
