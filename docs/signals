@@ -29,4 +29,14 @@ OSFORBIDEN              the request is forbiden at the os level eg: trying to re
                         payload.
 ONLINE                  common in write operations: notifies the client 
                         another service or previous request is still working on
-                        the specified resource eg a file.
+                        the specified resource eg a file. this happens when a 
+                        .gcelock.nameoffile.extensionoffile is present in the 
+                        dir where the file resides: this typically means another
+                        service is writting to the file.
+                        at sometimes, a service migth fail to remove the file
+                        .gcelock.nameoffile.extensionoffile after writing to it,
+                        you would typically be unable to write to that file from
+                        any gce service again, in this case you migth want to manually
+                        remove the .gcelock.nameoffile.extensionoffile file.
+                        how do you know this situation has occur? you would keep on
+                        getting this signal whenever any service try writing to the file

@@ -1,6 +1,13 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ALTHOUGH THS PACKAGE IS STABLE, GCE ONLY RECOMMENDS USING FOR TEST PURPOSES
+AS PACKAGES ARE NOT CURRENTLY INTEGRATED WITH THE GCE SERVICE WHICH MEANS YOU TYPICALLY 
+CANNOT USE PACKAGES IN A GCE SERVICE BUT CAN CURRENTLY INSTALL, REMOVE, SHOW 
+ETC.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 COMMAND pkg, v1.0.0
 status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
-want to build a package? visit https://github.com/pass-me-dachips/pkg-contrib.github.io
+want to build a package? visit https://gce.firebase.webapp/docs/pkg_contrib
  
 DESCRIPTION
     packages are add-ins created by users that provides additional support to gce services

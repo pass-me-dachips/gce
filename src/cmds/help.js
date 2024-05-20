@@ -35,16 +35,10 @@ export default function Help() {
 //     rkill -        recursively kill all running gce services.
 //     services -     List the ids of all running gce services.
 // Options:
-//   --FAIAF                   Notify gce to treath the first argument arg[0] as a
-//                             File or Folder regardless of the value.
-//   --help                    Show this help.
-//   --port:<port>             Specify a custom port to run your gce service on.
 //   --nosleep                 Only available on the \`gce clean\` command:
 //                             Notify gce to keep the process running and recur-
 //                             sively remove ghost services after a certain interv-
 //                             al.                 
-//   --temp                    Marks the service \`temporary\`, which means
-//                             once the service dies, all data's are wiped out.
 // Instructions:
 //   -s <serviceId>            Only avaialable on the \`gce services\` command:
 //                             List more extensive information about a specific 

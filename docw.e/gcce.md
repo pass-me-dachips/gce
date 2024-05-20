@@ -1,4 +1,5 @@
 all gcces must have a gconfig.json file in its root dir that holds the configs
+
 of the gcce. the contents must be as follows : {
 start,
 author,
@@ -25,3 +26,19 @@ UNLIKE OPERAS, THESE PACKAGES DOES NOT RAISE ANY ERRORS EVEN AFTER OCCURENECE.
 THEY ARE RESPONDED AS PLAIN STRINGS.
 
 NOTE THE QUICK SPKG WOULD THROW ERRORS SINCE IT DEALS WITH FS.
+
+the ws path for operations is /sapi: sapi as in service Api.
+
+any sapi response with CODE -1 means the request was not even process and failed,
+while any response with CODE 0 means the request was recieved and processed
+succesfully.
+
+each request must contains an oid which stands for operation ID. each response must
+also contain the same oid of the request so that the request can be identified when
+reaching the client side.
+
+SIGNALS ARE ONLY PRESENT IN CODE 0 RESPONSES AND IT IS THE
+ACTUAL CODE REPRESENTING IF THE REQUEST WAS COMPLETELY ACKNOWLEGED OR NOT
+eg: reading from a file.
+
+GCE WOULD HARDLY OR WOULD NEVER STRIP ANY FEATURE PAPKAGES OR GCCES COMPLETELY RELY ON
