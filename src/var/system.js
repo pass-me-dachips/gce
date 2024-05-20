@@ -24,7 +24,7 @@ export const SYSTEM = {
   buildAPackage_repo: "https://github.com/pass-me-dachips/pkg-contrib.github.io",
   encoding: "ascii",
   ESTsize: "1MB",
-  ESTcommands: 11,
+  ESTcommands: 13,
   Estoptions: 1,
   Estspkg: 23,
   name: "gce",
