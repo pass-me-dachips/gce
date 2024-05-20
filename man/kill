@@ -7,11 +7,11 @@ DESCRIPTION
 KEYWORDS 
    ghost services: services that are in the service log/registry but are not currently
    running due to abortion: eg using ctrl c, ctrl z, shutdown, reboot etc.
-   || : referes to or 
-   <no-option> : you dont have to specify any option
+   || : referes to or.
+   <no-argument> : you dont have to specify any argument.
 
 USAGE 
-  `gce kill <serviceId> || <no-option>`
+  `gce kill <serviceId> || <no-argument>`
 
 NOTE
    you would get 'kill ESRCH: ghost removed' if you try to kill a ghost service:

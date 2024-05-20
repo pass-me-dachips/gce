@@ -5,18 +5,18 @@ DESCRIPTION
   returns information about services.
 
 KEYWORDS 
-  no-sub-command: you dont have to specify any sub command.
+  no-instruction: you dont have to specify any instruction.
   ghosts/ghost-services : read the cmd `kill` manual to learn more.
 
 USAGE 
-  gce services <sub-command || no-sub-command>
+  gce services <-instruction || no-instruction>
 
 SPECIAL_NOTE
   when you run `gce services` without any subcommand, gce would ping all services
   in the log/registry, and return the total number of services in the registry: ghosts inclusive
   together with the lists of services currently running (ghosts exclusive).
 
-SUB_COMMANDS
+INSTRUCTIONS
   -x                        
      List all running gce services and additional info
      about each (ghosts exclusive). 
