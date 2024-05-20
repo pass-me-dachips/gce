@@ -1,0 +1,29 @@
+COMMAND services, v1.0.0
+status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+
+DESCRIPTION 
+  returns information about services.
+
+KEYWORDS 
+  no-sub-command: you dont have to specify any sub command.
+  ghosts/ghost-services : read the cmd `kill` manual to learn more.
+
+USAGE 
+  gce services <sub-command || no-sub-command>
+
+SPECIAL_NOTE
+  when you run `gce services` without any subcommand, gce would ping all services
+  in the log/registry, and return the total number of services in the registry: ghosts inclusive
+  together with the lists of services currently running (ghosts exclusive).
+
+SUB_COMMANDS
+  -x                        
+     List all running gce services and additional info
+     about each (ghosts exclusive). 
+
+  -s <serviceId>            
+     List more extensive information about a specific service <serviceId>
+     Note that gce would only return these information if the service is currently
+     running and not a ghost.
+
+documented and created by david <pass-me-dachips> 20-5-2024

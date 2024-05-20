@@ -26,7 +26,7 @@ export default function Man(args) {
       case "remove":  man(manualPath("remove"), 30); break;
       case "resetGlobalConfig":  man(manualPath("resetGlobalConfig"), 20); break;
       case "rkill":  man(manualPath("rkill"), 15); break;
-      case "services":  ""; break;
+      case "services":  man(manualPath("services"), 30); break;
       case "start":  man(manualPath("start"), 30); break;
       default: throw { 
          message: `gce does not have a manual for command ${args[0]}` 

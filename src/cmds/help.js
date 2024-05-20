@@ -23,19 +23,11 @@ export default function Help() {
 //     remove -       Remove an existing gcce.
 //     resetGlobalConfig - reset the gce globalConfig.
 //     rkill -        recursively kill all running gce services.
-//     services -     List the ids of all running gce services.
-// Options:
+//     services -   
 //   --nosleep                 Only available on the \`gce clean\` command:
 //                             Notify gce to keep the process running and recur-
 //                             sively remove ghost services after a certain interv-
 //                             al.                 
-// Instructions:
-//   -s <serviceId>            Only avaialable on the \`gce services\` command:
-//                             List more extensive information about a specific 
-//                             service <serviceId>.  
-//   -x                        Only avaialable on the \`gce services\` command:
-//                             List all running gce services and additional info
-//                             about each. 
 
 // Run gce man <commandName> to list detailed information about each command,
 // its sub-commands, sub-command-arguments, and options.
