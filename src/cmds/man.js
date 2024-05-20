@@ -25,7 +25,7 @@ export default function Man(args) {
       case "pkg":  man(manualPath("pkg"), 30); break;
       case "remove":  man(manualPath("remove"), 30); break;
       case "resetGlobalConfig":  man(manualPath("resetGlobalConfig"), 20); break;
-      case "rkill":  ""; break;
+      case "rkill":  man(manualPath("rkill"), 15); break;
       case "services":  ""; break;
       case "start":  man(manualPath("start"), 30); break;
       default: throw { 

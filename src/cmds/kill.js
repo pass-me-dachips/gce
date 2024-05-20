@@ -13,7 +13,7 @@ import { readdirSync, readFileSync, existsSync } from "node:fs";
  */
 export default async function Kill(args) {
   if (args.length === 1) {
-    const services = readdirSync(PATHS.serviceLog, SYSTEM.encoding).length;
+    const services = existsSync(PATHS.serviceLog) ? readdirSync(PATHS.serviceLog, SYSTEM.encoding).length : 0;
     console.log(
       `assass1n: ${services} target${services > 1 ? "s": ""}, ${services} ready to be killed.`
     );

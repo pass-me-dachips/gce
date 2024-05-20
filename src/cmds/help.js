@@ -17,11 +17,9 @@ export default function Help() {
 //     clean -        Similar to rkill but removes only ghost services.
 //     gcce -         List all installed gcce's.
 //     globalConfig - Set up a global configuration for all gce services.
-//     install -      Install a new gcce.
-//                    (1 sub-command-arg) = <relative_path_to_gcce>
+//     install -      Install a new gcce
 //     kill -         Kill a running gce service.
-//                    (1 sub-command-arg) = <serviceId> | <no_arg>
-//     pkg -          Work with packages (4 options)
+//     pkg -          Work with packages
 //     remove -       Remove an existing gcce.
 //     resetGlobalConfig - reset the gce globalConfig.
 //     rkill -        recursively kill all running gce services.
