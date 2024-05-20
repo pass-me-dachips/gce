@@ -17,7 +17,7 @@ export default function Man(args) {
    switch(args[0]) {
       case "about":  ""; break;
       case "contrib":  ""; break;
-      case "clean":  ""; break;
+      case "clean":  man(manualPath("clean"), 30); break;
       case "gcce":  man(manualPath("gcce"), 12); break;
       case "globalConfig":  man(manualPath("globalConfig"), 30); break;
       case "install":  man(manualPath("install"), 30); break;

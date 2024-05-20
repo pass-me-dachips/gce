@@ -1,0 +1,28 @@
+cmd: clean, v1.0.0
+status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+
+DESCRIPTION
+     similar to the rkill command but only removes ghost services.
+     the main difference between the rkill and clean command is that rkill command kills all services
+     including ghosts and none-ghost services while the clean command only removes ghost services.
+     use the clean command in cases where you want to ensure your machine is not bloated with useless data's
+     of ghost services.
+
+KEYWORDS 
+     ghosts/ghost-services : read the cmd `kill` manual to learn more.
+     none-ghost services: services that are currently active and running.
+     || : referes to or 
+     <no-option> : you dont have to specify any option
+
+USAGE
+    `gce clean <option || no-option>`
+
+OPTIONS 
+     --nosleep                
+        notifies gce to keep the process running and recursively remove ghost services 
+        at a certain interval (3 minutes).    
+
+NOTE
+    clean would return nothing if there are no GHOST services to remove.
+ 
+documented and created by david <pass-me-dachips> 20-5-2024
