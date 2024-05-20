@@ -1,6 +1,9 @@
+
+"use strict";
+
+import * as spkgUtils from "../../../spkg/v1.0.0.js";
 import { code_0 } from "../codes.js";
 import { defopera } from "./default.js";
-import * as spkgUtils from "../../../spkg/v1.0.0.js";
 import { errorResponseHelper } from "./fs.js";
 import { join } from "node:path";
 import { report } from "../../../etc/report.js";
@@ -50,6 +53,14 @@ async function END(ws, sdu, oid) {
 }
 
 // ++++++++ the main spkg api ++++++++++++++++++
+/** a function that handles ws requests and responses for service packages
+ * operations
+ * @author david, pass-me-dachips
+ * @param {object} request the http request instance
+ * @param {object} ws the web socket connection instance
+ * @param {object} sdu the service data unit
+ * @returns {void}
+ */
 export default async function spkg(request, ws, sdu) {
   const { OPERA, PAYLOAD, OID } = request;
   switch (OPERA) {
@@ -111,4 +122,3 @@ export default async function spkg(request, ws, sdu) {
      default: ws.send(defopera(OPERA)); //would change.
   };
 }
- 

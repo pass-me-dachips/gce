@@ -1,14 +1,24 @@
+
+"use strict";
+
 import { code_1 } from "./codes.js";
 import { deftype } from "./types/default.js";
 import fs from "./types/fs.js";
 import spkg from "./types/spkg.js";
 
+
+/** a function handles ws connections/messages
+ * @author david, pass-me-dachips
+ * @param {object} ws the websocket instance
+ * @param {object} sdu the service data unit
+ * @returns {void} 
+ */
 export default function handleSapiRequests(ws, sdu) {
    const error = "error";
    const operation = "message";
    const stringify = (payload) => JSON.stringify(payload);
 
-   ws.on(error, ()=> ws.send(stringify(code_1("gce encountered an error."))));
+   ws.on(error, ()=> ws.send(stringify(code_1("gce encountered an error"))));
 
    ws.on(operation, async (data)=> {
       data = data.toString();

@@ -11,7 +11,7 @@ import {
    existsSync, 
    statSync
 } from "node:fs";
-// import Server from "../net/server.js";
+import Server from "../net/server.js";
 
 /** handler for the core start service command
  * @author david, pass-me-dachips
@@ -130,14 +130,14 @@ export default async function Main(args) {
     console.log("~ Official repository at: https://github.com/pass-me-dachips/gce");//@log   
     console.log("~ Hint: run gce --help to see all available commands and options\n\x1b[0m");//@log  
 
-//    Server({
-//      servicePath,
-//      serviceType,
-//      isTemporary,
-//      serviceGcce,
-//      servicePort,
-//      gconfigContent
-//     }); //++++++++++ pass control to the server
+   Server({
+     servicePath,
+     serviceType,
+     isTemporary,
+     serviceGcce,
+     servicePort,
+     gconfigContent
+    }); //++++++++++ pass control to the server
   } else throw { message: "no gcce installed" }
  } catch(error) {
    console.log(error.message);

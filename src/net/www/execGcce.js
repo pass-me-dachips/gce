@@ -1,8 +1,17 @@
+
+"use strict";
+
 import * as readLine from "node:readline";
 import { exec } from "node:child_process";
 import { platform } from "node:os";
 import { promisify } from "node:util";
+import { supportedPlatforms } from "../../var/osPaths.js";
 
+/**
+ * @author david, pass-me-dachips
+ * @param {object} sdu the service data unit
+ * @param {string} port the service port
+ */
 export default async function execBrowser(sdu, port) {
   if ("start" in sdu && sdu.start !== "default") {
     let { start, name, version } = sdu;
@@ -28,15 +37,12 @@ export default async function execBrowser(sdu, port) {
     });
     else process.exit(0);
   } else {
-    let platforms = ["darwin", "freebsd", "linux", "win32", "openbsd"];
-    if (platforms.includes(platform())) {
-       const LFO = "xdg-open" //linux,freebsd,openbsd
+    if (supportedPlatforms.includes(platform())) {
        const proc = {
+         android: "",
+         linux: "xdg-open",
          darwin: "open",
-         freebsd: LFO,
-         linux: LFO,
-         win32: "start",
-         openbsd: LFO,
+         win32: "start"
        };
        exec(`${proc[platform()]} http://localhost:${port}`);
      } 

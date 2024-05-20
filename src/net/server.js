@@ -1,41 +1,48 @@
 
-import { createServer } from "node:http";
-import handleRequests from "./www/handleRequest.js";
-import { WebSocketServer } from "ws";
-import handleSapiRequests from "./sapi/handleRequests.js";
-import url from "node:url";
-import { join } from "node:path";
-import { GSYSTEM, GOUTFORMAT, GPATHS } from "../var/system.js";
-import { writeFileSync, existsSync, mkdirSync } from "node:fs";
-import Cache from "../etc/cache.js";
-import execGcce from "./www/execGcce.js";
+"use strict";
 
+import Cache from "../etc/cache.js";
+import { createServer } from "node:http";
+import execGcce from "./www/execGcce.js";
+import handleRequests from "./www/handleRequest.js";
+import handleSapiRequests from "./sapi/handleRequests.js";
+import { join } from "node:path";
+import { SYSTEM, PATHS } from "../var/system.js";
+import url from "node:url";
+import { WebSocketServer } from "ws";
+import { writeFileSync, existsSync, mkdirSync } from "node:fs";
+
+/**
+ * @author david, pass-me-dachips
+ * @param {object} sdu the service date unit or information about the service
+ * @returns {void}
+ */
 export default function Server(sdu) {
   
   const onServerStart = () => {
-     const port  = www.address().port;
+     const port = www.address().port;
      const serviceId = `${port}xS${(Math.floor(Math.random() * 100000))}`;
-     while (!existsSync(GPATHS.serviceLog)) {
-       mkdirSync(GPATHS.serviceLog, { recursive: true });
+     while (!existsSync(PATHS.serviceLog)) {
+       mkdirSync(PATHS.serviceLog, { recursive: true });
      }
      sdu.createdAt = new Date();
      sdu.serviceId = serviceId;
      sdu.servicePort = port;
      sdu.Pid = process.pid;
-     const pathToServiceLog = join(GPATHS.serviceLog,serviceId);
-     writeFileSync(pathToServiceLog,JSON.stringify(sdu,"",4));
+     const pathToServiceLog = join(PATHS.serviceLog, serviceId);
+     writeFileSync(pathToServiceLog, JSON.stringify(sdu,"",4));
 
      const stdout = [
-        `grand code environment(GCE) ${GSYSTEM.version}, serviceOptions -:`,
-        `${GOUTFORMAT.tabA}\x1b[93mabsolute(0) ${sdu.servicePath}`,
-        `${GOUTFORMAT.tabA}temp = ${sdu.isTemporary}\x1b[0m\n`,
+        `grand code environment(GCE) ${SYSTEM.version}, serviceOptions -:`,
+        `${SYSTEM.tabA}\x1b[93mabsolute(0) ${sdu.servicePath}`,
+        `${SYSTEM.tabA}temp = ${sdu.isTemporary}\x1b[0m\n`,
         `service gcce options -:`,
-        `${GOUTFORMAT.tabA}\x1b[93mabsolute(1) ${sdu.serviceGcce.abs}`,
-        `${GOUTFORMAT.tabA}name = ${sdu.serviceGcce.name}, version = ${sdu.serviceGcce.version}\x1b[0m\n`,
+        `${SYSTEM.tabA}\x1b[93mabsolute(1) ${sdu.serviceGcce.abs}`,
+        `${SYSTEM.tabA}name = ${sdu.serviceGcce.name}, version = ${sdu.serviceGcce.version}\x1b[0m\n`,
         `service NET options -:`,
-        `${GOUTFORMAT.tabA}\x1b[93minet = ${www.address().address}/lo, fixed`,
-        `${GOUTFORMAT.tabA}family = ${www.address().family}`,
-        `${GOUTFORMAT.tabA}port = ${port}, type = registered\x1b[0m\n`,
+        `${SYSTEM.tabA}\x1b[93minet = ${www.address().address}/lo, fixed`,
+        `${SYSTEM.tabA}family = ${www.address().family}`,
+        `${SYSTEM.tabA}port = ${port}, type = registered\x1b[0m\n`,
         `service started running on http://localhost:${port}\n`
      ];
      stdout.forEach(c => console.log(c));

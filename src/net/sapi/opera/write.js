@@ -1,31 +1,42 @@
+
+"use strict";
+
 /* ** This file contains utility functions for write operations **** */
-import { writeFile, rm, mkdir, rename, cp, copyFile, readFile } from "node:fs/promises";
-import { GOUTFORMAT,  GPATHS } from "../../../var/system.js";
 import { basename, join } from "node:path";
-import { existsAsync } from "../../../etc/existsAsync.js";
 import { Buffer } from "node:buffer";
-import { randomBytes } from "node:crypto";
 import Cache from "../../../etc/cache.js";
+import { existsAsync } from "../../../etc/existsAsync.js";
+import { randomBytes } from "node:crypto";
+import { SYSTEM,  PATHS } from "../../../var/system.js";
+import { 
+  writeFile, 
+  rm, 
+  mkdir, 
+  rename, 
+  cp, 
+  copyFile, 
+  readFile 
+} from "node:fs/promises";
 
 export async function fileWrite(path, content) {
   try {
      Cache.addStack(basename(path));
-     const lockFile = GPATHS.gcelock + basename(path);
+     const lockFile = PATHS.gcelock + basename(path);
      const pathBeforeBase = path.split(basename(path));
      pathBeforeBase[pathBeforeBase.length - 1] = lockFile;
 
      const lockPath = pathBeforeBase.join("");
 
      if (!await existsAsync(lockPath)) {
-        const response = { bytesWritten: Buffer.byteLength(content, GOUTFORMAT.encoding) };
-        await writeFile(lockPath, GOUTFORMAT.tabA, GOUTFORMAT.encoding);
+        const response = { bytesWritten: Buffer.byteLength(content, SYSTEM.encoding) };
+        await writeFile(lockPath, SYSTEM.tabA, SYSTEM.encoding);
         /* write the lock file so no other gce service can work on the cwf */
-        await writeFile(path, content, GOUTFORMAT.encoding);
+        await writeFile(path, content, SYSTEM.encoding);
         await rm(lockPath, { maxRetries: 2 });
         Cache.fsupgradeBytes(false, response.bytesWritten);
         return response;
      } else {
-         Cache.fsupgradeBytes(true, Buffer.byteLength(content, GOUTFORMAT.encoding)); 
+         Cache.fsupgradeBytes(true, Buffer.byteLength(content, SYSTEM.encoding)); 
          throw { code: "ONLINE" };
      }
       /**
@@ -34,7 +45,7 @@ export async function fileWrite(path, content) {
        * file.
        */
   } catch(error) {
-    Cache.fsupgradeBytes(true, Buffer.byteLength(content, GOUTFORMAT.encoding)); 
+    Cache.fsupgradeBytes(true, Buffer.byteLength(content, SYSTEM.encoding)); 
     throw error;
   }
 }
@@ -54,7 +65,7 @@ export async function createFile(path) {
   try {
     Cache.addStack(basename(path));
     const doesExists = await existsAsync(path);
-    if (!doesExists) await writeFile(path, "",  GOUTFORMAT.encoding);
+    if (!doesExists) await writeFile(path, "",  SYSTEM.encoding);
     else throw { code: "DUPKEY" }
     return true;
   } catch(error) {
@@ -126,7 +137,7 @@ export async function moveFile(source, destination) {
 export async function toTrash(serviceId, isFile, name, path) {
   try {
     let pointer = "g" + randomBytes(6).toString("hex") + serviceId.split("x")[0];
-    const pathToServiceBin = join(GPATHS.trash, serviceId, pointer);
+    const pathToServiceBin = join(PATHS.trash, serviceId, pointer);
     if (!await existsAsync(pathToServiceBin)) {
       await mkdir(pathToServiceBin, { recursive: true });
     }
@@ -134,12 +145,12 @@ export async function toTrash(serviceId, isFile, name, path) {
     // a .TRASHFILE contianing the original name of the file, and the trashed 
     // directory or file, in the service trash folder.
     const trashfile = join(pathToServiceBin, ".TRASHFILE");
-    await writeFile(trashfile, `${name}\n${path}`, GOUTFORMAT.encoding);
+    await writeFile(trashfile, `${name}\n${path}`, SYSTEM.encoding);
     if (isFile === true) {
       await writeFile(
         join(pathToServiceBin, "gfile"), 
-        GOUTFORMAT.tabA, 
-        GOUTFORMAT.encoding
+        SYSTEM.tabA, 
+        SYSTEM.encoding
       );
       await moveFile(path, pathToServiceBin);
     }
@@ -152,10 +163,10 @@ export async function toTrash(serviceId, isFile, name, path) {
 
 export async function restore(serviceId, pointer) {
   try {
-    const pathToServiceBin = join(GPATHS.trash, serviceId, pointer);
+    const pathToServiceBin = join(PATHS.trash, serviceId, pointer);
     if (await existsAsync(pathToServiceBin)) {
        const fsStatsPath = join(pathToServiceBin,".TRASHFILE");
-       const fsStats = await readFile(fsStatsPath, GOUTFORMAT.encoding);
+       const fsStats = await readFile(fsStatsPath, SYSTEM.encoding);
        //the trashfile is intrpreted as fsStats in this function.
        const isFile = await existsAsync(join(pathToServiceBin, "gfile"));
        let destination = fsStats.split("\n")[1];

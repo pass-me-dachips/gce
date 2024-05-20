@@ -1,8 +1,24 @@
-/* ** This file contains utility functions for read operations **** */
-import { readFile, stat, readdir } from "node:fs/promises";
-import { GOUTFORMAT } from "../../../var/system.js";
-import { join } from "node:path";
 
+"use strict";
+
+/* ** This file contains utility functions for read operations **** */
+import { join } from "node:path";
+import { readFile, stat, readdir } from "node:fs/promises";
+import { SYSTEM } from "../../../var/system.js";
+
+/**
+ * reads a file in a more efficient way
+ * @author david, pass-me-dachips
+ * @param {string} path the path to the file
+ * @param {bool} useDefault a bool indicating wether to use the default read 
+ * operation or with optimization (pagination)
+ * @param {number} window the size of the window, if useDefault is set to false
+ * @param {number} lineHeight the height of each line(px) in your interface.
+ * only useful if useDefault is set to false. 
+ * @param {number} page the number of page to return. only useful if useDefault is set to false. 
+ * @param {number} startLine  the line to start reading from. only useful if useDefault is set to false. 
+ * @returns {object}
+ */
 export async function fileRead(
    path, 
    useDefault, 
@@ -18,7 +34,7 @@ export async function fileRead(
      startLine = Number(startLine);
      //convert strings to integers 
      const { size, mtime } = await stat(path);
-     const data = await readFile(path, GOUTFORMAT.encoding);
+     const data = await readFile(path, SYSTEM.encoding);
      const response = { size, lmodified: mtime }
      if (useDefault) response["data"] = data, response["usedDefault"] = true;
      else {
@@ -45,7 +61,7 @@ export async function fileRead(
  which means you can only read diret children of a directory */
 export async function dirRead(path) {
  try {
-     const fsNames = await readdir(path, GOUTFORMAT.encoding);
+     const fsNames = await readdir(path, SYSTEM.encoding);
      const fsLists = [];
      for (let i = 0; i < fsNames.length; i++) {
         const fs = fsNames[i];

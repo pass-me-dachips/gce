@@ -1,8 +1,6 @@
-import { basename, join } from "node:path";
-import { code_0 } from "../codes.js";
-import { defopera } from "./default.js";
-import { dirRead, fileRead, getStatistics } from "../opera/read.js";
-import { ERRORCODES } from "../../../var/system.js";
+
+"use strict";
+
 import { 
   adminRemoveFs, 
   copyDir, 
@@ -16,6 +14,11 @@ import {
   restore,
   toTrash
 } from "../opera/write.js";
+import { basename, join } from "node:path";
+import { code_0 } from "../codes.js";
+import { defopera } from "./default.js";
+import { dirRead, fileRead, getStatistics } from "../opera/read.js";
+import { ERRORCODES } from "../../../var/system.js";
 import { report } from "../../../etc/report.js";
 
 export function errorResponseHelper(error, oid) {
@@ -225,6 +228,12 @@ async function RESTORE(pointer, oid, sdu) {
 }
 
 // ++++++++ the main fs api ++++++++++++++++++
+/** a function that handles ws requests and responses for fs operations
+ * @author david, pass-me-dachips
+ * @param {object} request the web socket connection instance
+ * @param {object} sdu the service data unit
+ * @returns {void}
+ */
 export default async function fs(request,sdu) {
   let response;
   const { OPERA, PAYLOAD, OID } = request;

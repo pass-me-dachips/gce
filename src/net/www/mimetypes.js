@@ -2,11 +2,16 @@
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    This file determines the mime type for HTTP the responses based on the 
    requested file extension sent from the client.
-   it only contains major types that is likely needed throughout this ent-
+   it only contains major types that are likely needed throughout this ent-
    ire project.
  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  */
 
+/** determines the mime type for a response based on the specified file extention
+ * @author gce
+ * @param {string} trail file name
+ * @returns {string}
+ */
 export default function mime(trail) {
   let type_subtype;
   const extention = (n) => trail.endsWith(n) ;
