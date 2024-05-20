@@ -5,7 +5,7 @@ import * as quickh from "./helpers/quick.h.js";
 import acfco from "./helpers/acfco.h.js";
 import asciiTable from "./helpers/asciitable.h.js";
 import Cache from "../etc/cache.js";
-// import { code_0 } from "../net/sapi/codes.js";
+import { code_0 } from "../net/sapi/codes.js";
 import { existsAsync } from "../etc/existsAsync.js";
 import { freemem } from "node:os";
 import { join } from "node:path";
@@ -168,28 +168,28 @@ export async function quick(path,key) {
   }
 }
 
-// export async function end(sdu, sendWsSignal, ws, throwErrToCaller) {
-//   // remove service log =>  path: serviceLogPath + serviceId
-//   // remove trash => path:  trashPath + serviceId
-//   // if temp then wipe temp data => path: servicePath
-//   // empty cache
-//   // if sendWsSignal =>  send die signal using the ws param
-//   // kill the process => pid: sdu.Pid
+export async function end(sdu, sendWsSignal, ws, throwErrToCaller) {
+  // remove service log =>  path: serviceLogPath + serviceId
+  // remove trash => path:  trashPath + serviceId
+  // if temp then wipe temp data => path: servicePath
+  // empty cache
+  // if sendWsSignal =>  send die signal using the ws param
+  // kill the process => pid: sdu.Pid
 
-//   const { serviceId, servicePath , Pid } = sdu;
-//   const logPath = join(PATHS.serviceLog, serviceId);
-//   const trashPath = join(PATHS.trash, serviceId);
-//   const rmOptions = { retryDelay: 200, recursive: true };
-//   await rm(logPath, rmOptions);
-//   if (await existsAsync(trashPath)) await rm(trashPath, rmOptions);
-//   if (sdu.isTemporary) await rm(servicePath, rmOptions);
-//   Cache.clear();
-//   if (sendWsSignal) ws.send(JSON.stringify(code_0(true,"DIE", "DIE", null)));
-//   if (throwErrToCaller) {
-//     try { process.kill(Pid); } catch(error) { throw {error}; }
-//   } else { process.kill(Pid); }
-//   return void 0;
-// }
+  const { serviceId, servicePath , Pid } = sdu;
+  const logPath = join(PATHS.serviceLog, serviceId);
+  const trashPath = join(PATHS.trash, serviceId);
+  const rmOptions = { retryDelay: 200, recursive: true };
+  await rm(logPath, rmOptions);
+  if (await existsAsync(trashPath)) await rm(trashPath, rmOptions);
+  if (sdu.isTemporary) await rm(servicePath, rmOptions);
+  Cache.clear();
+  if (sendWsSignal) ws.send(JSON.stringify(code_0(true,"DIE", "DIE", null)));
+  if (throwErrToCaller) {
+    try { process.kill(Pid); } catch(error) { throw {error}; }
+  } else { process.kill(Pid); }
+  return void 0;
+}
 
 export async function getTechStack(extensive) {
   try {

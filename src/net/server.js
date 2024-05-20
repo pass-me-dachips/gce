@@ -35,9 +35,10 @@ export default function Server(sdu) {
      const stdout = [
         `grand code environment(GCE) ${SYSTEM.version}, serviceOptions -:`,
         `${SYSTEM.tabA}\x1b[93mabsolute(0) ${sdu.servicePath}`,
-        `${SYSTEM.tabA}temp = ${sdu.isTemporary}\x1b[0m\n`,
+        `${SYSTEM.tabA}temp = ${sdu.isTemporary}`,
+        `${SYSTEM.tabA}serviceId = ${serviceId}\x1b[0m\n`,
         `service gcce options -:`,
-        `${SYSTEM.tabA}\x1b[93mabsolute(1) ${sdu.serviceGcce.abs}`,
+        `${SYSTEM.tabA}\x1b[93mabsolute(1) ${sdu.serviceGcce.path}`,
         `${SYSTEM.tabA}name = ${sdu.serviceGcce.name}, version = ${sdu.serviceGcce.version}\x1b[0m\n`,
         `service NET options -:`,
         `${SYSTEM.tabA}\x1b[93minet = ${www.address().address}/lo, fixed`,

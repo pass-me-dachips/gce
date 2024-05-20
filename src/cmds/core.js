@@ -121,7 +121,7 @@ Official docs@ ${github}pages/gce-env
         total packages  ${totalPkgs}, spkgs  ${SYSTEM.Estspkg}, external  ${totalPkgs - SYSTEM.Estspkg}
         freemem  ${hmr(currentDevMem) ?? errMessage}, rec services in parallel  ${calEstServices() ?? errMessage}
 
-Tech stack (mcc):${tsTop3.map(elem => ' '+elem.tech)}
+Tech stack (common):${tsTop3.map(elem => ' '+elem.tech)}
 ${tsOrdered.join("")}
 \x1b[90;47m col-representation \x1b[0m ${coloredPercentage()}
 \n`);
