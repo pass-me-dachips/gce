@@ -5,7 +5,7 @@ DESCRIPTION
  gce's recommended way of killing a running gce service gracefully.
 
 KEYWORDS 
-   ghost services: services that are in the service log/registry but is not currently
+   ghost services: services that are in the service log/registry but are not currently
    running due to abortion: eg using ctrl c, ctrl z, shutdown, reboot etc.
    || : referes to or 
    <no-option> : you dont have to specify any option
@@ -20,4 +20,4 @@ NOTE
   you would get nothing in return if the service was alive and succesffuly
   killed.
 
-documented and created by david <pass-me-dachips> 17-5-2024
+documented and created by david <pass-me-dachips> 20-5-2024
