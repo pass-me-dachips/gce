@@ -57,7 +57,7 @@ export async function fileRead(
 
 /* the dirRead does not provide any optimization technique for reducing file load
  times and eleminating freezing on large file systems for now.
- for this reason, the dir read only supports batch reading and not recursively
+ for this reason, the dir read only supports batch reading and not iteratively
  which means you can only read diret children of a directory */
 export async function dirRead(path) {
  try {

@@ -31,7 +31,7 @@ Command:
     pkg -          Work with packages.
     remove -       Remove an existing gcce.
     resetGlobalConfig - reset the gce globalConfig.
-    rkill -        recursively kill all running gce services.
+    rkill -        iteratively kill all running gce services.
     services -     List info about services.
     
 Run gce man <commandName> to list detailed information about each command,
