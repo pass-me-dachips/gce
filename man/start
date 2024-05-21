@@ -12,7 +12,7 @@ USAGE
 
 SPECIAL_NOTE
     if gce cannot find the relative_path_to_the_dir specified, it would 
-    create the path recursively as a directory and not a file
+    create the path iteratively as a directory and not a file
 
 CONFIGURATIONS
     in cases where you want to use a specific gcce for a specific service,

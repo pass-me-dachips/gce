@@ -19,7 +19,7 @@ USAGE
 
 OPTIONS 
      --nosleep                
-        notifies gce to keep the process running and recursively remove ghost services 
+        notifies gce to keep the process running and iteratively remove ghost services 
         at a certain interval (3 minutes).    
 
 NOTE
