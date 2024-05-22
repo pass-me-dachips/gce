@@ -40,7 +40,7 @@ if ( osplatform === "linux" || osplatform === "darwin" ) {
   execSync(command);
   // on posix, due to permission resitrictions, instead of copying the file
   // using node, the installer runs the command that allows the `superuser` to copy
-  // the file instead: you migth be promted to input your password   
+  // the file instead: you might be promted to input your password   
 } else {
   copyFileSync(local_exec_path, _os_exec_path[osplatform]);
 }
@@ -56,5 +56,5 @@ console.log(`
 `);
 console.log("grand code environment v1.0.0");
 console.log("\x1b[92mcompleted installation! run `gce` for confirmation.\x1b[0m");
-console.log("need quick help? run `\x1b[92mgce --help\x1b[0m` more information.");
+console.log("need quick help? run `\x1b[92mgce --help\x1b[0m` for more information.");
 console.log("want to start a service? run `\x1b[92mgce <relative_path_to_service>\x1b[0m`");
