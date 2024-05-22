@@ -1,7 +1,7 @@
-# Dir
+# Dirs
 tests/
 help/
-kivana/
+distrib.a
 
 # Files
 remember
