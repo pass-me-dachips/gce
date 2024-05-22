@@ -14,7 +14,7 @@ in later versions, gce would introduce new functionalities which includes :
   creating a new terminal window or bringing an existing window back to the
   foreground.
 
-- an additional support for web urls(git) instead of only file paths as args in
+- an additional support for web urls(git) instead of relying on only file paths as args in
   commands like `install`, `pkg add` and `start`.
 
-- additional built-in packages for: http client, live server, word finders/ replacers, and anotation tool: remember.
+- additional built-in packages: http client, live server, word finders/ replacers, and "the gce anot project: remember, upcoming, gitignore, fs, pins".
