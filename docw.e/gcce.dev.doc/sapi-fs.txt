@@ -350,3 +350,18 @@ TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE.
     @return => if the request was acknowledged, you should get a response
       with signal `ACK`
 ====================================================================================
+     
+  
+  SERVICEINFO => 
+    treturns info about the service.
+    @request => {
+        "TYPE": "FS",
+        "OPERA": "SERVICEINFO",
+        "OID": "<REQEUSTID>",
+        "PAYLOAD": ""
+      }
+    @return => if the request was acknowledged, you should get a response
+      with signal `ACK/HASPAYLOAD` where paload is an object containinig the 
+      service info.
+====================================================================================
+     

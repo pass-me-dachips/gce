@@ -119,6 +119,9 @@ export default async function spkg(request, ws, sdu) {
           await spkgUtils.getTechStack(PAYLOAD === "true" ? true : false)
        ))); 
        break 
+     case "SERVICEINFO" : 
+       ws.send(JSON.stringify(code_0( true, stdsignal, OID, sdu ))); 
+       break 
      default: ws.send(defopera(OPERA)); //would change.
   };
 }
