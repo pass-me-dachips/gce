@@ -62,8 +62,10 @@ export default async function Main(args, cwd) {
     isTemporary = false;
     if (existsSync(servicePath)) {
       serviceType = statSync(servicePath).isDirectory() ? "DIR" : "FILE";
-    } else { serviceType = "DIR"; 
-           mkdirSync(join(cwd, servicePath), { recursive: true}) }
+    } else { 
+      serviceType = "DIR"; 
+      mkdirSync(servicePath, { recursive: true}) 
+    }
     //+++++++++++ creates the path as a dir if it doesnt exists.
   }
 
