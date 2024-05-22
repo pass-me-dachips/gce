@@ -16,13 +16,12 @@ import Server from "../net/server.js";
 /** handler for the core start service command
  * @author david, pass-me-dachips
  * @param {Array} args 
- * @param {string} cwd 
  * @returns {void}
  */
-export default async function Main(args, cwd) {
+export default async function Main(args) {
  try {
  const serviceOptions = args.slice(1);
- let servicePath = join(cwd, args[0]);
+ let servicePath = join(process.cwd(), args[0]);
  let isTemporary;
  let serviceGcce;
  let servicePort;
@@ -63,7 +62,7 @@ export default async function Main(args, cwd) {
     if (existsSync(servicePath)) {
       serviceType = statSync(servicePath).isDirectory() ? "DIR" : "FILE";
     } else { serviceType = "DIR"; 
-           mkdirSync(join(cwd, servicePath), { recursive: true}) }
+           mkdirSync(join(process.cwd(), servicePath), { recursive: true}) }
     //+++++++++++ creates the path as a dir if it doesnt exists.
   }
 

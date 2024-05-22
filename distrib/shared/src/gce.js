@@ -23,25 +23,25 @@ process.on("uncaughtException", ( error )=> {
 })
 
 const args = process.argv.slice(3);
-const cwd = process.argv[2];
+process.chdir(process.argv[2]);
 
 if (args.length > 0) {
-  if (args.includes("--FAIAF")) Main(args, cwd) 
+  if (args.includes("--FAIAF")) Main(args) 
   else {  
     switch(args[0]) {
       case "--help" : { Help(); break }
       case "clean" : { Clean(args); break }
       case "gcce" : { Gcce(); break }
       case "globalConfig" : { GlobalC(); break }
-      case "install" : { Install(args, cwd); break }
+      case "install" : { Install(args); break }
       case "kill" : { Kill(args); break }
       case "man" : { Man(args); break }
-      case "pkg" : { Pkg(args, cwd); break }
+      case "pkg" : { Pkg(args); break }
       case "remove" : { Remove(args); break }
       case "resetGlobalConfig" : { ResetGlobalC(); break }
       case "rkill" : { Rkill(); break }
       case "services" : { Services(args); break }
-      default :  Main(args, cwd) 
+      default : Main(args) 
     }
   }
 } else Core();

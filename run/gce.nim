@@ -21,10 +21,10 @@ when declared(commandLineParams) :
   var arguments: string = workingDir
   for i in raw_params :
     arguments = arguments &  " " & i
+
   setCurrentDir(shared_path) 
-  discard execCmd("node " & string(shared_entry_point) & arguments)
+  discard execCmd("node " & string(shared_entry_point) & " " & arguments)
 else :
   echo "cannot launch gce!"
   echo "are you running from a dynamic link library?"
   # terminate: as the proc is not available.
-  

@@ -17,14 +17,13 @@ function successLog() {
 /**
  * handler for the install command.
  * @author david, pass-me-dachips
- * @param {Array} args 
- * @param {string} cwd 
+ * @param {string} args 
  * @returns {void}
  */
-export default function Install(args, cwd) {
+export default function Install(args) {
   if (args.length === 2) {
     const gccePath = args[1];
-    const gconfigPath =  join(cwd, gccePath, "gconfig.json"); 
+    const gconfigPath =  join(process.cwd(), gccePath, "gconfig.json"); 
     if (existsSync(gconfigPath)) {
        const gconfigContent =
          JSON.parse(readFileSync(gconfigPath, SYSTEM.encoding));
@@ -41,7 +40,7 @@ export default function Install(args, cwd) {
           notFound && 
           forbiden
          ) {
-         gconfigContent["path"] = join(cwd, gccePath);
+         gconfigContent["path"] = join(process.cwd(), gccePath);
          while (!existsSync(PATHS.configDir)) mkdirSync(PATHS.configDir, {
            recursive: true
          });

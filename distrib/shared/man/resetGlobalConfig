@@ -1,0 +1,14 @@
+cmd: resetGlobalConfig, v1.0.0
+status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+
+DESCRIPTION
+this command provides features for reseting the global configuration.
+
+NOTE 
+after acknowledging this request, previous changes made to the global configurations
+are re-written to default.
+
+USAGE
+`gce resetGlobalConfig`
+
+documented and created by david <pass-me-dachips> 17-5-2024

@@ -27,9 +27,9 @@ const update = (content) =>
  * @param {string} relativePath relative path to the package
  * @returns {void}
  */
-async function add(relativePath, cwd) {
+async function add(relativePath) {
   if (relativePath) {
-   const pathToPackage = join(cwd, relativePath);
+   const pathToPackage = join(process.cwd(), relativePath);
    const pathToHeaderfile = join(pathToPackage, "Headerfile.json");
    const Headerfile = JSON.parse(readFileSync(pathToHeaderfile, SYSTEM.encoding));
    let {
@@ -50,7 +50,7 @@ async function add(relativePath, cwd) {
       Array.isArray(requirements) && supportedPlatforms && Array.isArray(supportedPlatforms) &&
       cmd && cmd1 && args && Array.isArray(args) && basename(man) === "Manfile"
     ) {
-      man = join(cwd, relativePath, man); // switch to absoulte path
+      man = join(process.cwd(), relativePath, man); // switch to absoulte path
       if (requirements.length > 0) {
          const rl = readLine.createInterface({
            input : process.stdin,
@@ -193,15 +193,14 @@ function show(packageName) {
  * handler for the pkg command
  * @author david, pass-me-dachips
  * @param {Array} args 
- * @param {string} cwd 
  * @returns {void}
  */
-export default function Pkg(args, cwd) {
+export default function Pkg(args) {
   args = args.slice(1);
   if (args[0]) {
     const option = args[0]; const sub_command_arg = args[1];
     switch(option) {
-      case "add": add(sub_command_arg, cwd); break;
+      case "add": add(sub_command_arg); break;
       case "man": man(sub_command_arg); break;
       case "remove": remove(sub_command_arg); break;
       case "show": show(sub_command_arg); break;
