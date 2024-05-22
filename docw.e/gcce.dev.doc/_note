@@ -1,0 +1,12 @@
+
+
+=====================================================================================
+This folder gcce.dev.doc contains documentations for developers looking to create
+a gcce.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+it is advisable to read the gce.dev.doc to get a broader understanding of how gce 
+works in other to understand most of the keywords been used through out the docs.
+see 
+ + docs/gce.dev.doc/signals
+=====================================================================================
+
