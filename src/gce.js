@@ -22,7 +22,9 @@ process.on("uncaughtException", ( error )=> {
   else console.log(error.message);
 })
 
-const args = process.argv.slice(2);
+const args = process.argv.slice(3);
+process.chdir(process.argv[2]);
+
 if (args.length > 0) {
   if (args.includes("--FAIAF")) Main(args) 
   else {  

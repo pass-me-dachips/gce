@@ -13,32 +13,21 @@ import { execSync } from "node:child_process";
 const osplatform = platform();
 const oshomedir = homedir();
 
-const _shared_global_path_os_helper = join(oshomedir, "gce" , "shared");
-const _shared_global_path =  {
-  android: "/data/data/com.termux/files/apps/gce/shared",
-  darwin: _shared_global_path_os_helper,
-  linux: _shared_global_path_os_helper,
-  win32: _shared_global_path_os_helper,
+const shared_helper = join(oshomedir, "gce" , "shared");
+const _shared_path =  {
+  android: "/data/data/com.termux/files/home/gce/shared",
+  darwin: shared_helper,
+  linux: shared_helper,
+  win32: shared_helper,
 }
 
-const shared_global_path_entry_
-     = join(_shared_global_path[osplatform], "src", "gce.js");
-export const shared_entry_point = {
-  android: shared_global_path_entry_,
-  darwin: shared_global_path_entry_, 
-  linux: shared_global_path_entry_, 
-  win32: shared_global_path_entry_
-}
-
-const _shared_downloads_abspath = join(process.cwd(), "shared");
-cpSync(
-   _shared_downloads_abspath, _shared_global_path[osplatform], { recursive: true }
-);
-// copies the source code to the appropriate destination.
+const local_shared_path = join(process.cwd(), "shared");
+cpSync( local_shared_path, _shared_path[osplatform], { recursive: true } );
+// copies the source code to the appropriate destination: home/gce/shared.
 
 
-const _exec_abspath = join(process.cwd(), "gce");
-if ( osplatform === "win32" ) _exec_abspath = _exec_abspath + ".exe";
+const local_exec_path = join(process.cwd(), "gce");
+if ( osplatform === "win32" ) local_exec_path = local_exec_path + ".exe";
 
 const _os_exec_path =  {
   android: "/data/data/com.termux/files/usr/bin/gce",
@@ -46,12 +35,26 @@ const _os_exec_path =  {
   linux: "/usr/local/bin/gce",
   win32: "C:\\System32\\gce"
 }
-if (osplatform === "linux") {
-  const command = `sudo cp ${_exec_abspath} ${_os_exec_path[osplatform]}`;
+if ( osplatform === "linux" || osplatform === "darwin" ) {
+  const command = `sudo cp ${local_exec_path} ${_os_exec_path[osplatform]}`;
   execSync(command);
+  // on posix, due to permission resitrictions, instead of copying the file
+  // using node, the installer runs the command that allows the `superuser` to copy
+  // the file instead: you migth be promted to input your password   
 } else {
-  copyFileSync(_exec_abspath, _os_exec_path[osplatform]);
+  copyFileSync(local_exec_path, _os_exec_path[osplatform]);
 }
 // copies the gce executable to the appropriate destination.
 
-console.log("installation completed!. run `gce --help` to confirm installation");
+console.log(`
+  ██████╗  ██████╗███████╗
+ ██╔════╝ ██╔════╝██╔════╝
+ ██║  ███╗██║     █████╗  
+ ██║   ██║██║     ██╔══╝  
+ ╚██████╔╝╚██████╗███████╗
+  ╚═════╝  ╚═════╝╚══════╝
+`);
+console.log("grand code environment v1.0.0");
+console.log("\x1b[92mcompleted installation! run `gce` for confirmation.\x1b[0m");
+console.log("need quick help? run `\x1b[92mgce --help\x1b[0m` more information.");
+console.log("want to start a service? run `\x1b[92mgce <relative_path_to_service>\x1b[0m`");
