@@ -22,7 +22,8 @@ const github = "https://github.com/pass-me-dachips/";
 const errMessage = "cannot determine";
 
 const gcceInfoFn = async () => {
- let cmdVal = (await execAsync("node src/gce.js gcce")).stdout;
+ let cmdVal = (await execAsync("node src/gce.js .. gcce")).stdout;
+ // the two periods is just a dummy rep of the cwd .
  cmdVal = cmdVal.toString(SYSTEM.encoding)
  if (cmdVal.startsWith("gcce")) {
    let focus = cmdVal.split("\n")[0];
