@@ -2,7 +2,7 @@
   "name": "gce",
   "version": "1.0.0",
   "description": "(gce) grand code environement",
-  "main": "gce.js",
+  "main": "src/gce.js",
   "type": "module",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   },
   "keywords": [
     "code-editor",
-    "fs"
+    "code-environement"
   ],
   "author": "david.A",
   "license": "MIT",
