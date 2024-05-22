@@ -32,7 +32,7 @@ if (args.length > 0) {
       case "--help" : { Help(); break }
       case "clean" : { Clean(args); break }
       case "gcce" : { Gcce(); break }
-      case "globalConfig" : { GlobalC(); break }
+      case "globalConfig" : { GlobalC(cwd); break }
       case "install" : { Install(args, cwd); break }
       case "kill" : { Kill(args); break }
       case "man" : { Man(args); break }

@@ -4,6 +4,7 @@
 import * as readLine from "node:readline";
 import { execSync } from "node:child_process";
 import { globalConfigTemplate } from "../var/templates.js";
+import { join } from "node:path";
 import { PATHS, SYSTEM } from "../var/system.js";
 import { platform as Platform } from "node:os";
 import { 
@@ -17,10 +18,12 @@ import {
 /** 
  * handler for the globalConfig command
  * @author david, pass-me-dachips
+ * @param {string} cwd
  * @returns {void}
  */
-export default function GlobalC() {
+export default function GlobalC(cwd) {
   const TEMPFILENAME = "SETCONFIG.json";
+  const TEMPFILE = join(cwd, TEMPFILENAME);
   while (!existsSync(PATHS.configDir)) {
      mkdirSync(PATHS.configDir);
   }
@@ -28,7 +31,7 @@ export default function GlobalC() {
     JSON.parse(readFileSync(PATHS.globalConfig, SYSTEM.encoding)) : null;
     
   writeFileSync(
-     TEMPFILENAME, 
+     TEMPFILE, 
      JSON.stringify(prevConfig ? prevConfig : globalConfigTemplate, null, 2),
      SYSTEM.encoding
   );
@@ -43,25 +46,25 @@ export default function GlobalC() {
 
   const platform  = Platform();
   const updateConfigChanges = () => {
-    const SETCONFIGcontent = readFileSync(TEMPFILENAME, SYSTEM.encoding);
+    const SETCONFIGcontent = readFileSync(TEMPFILE, SYSTEM.encoding);
     writeFileSync(PATHS.globalConfig, SETCONFIGcontent, SYSTEM.encoding);
-    rmSync(TEMPFILENAME);
+    rmSync(TEMPFILE);
   }
 
   if (platform === "darwin") {
-    execSync(`open ${TEMPFILENAME}`); 
+    execSync(`open ${TEMPFILE}`); 
     updateConfigChanges();
   } else if (platform === "linux") {
-    execSync(`xdg-open ${TEMPFILENAME}`);
+    execSync(`xdg-open ${TEMPFILE}`);
     updateConfigChanges();
   } else if (platform === "win32") {
-    execSync(`start ${TEMPFILENAME}`);
+    execSync(`start ${TEMPFILE}`);
     updateConfigChanges();
   } 
   else {
     //assumes platform is android
     console.log(`\n~ platform = ${platform}`);
-    console.log(`~ cannot launch the ${TEMPFILENAME} on your default text editor.`);
+    console.log(`~ cannot launch the ${TEMPFILE} on your default text editor.`);
     console.log(`~ navigate to the file manually and make your configurations.`);
     const rl = readLine.createInterface({
        output: process.stdout, 
