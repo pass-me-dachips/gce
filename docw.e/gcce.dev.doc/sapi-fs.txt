@@ -72,10 +72,7 @@ TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE.
         "TYPE": "FS",
         "OPERA": "READFILE",
         "OID": "<REQEUSTID>",
-        "PAYLOAD":  {
-          "path" : "relative/path/to/file",
-          "useDefault" : <true || false>,
-        }
+cc
       }
      NOTE: `useDefault : false` tells gce to use the 2nd technique instead. 
      you must specify the following fields in other for the second technique to work:

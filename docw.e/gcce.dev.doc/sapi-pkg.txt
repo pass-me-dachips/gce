@@ -121,7 +121,9 @@ DO NOT HESITATE TO REPORT BUGS ENCOUNTERED IN ANY OPERATION IN THIS FILE
    number.coninuatione+coninuation where coninuation and number are actual numbers.
 
    BIN => the bin package converts a decimal unit to binary.
+   variable-lengt and not fixed length
    payload => <decimalToConvert>
+
 
    RGB => the rgb package converts a hexadecimal color to rgb format.
    payload => "<hex>"
@@ -145,7 +147,7 @@ DO NOT HESITATE TO REPORT BUGS ENCOUNTERED IN ANY OPERATION IN THIS FILE
    NOTE: the file is created if it doesnt exists. a response with signal ENOENT 
    is responded if any of the directory specified in the path location does not exists.
   
-   DIE => this package is the standard and recommended package for killing a gce 
+   END => this package is the standard and recommended package for killing a gce 
     service. when you kill a service using ctrl + c or z it is terminated prematu-
     rely and gce would not be able to flush all helper files/utils and directories
     created during runtime which can potentialy increase disk usage or cause
@@ -156,3 +158,10 @@ DO NOT HESITATE TO REPORT BUGS ENCOUNTERED IN ANY OPERATION IN THIS FILE
    this Package would ignore the request payload.
    upon success, you would get 1 last response with signal and OID "DIE" before
    the service process is killed. 
+
+TECHSTACK => payload => true to show all
+
+SERVICEINFO => return the service info
+
+IF YOU GET ANY WIERD MATHS RESULT:: 
+ITS JAVASCRIPT FUALT
