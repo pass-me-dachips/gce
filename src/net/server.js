@@ -8,6 +8,7 @@ import { join } from "node:path";
 import serviceApi from "./cbs/coreapi.js";
 import serviceUtil from "./cbs/coreutils.js";
 import { SYSTEM, PATHS } from "../var/system.js";
+import { URL } from "node:url";
 import webServer from "./cbs/ws.js";
 import { writeFileSync, existsSync, mkdirSync } from "node:fs";
 
@@ -50,10 +51,11 @@ export default function Server(sdu) {
   };
 
   const cb = async (req, res) => {
-    const path = req.url.split("?")[0];
+    const fullurl = `http://${req.headers.host}${req.url}`;
+    const { pathname, search, searchParams } = new URL(fullurl);
     const notstatic = req.headers?.notstatic === "true";
-    let payload = "";
 
+    let payload = "";
     req.on("data", (chunk) => {
       payload = payload + chunk;
     });
@@ -65,16 +67,21 @@ export default function Server(sdu) {
         const dataunit = {
           ...sdu,
           method,
+          paths: pathname,
+          query: search,
+          searchParams,
           payload: method !== "GET" && method !== "HEAD" ? payload : null,
         };
-
-        if (notstatic && path.startsWith("/coreapi"))
-          serviceApi(req, res, dataunit);
-        else if (notstatic && path.startsWith("/coreutils"))
-          serviceUtil(req, res, sdu);
+        if (notstatic && pathname.startsWith("/coreapi"))
+          // serviceApi(req, res, dataunit);
+          "";
+        else if (notstatic && pathname.startsWith("/coreutils"))
+          // serviceUtil(req, res, sdu);
+          "";
         else {
           let cbParams = sdu.serviceGcce;
           cbParams["serviceId"] = sdu.serviceId;
+          cbParams["url"] = pathname;
           webServer(req, res, cbParams);
         }
       } catch (error) {

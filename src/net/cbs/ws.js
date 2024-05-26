@@ -22,13 +22,13 @@ export default async function webServer(req, res, sdu) {
     res.end(message);
   }
   try {
-    if (req.url === "/") req.url = sdu.entry;
-    if (req.url === "/gconfig.json") req.url = sdu.forbiden;
-
+    if (sdu.url === "/") sdu.url = sdu.entry;
+    if (sdu.url === "/gconfig.json") sdu.url = sdu.forbiden;
     // handle path rewrites.
-    const filePath = join(sdu.path, req.url);
+
+    const filePath = join(sdu.path, sdu.url);
     const payload = await readFile(filePath, SYSTEM.encoding);
-    finish(200, mime(req.url), payload);
+    finish(200, mime(sdu.url), payload);
   } catch (err) {
     const unknownResponse = (message, code) => {
       finish(500, "application/json", JSON.stringify({ message, code }));
