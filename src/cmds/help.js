@@ -1,8 +1,7 @@
-
 "use strict";
 
 import { SYSTEM } from "../var/system.js";
- 
+
 /** handler for the help option
  * @author david, pass-me-dachips
  * @returns {void}
@@ -34,7 +33,7 @@ Command:
     rkill -        iteratively kill all running gce services.
     services -     List info about services.
     
-Run gce man <commandName> to list detailed information about each command,
+Run gce man <commandName> to see detailed information about each command,
 its sub-commands, sub-command-arguments, instructions and options.
 
 Not to sure about the concept gce or gcce? run \`gce man about\` to learn more.
