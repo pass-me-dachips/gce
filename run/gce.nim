@@ -7,7 +7,7 @@ from "std/os" import getCurrentDir
 from "std/osproc" import execCmd
   
 when declared(commandLineParams) :
-  let workingDir = getCurrentDir() # the cwd gce where called
+  let workingDir = getCurrentDir() # the cwd gce was called
 
   const shared_relative_path: Path = `/`(Path("gce"), Path("shared"))
   # the shared directory relative path
