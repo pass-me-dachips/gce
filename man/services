@@ -4,12 +4,12 @@ status: linux(stable), android(stable), windows(experinmental), mac(experinmenta
 DESCRIPTION 
   returns information about services.
 
+USAGE 
+  gce services <-instruction || no-instruction>
+
 KEYWORDS 
   no-instruction: you dont have to specify any instruction.
   ghosts/ghost-services : read the cmd `kill` manual to learn more.
-
-USAGE 
-  gce services <-instruction || no-instruction>
 
 SPECIAL_NOTE
   when you run `gce services` without any subcommand, gce would ping all services

@@ -17,7 +17,7 @@ NOTE
    you would get 'kill ESRCH: ghost removed' if you try to kill a ghost service:
    note the service is still removed from the registry. and all datas tied to it
    are erased from the disk also.
-   you would get nothing in return if the service was alive and succesffuly
+   you would get nothing in return if the service was alive and succesfully
    killed.
 
 documented and created by david <pass-me-dachips> 20-5-2024

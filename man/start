@@ -17,8 +17,8 @@ SPECIAL_NOTE
 CONFIGURATIONS
     in cases where you want to use a specific gcce for a specific service,
     without setting a global config, you would have to create a gceconfig.json
-    in the root of the directory.
-    where gceconfig.json is a json object that can contains the following:
+    file in the root of the directory.
+    where gceconfig.json is a json object that contains the following:
     {
        "default": "<gcce_name>"
     }
