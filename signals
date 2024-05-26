@@ -3,21 +3,23 @@ THIS FILE CONTAINS LISTS OF ALL AVAIALABLE SERVICE API SIGNALS (SIG) FOR GCE
 V1.0.0 - and later
 
 KEWORDS :
+the term -
 `provides a payload`: 
-   means the payload isnt null, and your request was acknowledged with a payload 
-   embeded to the response.
-   note that an empty array can still be considered as a response with a payload.
+   means the `payload` field in the response object isnt null, 
+   and your request was acknowledged with a payload field embeded to the response.
+   note that an empty array in the payload field can still be considered as a 
+   response with a payload.
 
 `does not provides a payload`:
-   does not mean the payload field wouldnt be present in the response, 
-   its more like its not needed and can be discarded similar to discarding a return 
-   value in languages like nim. in gce sapi for example an error response migth not contain a payload 
-   if the signal has a specific meaning eg ENOENTRY. 
+   does not mean the payload field in the response object wouldnt be present in the 
+   response, its more like its not needed and can be discarded similar to discarding 
+   a return value in languages like nim. in gce sapi for example an error response 
+   migth not contain a payload if the signal has a specific meaning eg ENOENTRY. 
    there is no need for a payload in this case as this signal indicates the requested resource doesnt exists.
 
 name                    description
 ACK/HASPAYLOAD          the operation was succesfull, and the response has a payload.
-ACK                     the operation was succesful, but the response does not 
+ACK                     the operation was succesfull, but the response does not 
                         provide a payload.
 DUPKEY                  the key `as in` fileName, packagName etc already exists in
                         the requested resource. 
