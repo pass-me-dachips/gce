@@ -1,51 +1,56 @@
 "use strict";
 
-// import {
-//   adminRemoveFs,
-//   copyDir,
-//   copyF,
-//   createDir,
-//   createFile,
-//   fileWrite,
-//   moveDir,
-//   moveFile,
-//   renameFs,
-//   restore,
-//   toTrash
-// } from "../opera/write.js";
-// import { basename, join } from "node:path";
-// import { code_0 } from "../codes.js";
-// import { defopera } from "./default.js";
-// import { dirRead, fileRead, getStatistics } from "../opera/read.js";
-// import { ERRORCODES } from "../../../var/system.js";
-// import { report } from "../../../etc/report.js";
+import {
+  adminRemoveFs,
+  copyDir,
+  copyF,
+  createDir,
+  createFile,
+  fileWrite,
+  moveDir,
+  moveFile,
+  renameFs,
+  restore,
+  toTrash,
+} from "../io/write.js";
+import { basename, join } from "node:path";
+import { code_0, code_1 } from "../codes.js";
+import { dirRead, fileRead, getStatistics } from "../io/read.js";
+import { ERRORCODES } from "../../../var/system.js";
+import finish from "../finish.js";
+import { report } from "../../../etc/report.js";
 
-// export function errorResponseHelper(error, oid) {
-//   if (error.code  === ERRORCODES.notFound) {
-//       return JSON.stringify(code_0(false, "ENOENTRY", oid, null));
-//   } else if (error.code === ERRORCODES.notdirectory ||
-//       error.code === ERRORCODES.notFile || error.code === "ERR_FS_CP_NON_DIR_TO_DIR"
-//     ) {
-//       return JSON.stringify(code_0(false, "OSFORBIDEN", oid, null));
-//   } else if (error.code === ERRORCODES.exists) {
-//       return JSON.stringify(code_0(false, "DUPKEY", oid, null));
-//   } else if (error.code === ERRORCODES.online) {
-//       return JSON.stringify(code_0(false, "ONLINE", oid, null));
-//   } else return JSON.stringify(code_0(false, "STDERR", oid, error.message));
-// }
+export function errorResponseHelper(error, oid) {
+  if (error.code === ERRORCODES.notFound) {
+    return code_0(false, "ENOENTRY", oid, null);
+  } else if (
+    error.code === ERRORCODES.notdirectory ||
+    error.code === ERRORCODES.notFile ||
+    error.code === "ERR_FS_CP_NON_DIR_TO_DIR"
+  ) {
+    return code_0(false, "OSFORBIDEN", oid, null);
+  } else if (error.code === ERRORCODES.exists) {
+    return code_0(false, "DUPKEY", oid, null);
+  } else if (error.code === ERRORCODES.online) {
+    return code_0(false, "ONLINE", oid, null);
+  } else return code_0(false, "STDERR", oid, error.message);
+}
 
-// async function READDIR(relativePath, oid, sdu) {
-//   try {
-//     // the readdir expects the payload to be the relative path to the file in
-//     // which the user wants to read.
-//     const { servicePath } = sdu;
-//     const pathToDir = join(servicePath, relativePath);
-//     const entries = await dirRead(pathToDir);
-//     return JSON.stringify(code_0(true, "ACK/HASPAYLOAD", oid, entries));
-//   } catch(error) {
-//     return errorResponseHelper(error, oid);
-//   }
-// }
+async function READDIR(sdu, oid, res) {
+  try {
+    // the readdir expects the payload to be the relative path to the file in
+    // which the user wants to read.
+    // if (sdu.method === "FETCH") {
+    // }
+    console.log(sdu.method, sdu.payload);
+    // const { servicePath } = sdu;
+    // const pathToDir = join(servicePath, relativePath);
+    // const entries = await dirRead(pathToDir);
+    // finish(200, code_0(true, "ACK/HASPAYLOAD", oid, entries), res);
+  } catch (error) {
+    return errorResponseHelper(error, oid);
+  }
+}
 
 // async function STATICS(relativePath, oid, sdu) {
 //   try {
@@ -236,9 +241,9 @@
  */
 
 export default async function fs(opera, oid, sdu, res) {
-  console.log(sdu, opera, oid);
-  switch (opera) {
+  switch (opera.toUpperCase()) {
     case "READDIR":
+      READDIR(sdu, oid, res);
       break;
     case "STATICS":
       break;
@@ -267,6 +272,6 @@ export default async function fs(opera, oid, sdu, res) {
     case "RESTORE":
       break;
     default:
-    // response = res;
+      finish(400, code_1(`unknown operation: ${opera}`), res);
   }
 }

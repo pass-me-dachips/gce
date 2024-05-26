@@ -72,17 +72,16 @@ export default function Server(sdu) {
           searchParams,
           payload: method !== "GET" && method !== "HEAD" ? payload : null,
         };
+        delete dataunit.serviceGcce;
         if (notstatic && pathname.startsWith("/coreapi"))
-          // serviceApi(req, res, dataunit);
-          "";
+          serviceApi(req, res, dataunit);
         else if (notstatic && pathname.startsWith("/coreutils"))
-          // serviceUtil(req, res, sdu);
-          "";
+          serviceUtil(res, dataunit);
         else {
           let cbParams = sdu.serviceGcce;
           cbParams["serviceId"] = sdu.serviceId;
           cbParams["url"] = pathname;
-          webServer(req, res, cbParams);
+          webServer(res, cbParams);
         }
       } catch (error) {
         res.writeHead(

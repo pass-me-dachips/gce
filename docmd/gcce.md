@@ -63,6 +63,10 @@ where type => is the type of request eg : fs, spkg,
 operation => is the operation eg for fs: readdir etc, for spkg: add, etc
 oid => operation id
 
+all in lowercase
+
+eg /coreapi/fs/readdir/oid
+
 the gce api version is different from the environment version, the gce version is not frequently updating that been said, currently the version is 1 and and it must be specified in the version headder.
 if you used any version not existing: error boom.
 the payload of the request must be an objecr also
@@ -83,6 +87,8 @@ oid: string,
 code : <always 0>,
 payload : {...}
 }
+
+this respone value, sig is in uppercase
 
 the ack is either true or false, which means acknowoledged, the sig is the signall.
 read signal to learn more. the oid is the oid you specified. the code is aleays 0

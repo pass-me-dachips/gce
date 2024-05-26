@@ -2,12 +2,11 @@
 
 /** a function that handles service util requests
  * @author david, pass-me-dachips
- * @param {object} req
  * @param {object} res
  * @param {object} sdu
  * @returns {void}
  */
-export default function serviceUtil(req, res, sdu) {
+export default function serviceUtil(res, sdu) {
   function finish(status, mimets, message) {
     res.writeHead(status, {
       "Content-Type": mimets,
@@ -16,7 +15,7 @@ export default function serviceUtil(req, res, sdu) {
     res.end(message);
   }
 
-  const urls = req.url.split("/").filter((elem) => elem !== "");
+  const urls = sdu.paths.split("/").filter((elem) => elem !== "");
   if (urls.length === 2) {
     const path = urls[1];
     switch (path) {

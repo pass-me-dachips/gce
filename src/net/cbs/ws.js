@@ -7,12 +7,11 @@ import { readFile } from "node:fs/promises";
 
 /** a function that handles the web server requests
  * @author david, pass-me-dachips
- * @param {object} req
  * @param {object} res
  * @param {object} sdu
  * @returns {void}
  */
-export default async function webServer(req, res, sdu) {
+export default async function webServer(res, sdu) {
   function finish(status = 200, mimets, message) {
     res.writeHead(status, {
       "Content-Type": mimets,
