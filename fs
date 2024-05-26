@@ -1,5 +1,6 @@
 __________________________________________________________________________________
-| docw.e     -     contains markdown docs for creating a gce package, creating a gcce,
+| CURRENT    -     contains information about the current functionalities been implemented.
+| docmd      -     contains markdown docs for creating a gce package, creating a gcce,
                    aswell as installing gce.
 | distrib    -     contains the build/distribution-ready version of the current  
                    gce environment.
@@ -22,7 +23,7 @@ ________________________________________________________________________________
 | network related keywords/paths :
 |___________________________________________________________________________________
 |    epkg  -   as in `external packages`
-|    opera -   contains core operations for filesystems i/o.
+|    opera -   contains core operations for filesystems i/o, but in general means operation.
 |    sapi  -   as in `service api`.
 |    sdu   -   as in `service data unit` which is the data passed from the parent function.
 |    spkg  -   as in `service packages` which are built in packages.
