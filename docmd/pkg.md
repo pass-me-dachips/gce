@@ -145,7 +145,7 @@ after retrieving the arguments, you can start processing the request.
 after processing the request, you migth want to give a feedback or a data back to the service which would be passed to the gcce service(higher level).
 in other to do this, gce provides an endpoint that allows packages to make requests to it (similar to / webhook ) upon completetaion or failure of the request.
 
-this endpoint is `http://localhost:<servicePort>/epkg/response`
+this endpoint is `http://localhost:<servicePort>/coreapi/epkg/response`
 
 when you make a request to the enpoint and specify your response to that request,
 gce would treath the request as your package response and then send the feedback in a more suitable format to the gcce.

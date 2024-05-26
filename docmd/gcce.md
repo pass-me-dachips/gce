@@ -42,3 +42,48 @@ ACTUAL CODE REPRESENTING IF THE REQUEST WAS COMPLETELY ACKNOWLEGED OR NOT
 eg: reading from a file.
 
 GCE WOULD HARDLY OR WOULD NEVER STRIP ANY FEATURE PAPKAGES OR GCCES COMPLETELY RELY ON
+
+coreapi end point for service apis
+and notstatic header set to true
+
+coreutils endpoint for utils like ping
+and notstatic header set to true
+
+anything else if for serving web contents
+
+SERVICE API ENDPOINT STRUCTURE THE ONE THAT THE GCCE NEEDS =>
+/coreapi/<type>/<operation>/<oid>
+header {
+notstatic: true,
+Content-Type: application/json
+version: 1
+}
+
+where type => is the type of request eg : fs, spkg,
+operation => is the operation eg for fs: readdir etc, for spkg: add, etc
+oid => operation id
+
+the gce api version is different from the environment version, the gce version is not frequently updating that been said, currently the version is 1 and and it must be specified in the version headder.
+if you used any version not existing: error boom.
+the payload of the request must be an objecr also
+
+reponse payload :
+
+if the response was not even processed due to bad request, you would get :
+{
+error: <message>,
+code: -1
+}
+and a status of 400 always
+
+if the request was processedc you would get status 200 regardless of wether the requst was succesul or not. the payload goes : {
+ack: bool,
+sig: string,
+oid: string,
+code : <always 0>,
+payload : {...}
+}
+
+the ack is either true or false, which means acknowoledged, the sig is the signall.
+read signal to learn more. the oid is the oid you specified. the code is aleays 0
+and the payload is always an object

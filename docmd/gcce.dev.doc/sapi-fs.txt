@@ -7,8 +7,37 @@ GCE RECOMMENDS DEVELOPERS TO PLAY WITH THE OPERATIONS PROVIDED IN THIS FILE
 TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE.
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
--- SAPI TYPE = FS
--- OPERATION TYPES =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   READDIR => 
     the readdir operation allows clients to read the direct contents/children of a 
