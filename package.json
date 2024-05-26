@@ -8,17 +8,10 @@
     "type": "git",
     "url": "git+https://github.com/pass-me-dachips/gce.git"
   },
-  "keywords": [
-    "code-editor",
-    "code-environement"
-  ],
   "author": "david.A",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pass-me-dachips/gce/issues"
   },
   "homepage": "https://github.com/pass-me-dachips/gce#readme",
-  "dependencies": {
-    "ws": "^8.16.0"
-  }
 }
