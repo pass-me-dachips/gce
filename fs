@@ -23,7 +23,8 @@ ________________________________________________________________________________
 | network related keywords/paths :
 |___________________________________________________________________________________
 |    epkg  -   as in `external packages`
-|    opera -   contains core operations for filesystems i/o, but in general means operation.
+|    io    -   contains functions for i/o operations mainly for file systems
+|    opera -   means operation and contains functions for handling service requests operas.
 |    sapi  -   as in `service api`.
 |    sdu   -   as in `service data unit` which is the data passed from the parent function.
 |    spkg  -   as in `service packages` which are built in packages.
