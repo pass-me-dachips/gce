@@ -236,24 +236,37 @@
  */
 
 export default async function fs(opera, oid, sdu, res) {
-  //   let response;
-  //   const { OPERA, PAYLOAD, OID } = request;
-  //   switch (OPERA) {
-  //      case "READDIR" : response = await READDIR(PAYLOAD, OID, sdu); break
-  //      case "STATICS" : response = await STATICS(PAYLOAD, OID, sdu); break
-  //      case "READFILE" : response = await READFILE(PAYLOAD, OID, sdu); break
-  //      case "WRITEFILE" : response = await WRITEFILE(PAYLOAD, OID, sdu); break
-  //      case "MAKEDIR" : response = await MAKEDIR(PAYLOAD, OID, sdu); break
-  //      case "MAKEFILE" : response = await MAKEFILE(PAYLOAD, OID, sdu); break
-  //      case "RENAME" : response = await RENAME(PAYLOAD, OID, sdu); break
-  //      case "ADMINREMOVE" : response = await ADMINREMOVE(PAYLOAD, OID, sdu); break
-  //      case "COPYDIR" : response = await COPYDIR(PAYLOAD, OID, sdu); break
-  //      case "COPYFILE" : response = await COPYFILE(PAYLOAD, OID, sdu); break
-  //      case "MOVEDIR" : response = await MOVEDIR(PAYLOAD, OID, sdu); break
-  //      case "MOVEFILE" : response = await MOVEFILE(PAYLOAD, OID, sdu); break
-  //      case "REMOVE" : response = await REMOVE(PAYLOAD, OID, sdu); break
-  //      case "RESTORE" : response = await RESTORE(PAYLOAD, OID, sdu); break
-  //      default: response = defopera(OPERA);
-  //   };
-  //   return response;
+  console.log(sdu, opera, oid);
+  switch (opera) {
+    case "READDIR":
+      break;
+    case "STATICS":
+      break;
+    case "READFILE":
+      break;
+    case "WRITEFILE":
+      break;
+    case "MAKEDIR":
+      break;
+    case "MAKEFILE":
+      break;
+    case "RENAME":
+      break;
+    case "ADMINREMOVE":
+      break;
+    case "COPYDIR":
+      break;
+    case "COPYFILE":
+      break;
+    case "MOVEDIR":
+      break;
+    case "MOVEFILE":
+      break;
+    case "REMOVE":
+      break;
+    case "RESTORE":
+      break;
+    default:
+    // response = res;
+  }
 }

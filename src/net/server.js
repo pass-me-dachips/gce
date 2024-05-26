@@ -51,15 +51,31 @@ export default function Server(sdu) {
   const cb = (req, res) => {
     const path = req.url.split("?")[0];
     const notstatic = req.headers?.notstatic === "true";
+    let payload = "";
 
-    if (notstatic && path.startsWith("/coreapi")) serviceApi(req, res, sdu);
-    else if (notstatic && path.startsWith("/coreutils"))
-      serviceUtil(req, res, sdu);
-    else {
-      let cbParams = sdu.serviceGcce;
-      cbParams["serviceId"] = sdu.serviceId;
-      webServer(req, res, cbParams);
-    }
+    req.on("data", (chunk) => {
+      payload = payload + chunk;
+    });
+
+    req.on("end", () => {
+      if (payload) payload = JSON.parse(payload);
+      const method = req.method;
+      const dataunit = {
+        ...sdu,
+        method,
+        payload: method !== "GET" && method !== "HEAD" ? payload : null,
+      };
+
+      if (notstatic && path.startsWith("/coreapi"))
+        serviceApi(req, res, dataunit);
+      else if (notstatic && path.startsWith("/coreutils"))
+        serviceUtil(req, res, sdu);
+      else {
+        let cbParams = sdu.serviceGcce;
+        cbParams["serviceId"] = sdu.serviceId;
+        webServer(req, res, cbParams);
+      }
+    });
   };
 
   const server = createServer(cb);
