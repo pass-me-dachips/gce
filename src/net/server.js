@@ -52,7 +52,7 @@ export default function Server(sdu) {
     const path = req.url.split("?")[0];
     const notstatic = req.headers?.notstatic === "true";
 
-    if (notstatic && path.startsWith("/core/api")) serviceApi(req, res, sdu);
+    if (notstatic && path.startsWith("/coreapi")) serviceApi(req, res, sdu);
     else if (notstatic && path.startsWith("/coreutils"))
       serviceUtil(req, res, sdu);
     else {
