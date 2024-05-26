@@ -17,4 +17,4 @@ in later versions, gce would introduce new functionalities which includes :
 - an additional support for web urls(git) instead of relying on only file paths as args in
   commands like `install`, `pkg add` and `start`.
 
-- additional built-in packages: http client, live server, word finders/ replacers, and "the gce anot project: remember, upcoming, gitignore, fs, pins".
+- additional built-in packages: http client, live server, word finders/ replacers, and "the gce anot project: remember, upcoming, fs, pins".
