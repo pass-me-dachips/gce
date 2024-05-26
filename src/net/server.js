@@ -1,15 +1,13 @@
-
 "use strict";
 
 import Cache from "../etc/cache.js";
 import { createServer } from "node:http";
 import execGcce from "./www/execGcce.js";
-import handleRequests from "./www/handleRequest.js";
-import handleSapiRequests from "./sapi/handleRequests.js";
 import { join } from "node:path";
+import serviceApi from "./cbs/coreapi.js";
+import serviceUtil from "./cbs/coreutils.js";
 import { SYSTEM, PATHS } from "../var/system.js";
-import url from "node:url";
-import { WebSocketServer } from "ws";
+import webServer from "./cbs/ws.js";
 import { writeFileSync, existsSync, mkdirSync } from "node:fs";
 
 /**
@@ -18,57 +16,53 @@ import { writeFileSync, existsSync, mkdirSync } from "node:fs";
  * @returns {void}
  */
 export default function Server(sdu) {
-  
   const onServerStart = () => {
-     const port = www.address().port;
-     const serviceId = `${port}xS${(Math.floor(Math.random() * 100000))}`;
-     while (!existsSync(PATHS.serviceLog)) {
-       mkdirSync(PATHS.serviceLog, { recursive: true });
-     }
-     sdu.createdAt = new Date();
-     sdu.serviceId = serviceId;
-     sdu.servicePort = port;
-     sdu.Pid = process.pid;
-     const pathToServiceLog = join(PATHS.serviceLog, serviceId);
-     writeFileSync(pathToServiceLog, JSON.stringify(sdu,"",4));
-
-     const stdout = [
-        `grand code environment(GCE) ${SYSTEM.version}, serviceOptions -:`,
-        `${SYSTEM.tabA}\x1b[93mabsolute(0) ${sdu.servicePath}`,
-        `${SYSTEM.tabA}temp = ${sdu.isTemporary}`,
-        `${SYSTEM.tabA}serviceId = ${serviceId}\x1b[0m\n`,
-        `service gcce options -:`,
-        `${SYSTEM.tabA}\x1b[93mabsolute(1) ${sdu.serviceGcce.path}`,
-        `${SYSTEM.tabA}name = ${sdu.serviceGcce.name}, version = ${sdu.serviceGcce.version}\x1b[0m\n`,
-        `service NET options -:`,
-        `${SYSTEM.tabA}\x1b[93minet = ${www.address().address}/lo, fixed`,
-        `${SYSTEM.tabA}family = ${www.address().family}`,
-        `${SYSTEM.tabA}port = ${port}, type = registered\x1b[0m\n`,
-        `service started running on http://localhost:${port}\n`
-     ];
-     stdout.forEach(c => console.log(c));
-     Cache.handleUpload(pathToServiceLog);
-     Cache.handleStackUpload();
-     execGcce(sdu.serviceGcce, port);
+    const port = server.address().port;
+    const serviceId = `${port}xS${Math.floor(Math.random() * 100000)}`;
+    while (!existsSync(PATHS.serviceLog)) {
+      mkdirSync(PATHS.serviceLog, { recursive: true });
+    }
+    sdu.createdAt = new Date();
+    sdu.serviceId = serviceId;
+    sdu.servicePort = port;
+    sdu.Pid = process.pid;
+    const pathToServiceLog = join(PATHS.serviceLog, serviceId);
+    writeFileSync(pathToServiceLog, JSON.stringify(sdu, "", 4));
+    const stdout = [
+      `grand code environment(GCE) ${SYSTEM.version}, serviceOptions -:`,
+      `${SYSTEM.tabA}\x1b[93mabsolute(0) ${sdu.servicePath}`,
+      `${SYSTEM.tabA}temp = ${sdu.isTemporary}`,
+      `${SYSTEM.tabA}serviceId = ${serviceId}\x1b[0m\n`,
+      `service gcce options -:`,
+      `${SYSTEM.tabA}\x1b[93mabsolute(1) ${sdu.serviceGcce.path}`,
+      `${SYSTEM.tabA}name = ${sdu.serviceGcce.name}, version = ${sdu.serviceGcce.version}\x1b[0m\n`,
+      `service NET options -:`,
+      `${SYSTEM.tabA}\x1b[93minet = ${server.address().address}/lo, fixed`,
+      `${SYSTEM.tabA}family = ${server.address().family}`,
+      `${SYSTEM.tabA}port = ${port}, type = registered\x1b[0m\n`,
+      `service started running on http://localhost:${port}\n`,
+    ];
+    stdout.forEach((c) => console.log(c));
+    Cache.handleUpload(pathToServiceLog);
+    Cache.handleStackUpload();
+    execGcce(sdu.serviceGcce, port);
   };
 
-  const www = createServer((req,res) => {
-    let cbParams = sdu.serviceGcce;
-    cbParams['serviceId'] = sdu.serviceId;
-    handleRequests(req, res, sdu.serviceGcce);
-  });
-  const wss = new WebSocketServer({ noServer: true });
+  const cb = (req, res) => {
+    const path = req.url.split("?")[0];
+    const notstatic = req.headers?.notstatic === "true";
 
-  wss.on("connection", (ws) => { handleSapiRequests(ws, sdu) });
- 
-  www.on("upgrade", (request, socket, head) => {
-  const { pathname } = url.parse(request.url);
-  if (pathname === "/sapi") {
-     wss.handleUpgrade(request, socket, head, (ws) => {
-       wss.emit("connection", ws);
-     });
-   } else socket.destroy();
-  });
+    if (notstatic && path.startsWith("/core/api")) serviceApi(req, res, sdu);
+    else if (notstatic && path.startsWith("/coreutils"))
+      serviceUtil(req, res, sdu);
+    else {
+      let cbParams = sdu.serviceGcce;
+      cbParams["serviceId"] = sdu.serviceId;
+      webServer(req, res, cbParams);
+    }
+  };
 
-  www.listen(sdu.servicePort, onServerStart);
-} 
+  const server = createServer(cb);
+
+  server.listen(sdu.servicePort, onServerStart);
+}
