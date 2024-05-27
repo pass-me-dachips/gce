@@ -134,8 +134,7 @@ class Env {
    * @returns {void}
    */
   handleStackUpload() {
-    //  const TBI = 120000; //Time Before Interval: every 2 minute
-    const TBI = 4000; //Time Before Interval: every 2 minute
+    const TBI = 120000; //Time Before Interval: every 2 minute
     let prevUpdateTime = null;
     setInterval(async () => {
       try {
