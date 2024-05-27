@@ -5,10 +5,11 @@ import acfco from "./helpers/acfco.h.js";
 import asciiTable from "./helpers/asciitable.h.js";
 import Cache from "../etc/cache.js";
 import { existsAsync } from "../etc/existsAsync.js";
+import { fileWrite } from "../net/sapi/io/write.js";
 import { freemem } from "node:os";
 import { join } from "node:path";
 import osPathLists from "./helpers/ospath.h.js";
-import { readFile, writeFile, rm } from "node:fs/promises";
+import { readFile, rm } from "node:fs/promises";
 import { SYSTEM, PATHS } from "../var/system.js";
 
 export function add(...operands) {
@@ -190,7 +191,7 @@ export async function quick(path, key) {
   try {
     const contentToWrite = quickh[key];
     if (contentToWrite) {
-      await writeFile(path, contentToWrite, SYSTEM.encoding);
+      await fileWrite(path, contentToWrite);
       return true;
     } else throw { message: "NO PLACEHOLDER" };
   } catch (error) {
