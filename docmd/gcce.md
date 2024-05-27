@@ -1,3 +1,21 @@
+=====================================================================================
+This folder gcce.dev.doc contains documentations for developers looking to create
+a gcce.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+it is advisable to read the gce.dev.doc to get a broader understanding of how gce
+works in other to understand most of the keywords been used through out the docs.
+see
+
+- # docs/gce.dev.doc/signals
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+This file contains documentation for working with crud operations on the pc's
+file system using gce's service api.
+
+GCE RECOMMENDS DEVELOPERS TO PLAY WITH THE OPERATIONS PROVIDED IN THIS FILE
+TO UNDERSTAND HOW THEY WORK BEFORE MAKING YOUR OWN GCCE.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 all gcces must have a gconfig.json file in its root dir that holds the configs
 
 of the gcce. the contents must be as follows : {
@@ -93,3 +111,8 @@ this respone value, sig is in uppercase
 the ack is either true or false, which means acknowoledged, the sig is the signall.
 read signal to learn more. the oid is the oid you specified. the code is aleays 0
 and the payload is always an object
+
+the reponse can only be in 2 status codes code_1 which is httml status 400
+and code_0 which is html status 200
+
+request payload can be array, object or string but must be encdoed using json.stringify

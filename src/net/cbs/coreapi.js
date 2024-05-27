@@ -13,12 +13,13 @@ import spkg from "../sapi/opera/spkg.js";
  * @returns {void}
  */
 export default function serviceApi(req, res, sdu) {
-  const urls = req.url.split("/").filter((elem) => elem !== "");
+  const urls = sdu.paths.split("/").filter((elem) => elem !== "");
 
   if (urls.length === 4) {
     const requestType = urls[1];
     const requestOpera = urls[2];
     const requestOid = urls[3];
+
     const requestPayload = { ...sdu };
     const api_version = Number(req.headers?.version) ?? 1;
 
