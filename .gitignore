@@ -2,6 +2,7 @@
 tests/
 help/
 distrib.a
+docmd/
 
 # Files
 remember
