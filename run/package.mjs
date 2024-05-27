@@ -12,6 +12,7 @@ const shared_path = join("distrib", "shared");
 
 console.log("copying shared code: ");
 cpSync("src", join(shared_path, "src"), { recursive: true });
+cpSync("node_modules", join(shared_path, "node_modules"), { recursive: true });
 cpSync("man", join(shared_path, "man"), { recursive: true });
 copyFileSync("package.json", join(shared_path, "package.json"));
 console.log("\x1b[92mcopied shared code successfully!\n\x1b[0m");
