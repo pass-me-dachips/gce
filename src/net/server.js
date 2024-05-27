@@ -2,6 +2,7 @@
 
 import Cache from "../etc/cache.js";
 import { code_1 } from "./sapi/codes.js";
+import cors from "cors";
 import { createServer } from "node:http";
 import execGcce from "./www/execGcce.js";
 import { join } from "node:path";
@@ -13,8 +14,7 @@ import webServer from "./cbs/ws.js";
 import { writeFileSync, existsSync, mkdirSync } from "node:fs";
 
 /**
- * @author david, pass-me-dachips
- * @param {object} sdu the service date unit or information about the service
+ * @param {object} sdu - The service data unit or information about the service
  * @returns {void}
  */
 export default function Server(sdu) {
@@ -50,6 +50,14 @@ export default function Server(sdu) {
     execGcce(sdu.serviceGcce, port);
   };
 
+  const handleCors = cors({
+    origin: [
+      "http://localhost:5500",
+      "http://localhost:44444", //gce dev host
+      "http://localhost:5173", //vite
+    ],
+  });
+
   const cb = async (req, res) => {
     const fullurl = `http://${req.headers.host}${req.url}`;
     const { pathname, search, searchParams } = new URL(fullurl);
@@ -57,7 +65,7 @@ export default function Server(sdu) {
 
     let payload = "";
     req.on("data", (chunk) => {
-      payload = payload + chunk;
+      payload += chunk;
     });
 
     req.on("end", () => {
@@ -73,27 +81,26 @@ export default function Server(sdu) {
           payload: method !== "GET" && method !== "HEAD" ? payload : null,
         };
         delete dataunit.serviceGcce;
-        if (notstatic && pathname.startsWith("/coreapi"))
+        if (notstatic && pathname.startsWith("/coreapi")) {
           serviceApi(req, res, dataunit);
-        else if (notstatic && pathname.startsWith("/coreutils"))
+        } else if (notstatic && pathname.startsWith("/coreutils")) {
           serviceUtil(res, dataunit);
-        else {
+        } else {
           let cbParams = sdu.serviceGcce;
           cbParams["serviceId"] = sdu.serviceId;
           cbParams["url"] = pathname;
           webServer(res, cbParams);
         }
       } catch (error) {
-        res.writeHead(
-          400,
-          JSON.stringify({ "Content-Type": "application/json" })
-        );
+        res.writeHead(400, { "Content-Type": "application/json" });
         res.end(JSON.stringify(code_1(error.message)));
       }
     });
   };
 
-  const server = createServer(cb);
+  const server = createServer((req, res) => {
+    handleCors(req, res, () => cb(req, res));
+  });
 
   server.listen(sdu.servicePort, onServerStart);
 }
