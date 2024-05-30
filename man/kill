@@ -1,23 +1,26 @@
-cmd: kill, v1.0.0
-status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+Command: kill, v1.0.0
+Status: 
+    Android (stable), 
+    Linux (stable), 
+    Windows (experimental), 
+    macOs (experimental)
 
 DESCRIPTION
- gce's recommended way of killing a running gce service gracefully.
+    gce's recommended way of killing a running gce service gracefully.
 
-KEYWORDS 
-   ghost services: services that are in the service log/registry but are not currently
-   running due to abortion: eg using ctrl c, ctrl z, shutdown, reboot etc.
-   || : referes to or.
-   <no-argument> : you dont have to specify any argument.
+KEYWORDS
+    ghost services: Services that are in the service log/registry but are not currently
+    running due to abortion (e.g., using Ctrl+C, Ctrl+Z, shutdown, reboot, etc).
+    || : Same as "or".
+    <no-option> : Which means specifying an option is not mandatory.
 
-USAGE 
-  `gce kill <serviceId> || <no-argument>`
+USAGE
+    gce kill <serviceId> || <no-argument>
 
 NOTE
-   you would get 'kill ESRCH: ghost removed' if you try to kill a ghost service:
-   note the service is still removed from the registry. and all datas tied to it
-   are erased from the disk also.
-   you would get nothing in return if the service was alive and succesfully
-   killed.
+    You will get 'kill ESRCH: ghost removed' if you try to kill a ghost service.
+    Note that the service is still removed from the registry, and all data tied to it 
+    are erased from the disk as well.
+    You will get nothing in return if the service was alive and successfully killed.
 
-documented and created by david <pass-me-dachips> 20-5-2024
+Documented and created by David.A http://github.com/pass-me-dachips on 20-05-2024
