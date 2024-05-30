@@ -1,10 +1,14 @@
-cmd: gcce, v1.0.0
-status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+Command: gcce, v1.0.0
+Status: 
+     Android (stable), 
+     Linux (stable), 
+     Windows (experimental), 
+     macOS (experimental)
 
 DESCRIPTION
-    this command provides features for listing all existing gcces.
+    This command returns informations about all installed gcce's.
 
 USAGE
     `gce gcce`
  
-documented and created by david <pass-me-dachips> 17-5-2024
+Documented and created by David.A <http://github.com/pass-me-dachips> on 17-05-2024
