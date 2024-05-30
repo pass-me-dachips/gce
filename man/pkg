@@ -47,24 +47,24 @@ SUB_COMMANDS
     - show
 
     add - adds a package to gce's registry.
-          usage: gce pkg add <relative_path_to_package>
+          usage: `gce pkg add <relative_path_to_package>`
           If the package already exists, gce will update it.
 
     man - returns the manual/docs of the specified package.
-          usage: gce pkg man <packageName>
+          usage: `gce pkg man <packageName>`
 
     remove - removes a package from gce's registry.
           usage: gce pkg remove
           This command removes all packages in the registry. In order to remove a 
           specific package, the subcommand requires an argument which is the name of 
           the package.
-          usage: gce pkg remove <packageName>
+          usage: `gce pkg remove <packageName>`
 
     show - lists all existing packages in the registry.
           usage: gce pkg show
           This command lists all packages in the registry. In order to list more info 
           about a specific package, the subcommand requires an argument which is the 
           name of the package.
-          usage: gce pkg show <packageName>
+          usage: `gce pkg show <packageName>`
 
 Documented and created by David.A http://github.com/pass-me-dachips on 18-05-2024
