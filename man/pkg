@@ -1,64 +1,70 @@
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-ALTHOUGH THE PACKAGE COMMAND IS STABLE, GCE ONLY RECOMMENDS USING FOR TEST PURPOSES
-AS PACKAGES ARE NOT CURRENTLY INTEGRATED WITH THE GCE SERVICE WHICH MEANS YOU TYPICALLY 
-CANNOT USE PACKAGES IN A GCE SERVICE BUT CAN CURRENTLY INSTALL, REMOVE, SHOW 
+ALTHOUGH THE PACKAGE COMMAND IS STABLE, GCE ONLY RECOMMENDS USING IT FOR TEST PURPOSES
+AS PACKAGES ARE NOT CURRENTLY INTEGRATED WITH THE GCE SERVICE WHICH MEANS YOU TYPICALLY
+CANNOT USE PACKAGES IN A GCE SERVICE BUT CAN CURRENTLY INSTALL, REMOVE, VIEW A PACKAGE
 ETC.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-COMMAND pkg, v1.0.0
-status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
-want to build a package? visit https://gce.firebase.webapp/docs/pkg_contrib
- 
+Command pkg, v1.0.0
+Status: 
+    Android (stable),
+    Linux (stable),
+    Windows (experimental),
+    macOS (experimental)
+
+Want to build a package? Visit the gce home page to view more detailed information.
+
 DESCRIPTION
-    packages are add-ins created by users that provides additional support to gce services
-    rather than just the regular built in fs i/o operations.
-    they provide various kinds of functionalities: http clients (simlar to vscode REST client),
-    live servers, word finders, custom service api and lot more.
-    the gce `pkg` command provides sub commands that allows adding, removing,
-    updating, listing and understanding packages etc.
+    Packages are add-ins created by users that provide additional support to gce 
+    services rather than just the regular built-in fs I/O operations. They provide 
+    various kinds of functionalities: HTTP clients (similar to VSCode REST client), 
+    live servers, word finders, custom service APIs, and much more. The gce pkg command
+    provides subcommands that allow adding, removing, updating, listing, and 
+    understanding packages, etc.
 
 LIMITATIONS
-    unlike other code editors/environments like vscode, packages does not provide
-    an user interface for interating with a service instead there communicate using
-    custom stateless protocols. similar to api webhooks.
+    Unlike other code editors/environments like VSCode, packages do not provide a user
+    interface for interacting with a service. Instead, they communicate using custom 
+    stateless protocols, similar to API webhooks.
 
-UNIQUE_FEATURES
-  -  since the gce package acts as an add-in api, it can be written in any 
-     of your prefered language: node, python, ruby, java, platform specific executables (bin) in c, c++, rust, go, nim
-     etc as long as it runs properly on the environment and the machine has the neccessary requirements (eg: interpreted languages for packages that aren't native binaries),
-     you are good to go.
-  -  a mirror or custom repository that stores meta data about packages and can be
-     easily accessed, cached, and modified etc. 
+UNIQUE FEATURES
+  - Since the gce package acts as an add-in with web APIs, it can be written in any of your 
+    preferred languages: Node, Python, Ruby, Java, platform-specific executables (bin) 
+    in C, C++, Rust, Go, Nim, etc. As long as it runs properly on the environment and 
+    the machine has the necessary requirements (e.g., interpreted languages for 
+    packages that aren't native binaries), you are good to go.
+  - A mirror or custom repository that stores metadata about packages and can be easily 
+    accessed, cached, and modified, etc.
 
 USAGE
-    gce pkg [sub-command || sub-command-argument]
+    gce pkg <sub-command || sub-command-argument>
 
+SUB_COMMANDS
+    - add
+    - man
+    - remove
+    - show
 
-SUB_COMMANDS 
-  - add
-  - man
-  - remove
-  - show
+    add - adds a package to gce's registry.
+          usage: gce pkg add <relative_path_to_package>
+          If the package already exists, gce will update it.
 
- add - adds a package to gce's registry
-  usage `gce pkg add <relative_path_to_package>`
-  if the package already exists, gce would update it.
+    man - returns the manual/docs of the specified package.
+          usage: gce pkg man <packageName>
 
- man - returns the manual/docs of the specified package
-  usage `gce pkg man <packageName>`
-  
- remove - removes a package from gce's registry 
-  usage `gce pkg remove`
-  this command removes all packages in the registry, in other to remove a specific
-  package, the subcommand would require an argument which is the name of the 
-  package.
-  usage `gce pkg remove <packageName>
+    remove - removes a package from gce's registry.
+          usage: gce pkg remove
+          This command removes all packages in the registry. In order to remove a 
+          specific package, the subcommand requires an argument which is the name of 
+          the package.
+          usage: gce pkg remove <packageName>
 
- show - lists all existing packages in the registry
-  usage `gce pkg show`
-  this command lists all packages in the registry, in other to list more info
-  about a specific package, the subcommand would require an argument which is the 
-  name of the package.
-  usage `gce pkg show <packageName>
+    show - lists all existing packages in the registry.
+          usage: gce pkg show
+          This command lists all packages in the registry. In order to list more info 
+          about a specific package, the subcommand requires an argument which is the 
+          name of the package.
+          usage: gce pkg show <packageName>
 
-documented and created by david <pass-me-dachips> 18-5-2024
+Documented and created by David.A http://github.com/pass-me-dachips on 18-05-2024
