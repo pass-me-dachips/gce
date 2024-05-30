@@ -1,27 +1,37 @@
 Command: globalConfig, v1.0.0
 Status: 
-    linux(stable), android(stable), windows(experinmental), mac(experinmental)
+    Android (stable), 
+    Linux (stable), 
+    Windows (experimental), 
+    macOS (experimental)
 
 DESCRIPTION
-    this command provides features for creating a global configuration for your
-    gcce services.
-    global configurations are usefull when you want to ensure all services feels
-    the same. currently the global config only recognizes 1 field which is the
-    `default` field. the default field sets a default gcce to use on start of every
-    service, this can be usefull in cases where multiple gcces are installed.
-    when running a service, if gce cannot find a global configuation with the
-    `default` field or a local configuration which is usually a file named 
-    `gceconfig.json` in the root directory of the service path, 
-    the user would be prompted to choose a gcce before starting the service.
-    NOTE: when running a service, if the default gcce in either configs (local or global)
-    has multiple versions installed, gce would choose the first one it finds which
-    is usually the last installed.
+    This command provides an interface that allows users to create a global 
+    configuration for their gce services.
 
-SPECIAL_NOTE
-    gce uses the global config always if the service is a temporary service or 
+    Global configurations are useful in cases where you want to ensure that all 
+    services act the same way. Currently, gce only recognizes one configuration, which 
+    is the default configuration. The default configuration specifies a default gcce 
+    to use on the start of every service. This can be useful in cases where multiple 
+    gce's are installed. When running a service, if gce cannot find a default 
+    configuration in the global configuration file or in the local configuration file, 
+    which is usually a file named gceconfig.json in the root directory of the actual 
+    service, the user will be prompted to choose a gcce before starting the service.
+    NOTE: If the default gcce in either configuration (local or global) has multiple 
+    versions installed, gce will choose the first version of the gcce it finds in the 
+    registry, which is usually the last version of the gcce installed.
+
+SPECIAL NOTE
+    gce uses the global configuration always if the service is a temporary service or 
     the service path points to a file.
 
 USAGE
     `gce globalConfig`
- 
-documented and created by david <pass-me-dachips> 17-5-2024
+
+EXAMPLES
+    gceconfig.json file sample :
+    {
+      "default" : "<name_of_gcce>"
+    }
+
+Documented and created by David.A http://github.com/pass-me-dachips on 17-05-2024
