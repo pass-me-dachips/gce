@@ -1,10 +1,14 @@
-cmd: rkill, v1.0.0
-status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+Command: rkill, v1.0.0
+Status: 
+    Android (stable), 
+    Linux (stable), 
+    Windows (experimental), 
+    macOS (experimental)
 
 DESCRIPTION
-   iteratively kill all running gce services gracefully.
+   Iteratively and gracefully kill all running gce services.
 
 USAGE 
   `gce rkill`
 
-documented and created by david <pass-me-dachips> 20-5-2024
+Documented and created by David.A http://github.com/pass-me-dachips on 20-05-2024
