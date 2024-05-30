@@ -1,29 +1,33 @@
-COMMAND services, v1.0.0
-status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+Command services, v1.0.0
+Status:
+    Android (stable),
+    Linux (stable),
+    Windows (experimental),
+    macOS (experimental)
 
-DESCRIPTION 
-  returns information about services.
+DESCRIPTION
+    Returns information about services.
 
-USAGE 
-  gce services <-instruction || no-instruction>
+USAGE
+    gce services <-instruction || no-instruction>
 
-KEYWORDS 
-  no-instruction: you dont have to specify any instruction.
-  ghosts/ghost-services : read the cmd `kill` manual to learn more.
+KEYWORDS
+    no-instruction: Which means its not mandatory to specify an instruction.
+    ghosts/ghost-services: Refer to the kill command manual to learn more.
 
-SPECIAL_NOTE
-  when you run `gce services` without any subcommand, gce would ping all services
-  in the log/registry, and return the total number of services in the registry: ghosts inclusive
-  together with the lists of services currently running (ghosts exclusive).
+SPECIAL NOTE
+    When you run gce services without any subcommand, gce will ping all services in 
+    the log/registry and return the total number of services in the registry, 
+    ghosts inclusive. It will also provide a list of services currently running, 
+    ghosts exclusive.
 
 INSTRUCTIONS
-  -x                        
-     List all running gce services and additional info
-     about each (ghosts exclusive). 
+    -x
+     List all running gce services and additional info about each ghosts exclusive.
 
-  -s <serviceId>            
-     List more extensive information about a specific service <serviceId>
-     Note that gce would only return these information if the service is currently
+    -s <serviceId>
+     List more extensive information about a specific service <serviceId>. 
+     Note that gce will only return this information if the service is currently 
      running and not a ghost.
 
-documented and created by david <pass-me-dachips> 20-5-2024
+Documented and created by David.A http://github.com/pass-me-dachips on 20-05-2024
