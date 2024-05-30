@@ -1,5 +1,6 @@
-cmd: globalConfig, v1.0.0
-status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+Command: globalConfig, v1.0.0
+Status: 
+    linux(stable), android(stable), windows(experinmental), mac(experinmental)
 
 DESCRIPTION
     this command provides features for creating a global configuration for your

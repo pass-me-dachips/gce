@@ -1,9 +1,9 @@
 Command: gcce, v1.0.0
 Status: 
-     Android (stable), 
-     Linux (stable), 
-     Windows (experimental), 
-     macOS (experimental)
+    Android (stable), 
+    Linux (stable), 
+    Windows (experimental), 
+    macOS (experimental)
 
 DESCRIPTION
     This command returns informations about all installed gcce's.
