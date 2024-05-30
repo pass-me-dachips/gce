@@ -1,28 +1,36 @@
-cmd: clean, v1.0.0
-status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+Command: clean, v1.0.0
+Status:
+     Android (stable), 
+     Linux (stable),
+     Windows (experimental), 
+     macOS (experimental)
 
 DESCRIPTION
-     similar to the rkill command but only removes ghost services.
-     the main difference between the rkill and clean command is that rkill command kills all services
-     including ghosts and none-ghost services while the clean command only removes ghost services.
-     use the clean command in cases where you want to ensure your machine is not bloated with useless data's
-     of ghost services.
+     Similar to the rkill command but only removes ghost services.
+     The main difference between the rkill and clean commands is that the rkill command kills all services
+     including both ghosts and non-ghosts, whereas the clean command only removes ghost services.
+     Use the clean command in cases where you want to ensure your machine is not bloated with useless data
+     produced by ghost services.
 
 KEYWORDS 
-     ghosts/ghost-services : read the cmd `kill` manual to learn more.
-     none-ghost services: services that are currently active and running.
-     || : referes to or 
-     <no-option> : you dont have to specify any option
+     ghosts/ghost services : Read the cmd `kill` manual to learn more.
+     non-ghost services: Services that are active and running.
+     || : Same as "or".
+     <no-option> : Which means specifying an option is not mandatory.
 
 USAGE
-    `gce clean <option || no-option>`
+    `gce clean [option || no-option]`
 
 OPTIONS 
      --nosleep                
-        notifies gce to keep the process running and iteratively remove ghost services 
-        at a certain interval (3 minutes).    
+        Notifies gce to keep the process running and iteratively remove ghost services 
+        at a regular interval (every 3 minutes).    
+
+EXAMPLES 
+    `gce clean`
+    `gce clean --nosleep`
 
 NOTE
-    clean would return nothing if there are no GHOST services to remove.
+    The clean command would return nothing if there are no ghost services to remove.
  
-documented and created by david <pass-me-dachips> 20-5-2024
+Documented and created by David.A <http://github.com/pass-me-dachips> on 20-05-2024
