@@ -1,6 +1,7 @@
 "use strict";
 
-/** the program that installs the gce source code to the appropriate location.
+/** the program that install :
+ *     moves the gce source code and binary to the appropriate location.
  * @author david, pass-me-dachips
  */
 
