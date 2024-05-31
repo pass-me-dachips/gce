@@ -9,7 +9,7 @@ DESCRIPTION
     Returns information about services.
 
 USAGE
-    gce services <-instruction || no-instruction>
+    gce services [-instruction || no-instruction]
 
 KEYWORDS
     no-instruction: Which means its not mandatory to specify an instruction.

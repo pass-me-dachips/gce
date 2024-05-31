@@ -38,7 +38,7 @@ UNIQUE FEATURES
     accessed, cached, and modified, etc.
 
 USAGE
-    gce pkg <sub-command || sub-command-argument>
+    gce pkg [sub-command || sub-command-argument]
 
 SUB_COMMANDS
     - add

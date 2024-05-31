@@ -16,7 +16,7 @@ KEYWORDS
      ghosts/ghost services : Read the cmd `kill` manual to learn more.
      non-ghost services: Services that are active and running.
      || : Same as "or".
-     <no-option> : Which means specifying an option is not mandatory.
+     no-option : Which means specifying an option is not mandatory.
 
 USAGE
     `gce clean [option || no-option]`
