@@ -1,67 +1,65 @@
-
-COMMAND start, v1.0.0
-status: linux(stable), android(stable), windows(experinmental), mac(experinmental)
+Command Start, v1.0.0
+Status:
+    Android (stable)
+    Linux (stable)
+    Windows (experimental)
+    macOS (experimental)
 
 DESCRIPTION
-    the start command is gce's main command for starting a service. this command 
-    is an invinsible command which means you dont have to specify the `start` command
-    you only need the part to the service and thats all.
+    The start command is GCE's main command for starting a service. This command is a 
+    hidden command, which means you don't have to specify the start command 
+    explicitly; you only need to provide the path to the service.
 
-USAGE 
-    gce <relative_path_to_file/dir> [--options or no-option ]
+USAGE
+    gce <relative_path_to_file/dir> [--options || no-option]
 
-SPECIAL_NOTE
-    if gce cannot find the relative_path_to_the_dir specified, it would 
-    create the path iteratively as a directory and not a file
+SPECIAL NOTE
+    If gce cannot find the specified relative_path_to_dir, it will create the path 
+    iteratively as a directory and not as a file.
 
 CONFIGURATIONS
-    in cases where you want to use a specific gcce for a specific service,
-    without setting a global config, you would have to create a gceconfig.json
-    file in the root of the directory.
-    where gceconfig.json is a json object that contains the following:
+    In cases where you want to use a specific gcce for a specific service without 
+    setting a global config, you would need to create a gceconfig.json file in the root of 
+    the directory. The gceconfig.json file is a JSON object that contains the 
+    following:
     {
        "default": "<gcce_name>"
     }
-    identically to the global config, infact it is just like the global config
-    but is usually refered to as the local config as the configurations are only
-    specific to a single service.
-    Note that the local config has no effect on temporary services or services
-    that points to a file. gce would always use the global config in this cases.
+    This is similar to the global config but is referred to as the local config 
+    because the configurations are specific to a single service. Note that the local 
+    config has no effect on temporary services or services that points to a file. 
+    Gce will always use the global config in these cases.
 
 OPTIONS
-    --temp 
-        Marks the service as `temporary`, which means once the service dies, 
-        all data's related to it are wiped out. this services are useful in cases where you
-        are writing tests/prototypes that neccessarily dont need to be saved.
-        Note that temporary services can only be directories.
+   --temp
+      Marks the service as temporary, which means once the service dies, all related 
+      data are wiped out. These services are useful for tests/prototypes that don't 
+      need to be saved. Note that temporary services can only be directories.
 
-        In temporary services, the <relativepath/to/service/fs> argument is threated as the 
-        name of the temporary service so gce recommendeds using a single name and not
-        a path as:
-        
-        whenever you run `gce <relativepath/to/service/fs> --temp` unlike normal services
-        where gce would create <relativepath/to/service/fs> if not found, when the --temp option
-        is specified, gce would merge the relative/path/to/service/fs to a simple
-        temporary directory name possibly omiting the forward slash(/) and colon(:)
-        symbols.
-        in this case, gce might even create the temporary service | directory name as
-        relativepathtoservicefs if you specified path: relativepath/to/service/fs.
-        Its generally recommended to use a meaningful single name (without white-spaces) as a temporary service and not a path-like name or path.
+      In temporary services, the <relative_path/to/service/fs> argument is treated as 
+      the name of the temporary service. Gce recommends using a single name and not a 
+      path. When you run `gce <relative_path/to/service/fs> --temp`, gce will merge 
+      `relative/path/to/service/fs` into a simple temporary directory name, 
+      possibly omitting the forward slash (/) and colon (:) symbols. For example, 
+      gce might create the temporary service directory as `relativepathtoservicefs` if 
+      you specified the path `relative/path/to/service/fs`. It is generally recommended 
+      to use a meaningful single name (without white spaces) as a temporary service 
+      name, rather than a path-like name or path.
+      Example   `gce serviceName --temp`
 
-    --port:<Port_Number>  
-        by default gce would pick a random registered port (1024 - 49150) where 
-        the service would listen to. by specifying this option, gce would use the
-        specified port to run your service. 
-        in the usage described above replace <Port_Number> with the actual port 
-        number.
-        Note that ports can only be registered (1024 - 49150).
-        example `gce <relative/path/to/fs> --port:8080`
-    
-     --FAIAF
-        notifies gce to threat the command as a start command.
-        in cases where you have a directory or file named `install` for example, if
-        you where to run `gce install` it would call the install command instead
-        of starting the service: ./install
-        the --FAIAF notifies gce that the command is to start a service and nothing else.
+   --port:<Port_Number>
+      By default, GCE will pick a random registered port (1024 - 49150) on Windows, Linux
+      and Mac, and (1024 - 65535) for Android for the service
+      to listen to. By specifying this option, GCE will use the specified port to run 
+      your service. Replace <Port_Number> with the actual port number. Note that only 
+      registered ports (1024 - 49150) can be used.
+      Example: `gce <path_to_fs> --port:8080`
 
-documented and created by david <pass-me-dachips> 20-5-2024
+   --FAIAF
+      Notifies gce to treat the command as a start command. In cases where you have a 
+      directory, file or temporary service named install, running `gce install` would 
+      call the install command instead of starting the service `install`. 
+      The --FAIAF option ensures gce starts the service instead of executing another
+      command.
+ 
+Documented and created by David.A http://github.com/pass-me-dachips on 20-05-2024
