@@ -50,13 +50,7 @@ export default function Server(sdu) {
     execGcce(sdu.serviceGcce, port);
   };
 
-  const handleCors = cors({
-    origin: [
-      "http://localhost:5500",
-      "http://localhost:44444", //gce dev host
-      "http://localhost:5173", //vite
-    ],
-  });
+  const handleCors = cors();
 
   const cb = async (req, res) => {
     const fullurl = `http://${req.headers.host}${req.url}`;
