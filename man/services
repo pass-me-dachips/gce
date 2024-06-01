@@ -17,17 +17,17 @@ KEYWORDS
 
 SPECIAL NOTE
     When you run gce services without any subcommand, gce will ping all services in 
-    the log/registry and return the total number of services in the registry, 
-    ghosts inclusive. It will also provide a list of services currently running, 
+    the log/registry and return the total number of services in the registry: 
+    ghosts inclusive. It will also provide a list of services currently running: 
     ghosts exclusive.
 
 INSTRUCTIONS
     -x
-     List all running gce services and additional info about each ghosts exclusive.
+     List all running gce services and additional info about each: ghosts exclusive.
 
     -s <serviceId>
      List more extensive information about a specific service <serviceId>. 
      Note that gce will only return this information if the service is currently 
      running and not a ghost.
 
-Documented and created by David.A http://github.com/pass-me-dachips on 20-05-2024
+Documented and created by David.A <david40au40@gmail.com> on 20-05-2024

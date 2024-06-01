@@ -20,8 +20,7 @@ DESCRIPTION
     services rather than just the regular built-in fs I/O operations. They provide 
     various kinds of functionalities: HTTP clients (similar to VSCode REST client), 
     live servers, word finders, custom service APIs, and much more. The gce pkg command
-    provides subcommands that allow adding, removing, updating, listing, and 
-    understanding packages, etc.
+    provides subcommands that allow adding, removing, updating and listing Packages etc.
 
 LIMITATIONS
     Unlike other code editors/environments like VSCode, packages do not provide a user
@@ -29,11 +28,12 @@ LIMITATIONS
     stateless protocols, similar to API webhooks.
 
 UNIQUE FEATURES
-  - Since the gce package acts as an add-in with web APIs, it can be written in any of your 
-    preferred languages: Node, Python, Ruby, Java, platform-specific executables (bin) 
-    in C, C++, Rust, Go, Nim, etc. As long as it runs properly on the environment and 
-    the machine has the necessary requirements (e.g., interpreted languages for 
-    packages that aren't native binaries), you are good to go.
+  - Since the gce package acts as an add-in connected using networking protocols, 
+    it can be written in any of your preferred languages: Node, Python, Ruby, Java, 
+    platform-specific executables (bin) in C, C++, Rust, Go, Nim, etc. As long as it 
+    runs properly on the environment and the machine has the necessary requirements 
+    (e.g., interpreted languages for packages that aren't native binaries), you are 
+    good to go.
   - A mirror or custom repository that stores metadata about packages and can be easily 
     accessed, cached, and modified, etc.
 
@@ -67,4 +67,4 @@ SUB_COMMANDS
           name of the package.
           usage: `gce pkg show <packageName>`
 
-Documented and created by David.A http://github.com/pass-me-dachips on 18-05-2024
+Documented and created by David.A <david40au40@gmail.com> on 18-05-2024
