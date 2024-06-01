@@ -1,47 +1,43 @@
+This file contains a list of available Service API signals (SIG) for GCE v1.0.0 and 
+later.
 
-THIS FILE CONTAINS LISTS OF ALL AVAIALABLE SERVICE API SIGNALS (SIG) FOR GCE 
-V1.0.0 - and later
+Keywords:
+- "Provide a payload": 
+       The payload field in the response object is not null, and your request was 
+       acknowledged with a payload field embedded in the response. Note that an empty
+       array in the payload field can still be considered a response with a payload.
 
-KEWORDS :
-the term -
-`provide a payload`: 
-   means the `payload` field in the response object isnt null, 
-   and your request was acknowledged with a payload field embeded to the response.
-   note that an empty array in the payload field can still be considered as a 
-   response with a payload.
+- "Does not provide a payload": 
+       The payload field in the response object may still be present, but it is not 
+       needed and can be discarded, similar to discarding a return value in languages 
+       like Nim.
 
-`does not provide a payload`:
-   does not mean the payload field in the response object wouldnt be present in the 
-   response, its more like its not needed and can be discarded similar to discarding 
-   a return value in languages like nim. in gce sapi for example an error response 
-   migth not contain a payload if the signal has a specific meaning eg ENOENTRY. 
-   there is no need for a payload in this case as this signal indicates the requested resource doesnt exists.
+Signals:
 
-name                    description
-ACK/HASPAYLOAD          the operation was succesfull, and the response has a payload.
-ACK                     the operation was succesfull, but the response does not 
-                        provide a payload.
-DUPKEY                  the key `as in` fileName, packagName etc already exists in
-                        the requested resource. 
-                        this signal does not provide a payload.
-STDERR                  the operation was unsucsesful due to client side errors, 
-                        this operation provides a payload which is the error message.
-ENOENTRY                the requested resource was not found. this signal does not 
-                        provide a payload.
-OSFORBIDEN              the request was considered forbiden at the os level eg: 
-                        trying to read a dir but provided a path to a file. 
-                        this signal does not provide a payload.
-ONLINE                  common in write operations: notifies the client 
-                        another service or previous request is still working on
-                        the specified resource eg a file. this happens when a 
-                        .gcelock.<nameoffile> is present in the 
-                        dir where the file resides, which typically means another/same 
-                        service is writting to the same file.
-                        at some point, a service migth fail to remove the file:
-                        .gcelock.<nameoffile> after writing to the target destination: <nameoffile>, 
-                        in that case you would be unable to write to that file from
-                        any gce service again, to solve this issue,
-                        you would have to manually remove the .gcelock.<nameoffile> file.
-                        when you keep on getting this signal whenever any service try writing to
-                        a specific file, then it means a service failed to remove the
-                        .gcelock.<nameoffile> file after writing to the target, and you would have to manually remove it.
+- ACK/HASPAYLOAD: The operation was successful, and the response has a payload.
+
+- ACK:  The operation was successful, but the response does not provide a payload.
+
+- DUPKEY: 
+      The key (e.g., fileName, packageName) already exists in the requested resource. 
+      This signal does not provide a payload.
+
+- STDERR: 
+      The operation was unsuccessful due to client-side errors. This operation 
+      provides a payload, which is the error message.
+
+- ENOENTRY: 
+      The requested resource was not found. This signal does not provide a payload.
+
+- OSFORBIDEN: 
+      The request was considered forbidden at the OS level (e.g., trying to read a 
+      directory but provided a path to a file). This signal does not provide a 
+      payload.
+
+- ONLINE: 
+      Common in write operations, notifies the client that another service or previous
+      request is still working on the specified resource (e.g., a file). This happens 
+      when a .gcelock.<nameoffile> file is present in the directory where the file 
+      resides, indicating that another/same service is writing to the same file. If a 
+      service fails to remove the .gcelock.<nameoffile> file after writing to the 
+      target destination, you may need to manually remove it to resolve the issue.
