@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git+https://github.com/pass-me-dachips/gce.git"
   },
+  "engines": {
+    "node": ">= 20.14.0"
+  },
   "author": "david.A",
   "license": "MIT",
   "bugs": {
