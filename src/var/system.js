@@ -22,7 +22,7 @@ export const SYSTEM = {
   buildAPackage: "https://tgcep-7d565.web.app/packages",
   homeRepo: "https://github.com/pass-me-dachips/gce.git",
   homePage: "https://tgcep-7d565.web.app",
-  encoding: "ascii",
+  encoding: "utf-8",
   ESTsize: "600kB",
   ESTcommands: 13,
   Estoptions: 1,
