@@ -83,7 +83,7 @@ export default function Server(sdu) {
           let cbParams = sdu.serviceGcce;
           cbParams["serviceId"] = sdu.serviceId;
           cbParams["url"] = pathname;
-          webServer(res, cbParams);
+          webServer(res, cbParams, pathname);
         }
       } catch (error) {
         res.writeHead(400, { "Content-Type": "application/json" });
