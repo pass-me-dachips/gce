@@ -18,8 +18,7 @@ export default async function webServer(res, sdu, url) {
       "X-Powered-By": SYSTEM.name,
       Server: `${SYSTEM.name}/${SYSTEM.version}`,
     });
-    // console.log(message.slice(0, 100), sdu.url, mimets, "\n\n\n\n");
-    res.end(message.toString("utf-8"));
+    res.end(message);
   }
   try {
     if (url === "/") url = sdu.entry;
@@ -29,8 +28,11 @@ export default async function webServer(res, sdu, url) {
     // handle path rewrites.
 
     const filePath = join(sdu.path, url);
-    const payload = await readFile(filePath, SYSTEM.encoding);
-    finish(200, mime(url), payload);
+    let payload = await readFile(filePath);
+    const mimetype = mime(url);
+    if (!mimetype.startsWith("font"))
+      payload = payload.toString(SYSTEM.encoding);
+    finish(200, mimetype, payload);
   } catch (err) {
     const unknownResponse = (message, code) => {
       finish(500, "application/json", JSON.stringify({ message, code }));

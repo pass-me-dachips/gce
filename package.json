@@ -4,6 +4,9 @@
   "description": "(gce) grand code environement",
   "main": "src/gce.js",
   "type": "module",
+  "scripts": {
+     "gtest": "node run/package.mjs && cd distrib && node install.mjs"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pass-me-dachips/gce.git"
