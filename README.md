@@ -20,8 +20,7 @@ code editors.
 
 - **Cross-Platform**: GCE is designed to work seamlessly across Android (via Termux), Linux,
   Windows (experimental), and macOS (experimental).
-- **High Performance**: Written in Node.js and wrapped in a lightweight Nim binary, GCE
-  ensures fast startup and efficient performance.
+- **High Performance**: Written in Node.js, GCE ensures fast startup and efficient performance.
 - **Scalability and Customizability**: Developers can easily switch between different GCCEs,
   customize the environment, and contribute to the codebase.
 
@@ -50,12 +49,6 @@ packages. The community-driven nature of GCE fosters innovation and collaboratio
 GCE is designed to be portable across various platforms, including Android, Linux,
 Windows (experimental), and macOS (experimental). The platform-specific installation 
 ensures that GCE runs optimally on each operating system.
-
-### Fast and Efficient
-
-GCE's backend, written in Node.js and wrapped in a Nim binary, ensures fast startup times
-and efficient performance. This design eliminates the overhead associated with traditional
-npm global installations, making GCE a lightweight and responsive environment.
 
 ### Customization and Flexibility
 
