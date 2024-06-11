@@ -24,7 +24,12 @@ Examples of unacceptable behavior by participants include:
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project author at **david40au40@gmail.com** with the subject line "GCE-REPORT". All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to 
+the gce official telgram group at [https://t.me/grand_code_environmen/1](https://t.me/grand_code_environmen/1). 
+All complaints will be reviewed and investigated and will result in a 
+response that is deemed necessary and appropriate to the circumstances. The project 
+team is obligated to maintain confidentiality with regard to the reporter of an incident. 
+Further details of specific enforcement policies may be posted separately.
 
 ## Attribution
 
