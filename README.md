@@ -3,9 +3,9 @@
 
 ## Showcase
 
-![image1](http://localhost:4173/showcase/gce-desktop1.png)
-![image1](http://localhost:4173/showcase/gce-desktop2.png)
-![image1](http://localhost:4173/showcase/gce-desktop3.png)
+![image1](https://tgcep-7d565.web.app/showcase/gce-desktop1.png)
+![image1](https://tgcep-7d565.web.app/showcase/gce-desktop2.png)
+![image1](https://tgcep-7d565.web.app/showcase/gce-desktop3.png)
 
 ## What is GCE?
 
