@@ -3,9 +3,9 @@
 
 ## Showcase Kivana (The Default Gcce)
  
-![image1](https://tgcep-7d565.web.app/showcase/gce-desktop1.png)
-![image1](https://tgcep-7d565.web.app/showcase/gce-desktop2.png)
-![image1](https://tgcep-7d565.web.app/showcase/gce-desktop3.png)
+![https://tgcep-7d565.web.app/showcase/gce-desktop1.png](https://tgcep-7d565.web.app/showcase/gce-desktop1.png)
+![https://tgcep-7d565.web.app/showcase/gce-desktop2.png](https://tgcep-7d565.web.app/showcase/gce-desktop2.png)
+![https://tgcep-7d565.web.app/showcase/gce-desktop3.png](https://tgcep-7d565.web.app/showcase/gce-desktop3.png)
 
 ## What is GCE?
 
