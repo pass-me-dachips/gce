@@ -84,7 +84,7 @@ export function osPath(os = "", pathName) {
   os = os.toLowerCase();
   if (os === "mac" || os === "windows" || os === "linux") {
     const response = osPathLists[os][pathName];
-    return response ?? "cannnot determine part";
+    return response ?? "cannnot determine path";
   } else return "unsupported os";
 }
 
