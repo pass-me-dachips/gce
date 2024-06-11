@@ -11,6 +11,6 @@ environment where the security issue or bug was found.
 
 ## Reporting a Vulnerability
 
-Gce offers a telgram topic dedicated for reporting Bugs/Issues Only. View Topic at 
-[https://t.me/grand_code_environmen/5](https://t.me/grand_code_environmen/5).
-If you wish to do same in github, gce also accepts that.
+GCE offers a dedicated Telegram topic for reporting bugs and issues only. You can view the 
+topic at [https://t.me/grand_code_environmen/5](https://t.me/grand_code_environmen/5). 
+If you prefer to report bugs on GitHub, GCE also accepts reports here.
