@@ -1,7 +1,7 @@
 {
   "name": "gce",
   "version": "1.0.0",
-  "description": "(gce) grand code environement",
+  "description": "(gce) grand code environement.",
   "main": "src/gce.js",
   "type": "module",
   "scripts": {
@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/pass-me-dachips/gce/issues"
   },
-  "homepage": "https://github.com/pass-me-dachips/gce#readme",
+  "homepage": "https://tgcep-7d565.web.app",
   "dependencies": {
     "cors": "^2.8.5"
   }
