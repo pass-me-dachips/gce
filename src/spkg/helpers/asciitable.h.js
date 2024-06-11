@@ -1,4 +1,3 @@
-
 const asciiTable = `                                                     
   __   ____   ___  __   __  
  / _\ / ___) / __)(  ) (  ) 
@@ -6,7 +5,7 @@ const asciiTable = `
 \_/\_/(____/ \___)(__) (__)   
 
 Source rapidtables.com
-Credit To https://www.rapidtables.com/code/text/ascii-table.html
+Credit: https://www.rapidtables.com/code/text/ascii-table.html
 
 Dec	Hex	Binary    	HTML	Char   	Description
 0	00	00000000	&#0;	NUL	Null
