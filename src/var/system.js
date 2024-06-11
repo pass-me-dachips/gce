@@ -28,7 +28,7 @@ export const SYSTEM = {
   Estoptions: 1,
   Estspkg: 24,
   name: "gce",
-  releaseDate: "03-06-2024",
+  releaseDate: "12-06-2024",
   tabA: "\t",
   version: "1.0.0",
 };
