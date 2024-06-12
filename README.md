@@ -81,8 +81,8 @@ ensuring that they can always use the best tool for their needs.
   [Google Compute Engine](https://cloud.google.com/compute), or 
   [Microsoft Azure Virtual Machines](https://azure.microsoft.com/en-us/services/virtual-machines/), 
   which offers such flexibility, multiple developers can work on the same code base at the 
-  same time, although on different files to avoid data overwritting and breaches. 
-  _View the official documentation to learn more_. In this case, your project is also stored on a dedicated server, which enhances the risk of data loss even without a VCS, and promotes portability as any device can work on the codebase. Note that exposing a service is generally super insecure. GCE recommends wrapping these services with more powerful software, e.g., [Nginx](https://www.nginx.com/), [NGROK](https://ngrok.com). Set up a strong firewall configuration to block unauthorized IPs.
+  same time, although on different files to avoid data overwritting and breaches: 
+  _View the official documentation to learn more_. Your project is also stored on a dedicated server, which enhances the risk of data loss even without a VCS, and promotes portability as any device can work on the codebase. Note that exposing a service is generally super insecure. GCE recommends wrapping these services with more powerful software, e.g., [Nginx](https://www.nginx.com/), [NGROK](https://ngrok.com). Set up a strong firewall configuration to block unauthorized IPs.
 
 ## Getting Started with GCE
 
