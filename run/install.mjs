@@ -6,7 +6,7 @@
  */
 
 import { copyFileSync, cpSync } from "node:fs";
-import { execSync } from "node:child_process";
+import { execSync, exec } from "node:child_process";
 import { homedir, platform } from "node:os";
 import { join } from "node:path";
 
@@ -83,15 +83,33 @@ if (supportedPlatforms.includes) {
     console.log(logAfterAddingPerm);
   } // copies the gce start script to the appropriate location.
 
-  console.log(`
+  console.log("[-] Installing kivana 1.0.0");
+  const install_kivana = `gce install kivana`;
+  exec(install_kivana, (error, stdout) => {
+    if (!error && stdout.includes("gcce successfully installed!")) {
+       console.log(stdout);
+       console.log(`
       ██████╗  ██████╗███████╗
      ██╔════╝ ██╔════╝██╔════╝
      ██║  ███╗██║     █████╗
      ██║   ██║██║     ██╔══╝
      ╚██████╔╝╚██████╗███████╗
       ╚═════╝  ╚═════╝╚══════╝
-    `);
-  console.log("Installation completed! Run `gce` for confirmation.");
-  console.log("Need quick help? Run `gce --help`.");
-  console.log("Want to start a service? Run `gce <relative/path/to/fs>`");
+      `);
+      console.log("Installation completed! Run `gce` for confirmation.");
+      console.log("Need quick help? Run `gce --help`.");
+      console.log("Want to start a service? Run `gce <relative/path/to/fs>`");     
+      // 
+    } else {
+      console.log(error.message);
+      console.log("Cannot install kivana. Try installing it manually using `gce install kivana` on this directory.");
+      console.log(
+        "Are you sure gce was successfully installed? If you are on windows, gce recommends adding the PATH to the system environment variable before running `gce install kivana` on this current working directory."
+      );
+      console.log("If you are on mac or linux, gce recommends checking the path : `/usr/local/bin` to crosscheck if the gce executable is present.");
+      console.log("If These issues still persists, please reach out to our community at https://t.me/grand_code_environmen/5");
+    } 
+  });
+  // install kivana
+
 } else console.log("unsupported platform %s", osplatform);
