@@ -13,7 +13,7 @@
     "url": "git+https://github.com/pass-me-dachips/gce.git"
   },
   "engines": {
-    "node": ">= 20.14.0"
+    "node": ">= 18.20.3"
   },
   "author": "david.A",
   "license": "MIT",
@@ -25,3 +25,4 @@
     "cors": "^2.8.5"
   }
 }
+
