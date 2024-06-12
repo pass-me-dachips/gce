@@ -7,6 +7,9 @@
 ![https://tgcep-7d565.web.app/showcase/gce-desktop2.png](https://tgcep-7d565.web.app/showcase/gce-desktop2.png)
 ![https://tgcep-7d565.web.app/showcase/gce-desktop3.png](https://tgcep-7d565.web.app/showcase/gce-desktop3.png)
 
+## Installation
+[https://tgcep-7d565.web.app/install](https://tgcep-7d565.web.app/install)
+
 ## What is GCE?
 
 The Grand Code Environment (GCE), pronounced "gee cee," is a revolutionary code
