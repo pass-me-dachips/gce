@@ -5,7 +5,8 @@
   "main": "src/gce.js",
   "type": "module",
   "scripts": {
-     "gtest": "node run/package.mjs && cd distrib && node install.mjs"
+     "tBuild": "node run/package.mjs && cd distrib && node install.mjs",
+     "build": "node run/package.mjs"
   },
   "repository": {
     "type": "git",
