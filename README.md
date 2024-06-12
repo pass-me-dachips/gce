@@ -1,7 +1,7 @@
 
 # Grand Code Environment (GCE)
 
-## Showcase Kivana (The Default Gcce)
+## Showcasing Kivana (The Default Gcce)
  
 ![https://tgcep-7d565.web.app/showcase/gce-desktop1.png](https://tgcep-7d565.web.app/showcase/gce-desktop1.png)
 ![https://tgcep-7d565.web.app/showcase/gce-desktop2.png](https://tgcep-7d565.web.app/showcase/gce-desktop2.png)
