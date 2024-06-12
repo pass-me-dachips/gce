@@ -15,3 +15,5 @@ In later versions, gce would introduce the following functionalities :
 - An additional support for using git urls as arguments in commands like `install` `pkg add` and `start`.
 
 - Package: Http client, Live server, Word finder and **The gce annotation project**.
+
+- An `uninstall` command.
