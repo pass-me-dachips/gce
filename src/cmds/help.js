@@ -38,7 +38,7 @@ Run gce man <commandName> to see detailed information about a command,
 its sub-commands, sub-command-arguments, instructions and options.
 
 Not to sure about the concept gce or gcce? visit ${SYSTEM.homePage} to learn more.
-Need instructions about contributing to gce? run ${SYSTEM.homePage}/contribute to learn more.
+Need instructions about contributing to gce? run ${SYSTEM.homePage}/contrib to learn more.
 `;
   console.log(content);
   return void 0;
