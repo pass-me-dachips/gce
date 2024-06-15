@@ -128,7 +128,7 @@ Github ${github}
 Repo ${github}gce
 Run \`gce --help\` for more information about available commands and options.
 
-Official docs@ ${github}pages/gce-env
+Official docs@ ${SYSTEM.homePage}
         total commands  ${SYSTEM.ESTcommands}, total options  ${
     SYSTEM.Estoptions
   }  
