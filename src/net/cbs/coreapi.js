@@ -6,7 +6,7 @@ import fs from "../sapi/opera/fs.js";
 import spkg from "../sapi/opera/spkg.js";
 
 /** a function that handles service api requests
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {object} req
  * @param {object} res
  * @param {object} sdu

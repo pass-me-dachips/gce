@@ -5,12 +5,12 @@
   "main": "src/gce.js",
   "type": "module",
   "scripts": {
-     "tBuild": "node run/package.mjs && cd distrib && node install.mjs",
-     "build": "node run/package.mjs"
+    "tBuild": "node run/package.mjs && cd distrib && node install.mjs",
+    "build": "node run/package.mjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pass-me-dachips/gce.git"
+    "url": "git+https://github.com/super-user-d0/gce.git"
   },
   "engines": {
     "node": ">= 18.20.3"
@@ -18,11 +18,10 @@
   "author": "david.A",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pass-me-dachips/gce/issues"
+    "url": "https://github.com/super-user-d0/gce/issues"
   },
   "homepage": "https://tgcep-7d565.web.app",
   "dependencies": {
     "cors": "^2.8.5"
   }
 }
-

@@ -7,7 +7,7 @@ import { promisify } from "node:util";
 import { supportedPlatforms } from "../../var/osPaths.js";
 
 /** a function that handles the gcce start script and execution
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {object} sdu the service data unit
  * @param {string} port the service port
  */

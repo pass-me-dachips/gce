@@ -15,7 +15,7 @@ function successLog() {
 
 /**
  * handler for the install command.
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {Array} args
  * @param {string} cwd
  * @returns {void}

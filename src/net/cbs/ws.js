@@ -6,7 +6,7 @@ import mime from "../www/mimetypes.js";
 import { readFile } from "node:fs/promises";
 
 /** a function that handles the web server requests
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {object} res
  * @param {object} sdu
  * @returns {void}

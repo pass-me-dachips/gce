@@ -9,7 +9,7 @@ import { readFile, readdir } from "node:fs/promises";
 import { promisify } from "node:util";
 
 /** handler for the rkill command
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @returns {void}
  */
 export default async function Rkill() {

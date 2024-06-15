@@ -6,7 +6,7 @@ const manualPath = (basename) => `./man/${basename}`;
 
 /**
  * handler for the man command.
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {Array} args
  * @returns {void}
  */

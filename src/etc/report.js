@@ -2,7 +2,7 @@
 
 /**
  * log reports to the terminal.
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {string} message the report message to log
  * @param {string} oid the operation id
  * @param {string} type the type of log. values can only be "fs", "others" or "danger".

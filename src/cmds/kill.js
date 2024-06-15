@@ -6,7 +6,7 @@ import { PATHS, SYSTEM } from "../var/system.js";
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 
 /** handler for the kill command
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {Array} args
  * @returns {void}
  */

@@ -14,7 +14,7 @@ class Env {
   }
 
   /** clears the cache
-   * @author david, pass-me-dachips
+   * @author david, super-user-d0
    * @returns {void}
    */
   clear() {
@@ -23,7 +23,7 @@ class Env {
   }
 
   /** adds fileName(extension) to the tech stack
-   * @author david, pass-me-dachips
+   * @author david, super-user-d0
    * @returns {void}
    */
   addStack(fileName) {
@@ -44,7 +44,7 @@ class Env {
   }
 
   /** returns the cached stack
-   * @author david, pass-me-dachips
+   * @author david, super-user-d0
    * @returns {void}
    */
   getStack() {
@@ -54,7 +54,7 @@ class Env {
   /**
    * updates the total number of bytes written/dropped to files from the gce
    * throughout the entire service life-span
-   * @author david, pass-me-dachips
+   * @author david, super-user-d0
    * @param {boolean} forDropped specifies if the update is for bytes dropped
    * @param {string} bytes the number of bytes
    * @returns {void}
@@ -76,7 +76,7 @@ class Env {
   /**
    * increaments the total numbers of directoies written/dropped throughout the
    * entire service life-span
-   * @author david, pass-me-dachips
+   * @author david, super-user-d0
    * @param {boolean} forDropped specifies if the update is for dirs dropped
    * @returns {void}
    */
@@ -94,7 +94,7 @@ class Env {
   }
 
   /** returns the cached fs analytics
-   * @author david, pass-me-dachips
+   * @author david, super-user-d0
    * @returns {void}
    */
   getFs() {
@@ -102,7 +102,7 @@ class Env {
   }
 
   /** uploads cache/service meta data to service log after every minute
-   * @author david, pass-me-dachips
+   * @author david, super-user-d0
    * @param {string} path path to service log
    * @returns {void}
    */
@@ -130,7 +130,7 @@ class Env {
   }
 
   /** updates the global tech stack with cached
-   * @author david, pass-me-dachips
+   * @author david, super-user-d0
    * @returns {void}
    */
   handleStackUpload() {
@@ -198,7 +198,7 @@ class Env {
 
 /**
  * the gce's cache for handling stack updates, analytics, packages etc.
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @returns {void}
  */
 const Cache = Env.EnvInstance();

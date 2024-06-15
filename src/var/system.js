@@ -20,7 +20,7 @@ export const ERRORCODES = {
 
 export const SYSTEM = {
   buildAPackage: "https://tgcep-7d565.web.app/packages",
-  homeRepo: "https://github.com/pass-me-dachips/gce.git",
+  homeRepo: "https://github.com/super-user-d0/gce.git",
   homePage: "https://tgcep-7d565.web.app",
   encoding: "utf-8",
   ESTsize: "600kB",

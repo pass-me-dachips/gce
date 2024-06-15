@@ -8,7 +8,7 @@ import { readFileSync, mkdirSync, existsSync, statSync } from "node:fs";
 import Server from "../net/server.js";
 
 /** handler for the core start service command
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {Array} args
  * @param {string} cwd
  * @returns {void}

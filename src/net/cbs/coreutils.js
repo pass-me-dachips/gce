@@ -1,7 +1,7 @@
 "use strict";
 
 /** a function that handles service util requests
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {object} res
  * @param {object} sdu
  * @returns {void}

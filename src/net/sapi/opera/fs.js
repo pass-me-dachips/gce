@@ -370,7 +370,7 @@ async function RESTORE(sdu, oid, res) {
 }
 
 /** a function that handles service api requests and responses for fs operations
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {string} opera the operation
  * @param {string} oid the operation id
  * @param {object} sdu the service data unit which must include the request body

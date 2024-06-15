@@ -21,7 +21,7 @@ const update = (content) =>
 
 /**
  * a sub-command for adding packages to gce's global registry
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {string} relativePath relative path to the package
  * @returns {void}
  */
@@ -156,7 +156,7 @@ async function add(relativePath, cwd) {
 
 /**
  * a sub-command for outputing the specified package's manual
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {string} packageName
  * @returns {void}
  */
@@ -178,7 +178,7 @@ function man(packageName) {
 
 /**
  * a sub-command for removing existing packages from gce's global registry
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {string} packageName
  * @returns {void}
  */
@@ -216,7 +216,7 @@ function remove(packageName) {
 
 /**
  * a sub-command for listing existing packages
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {*} packageName
  * @returns {void}
  */
@@ -257,7 +257,7 @@ function show(packageName) {
 
 /**
  * handler for the pkg command
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @param {Array} args
  * @param {string} cwd
  * @returns {void}

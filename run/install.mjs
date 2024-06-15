@@ -2,7 +2,7 @@
 
 /** the program that installs :
  *  moves the gce source code and start script to the appropriate location.
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  */
 
 import { copyFileSync, cpSync } from "node:fs";

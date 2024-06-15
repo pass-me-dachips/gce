@@ -3,13 +3,13 @@
 import { SYSTEM } from "../var/system.js";
 
 /** handler for the help option
- * @author david, pass-me-dachips
+ * @author david, super-user-d0
  * @returns {void}
  */
 export default function Help() {
   console.log("Grand Code(GCE) Environment Version %s", SYSTEM.version);
   console.log("Published at %s", SYSTEM.releaseDate);
-  console.log("Copyright (c) 2024 by David.A,  github:<pass-me-dachips>");
+  console.log("Copyright (c) 2024 by David.A,  github:<super-user-d0>");
   const content = `
 Usage: gce command [sub-command || sub-command-argument] [--options || -instructions or no-option/instruction ]
 
