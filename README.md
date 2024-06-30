@@ -10,6 +10,9 @@
 ## Installation
 [https://tgcep-7d565.web.app/install](https://tgcep-7d565.web.app/install)
 
+## Special Note
+GCE Kivana is currently in the developement stage and may contain multiple bugs. Please feel free to report any issues to our official Telegram group.
+
 ## What is GCE?
 
 The Grand Code Environment (GCE), pronounced "gee cee," is a revolutionary code
